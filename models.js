@@ -37,9 +37,9 @@ const pastContactSchema = mongoose.Schema({
 pastContactSchema.methods.pastApi = function() {
   return {
     contactId: this._id,
-    serDateContact: this.Contact.serDateContact,
-    serTypeContact: this.Contact.serTypeContact,
-    serNotesContact: this.Contact.serNotesContact
+    serDateContact: this.serDateContact,
+    serTypeContact: this.serTypeContact,
+    serNotesContact: this.serNotesContact
   }
 }
 

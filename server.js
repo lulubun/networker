@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const {PORT, DATABASE_URL} = require('./config');
-const {ContactModel} = require('./models');
+const {ContactModel, PastModel} = require('./models');
 const app = express();
 app.use(bodyParser.json());
 
@@ -47,16 +47,16 @@ app.get('/one_contact/:id/past_contact/:contactId', (req, res) => {
     })
 });
 
-app.post('/one_contact/:id', (req, res) => {
+app.put('/one_contact/:id', (req, res) => {
   let serPastDate = req.body.serPast.serDateContact ? req.body.serPast.serDateContact: '';
   let serPastType = req.body.serPast.serTypeContact ? req.body.serPast.serTypeContact: '';
   let serPastNotes = req.body.serPast.serNotesContact ? req.body.serPast.serNotesContact: ''
 
   PastModel
-    .create({
-    serPast: serPastDate,
-    serPastType: serPastType,
-    serPastNotes: serPastNotes
+  .create({
+    serPastDate: req.body.serPast.serDateContact,
+    serPastType: req.body.serPast.serTypeContact,
+    serPastNotes: req.body.serPast.serNotesContact
   })
   .then(data => res.status(201).json(data.pastApi()))
   .catch(err => {
