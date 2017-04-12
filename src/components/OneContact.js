@@ -6,7 +6,9 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
+import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
+import Past from './Past';
 
 
 export class OneContact extends React.Component {
@@ -23,11 +25,11 @@ export class OneContact extends React.Component {
       <p>co: {this.props.company}</p>
       <p>p: {this.props.phone}</p>
       <p>e: {this.props.email}</p>
-      <p>m: {this.props.meet}</p>
-      <p>n: {this.props.note}</p>
+      <p>n: {this.props.meet}</p>
+      <FlatButton label="Edit Contact Info" />
       <p>Appointment for Next Contact: SERVERINFO</p><FlatButton label="Change" />
       <form>
-        <p>Make Contact</p>
+        <p>Record New Follow Up</p>
         <DatePicker hintText="Date" defaultDate={this.props.day} />
         <RadioButtonGroup name="contact" defaultSelected="not_light">
           <RadioButton
@@ -51,8 +53,13 @@ export class OneContact extends React.Component {
             style={styles.radioButton}
           />
         </RadioButtonGroup>
+        <TextField
+          hintText="notes"
+          floatingLabelText="notes"
+        />
+        <FlatButton label="Save Follow Up" />
       </form>
-      <p>Past Contact: {this.props.past}</p>
+      <Past />
     </div>
   )
  }

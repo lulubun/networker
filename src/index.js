@@ -37,6 +37,7 @@ const Start = () => (
         <Route path="/" component={Control}>
           <IndexRoute component={Login} />
           <Route path="/login" component={Login} />
+          <Route path="/one_contact:id" component={OneContact} />
           <Route path="/new_contact" component={NewContact} />
           <Route path="/contacts" component={Contacts} />
         </Route>

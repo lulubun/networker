@@ -15,34 +15,42 @@ export class NewContact extends React.Component {
         <form>
           <p>New Contact</p>
           <TextField
-            hintText="First Name"
-          /><br />
+            hintText="First Name" onChange={(event, newValue) => {
+            firstInput = newValue
+          }}/><br />
           <TextField
-            hintText="Last Name"
-          /><br />
+            hintText="Last Name" onChange={(event, newValue) => {
+            lastInput = newValue
+          }}/><br />
           <Checkbox
           checkedIcon={<ActionFavorite />}
           uncheckedIcon={<ActionFavoriteBorder />}
           label="Select if this is an important contact"
           />
           <TextField
-            hintText="Company"
-          /><br />
+            hintText="Company" onChange={(event, newValue) => {
+            companyInput = newValue
+          }}/><br />
           <TextField
-            hintText="Job Title"
-          /><br />
+            hintText="Job Title" onChange={(event, newValue) => {
+            jobTitleInput = newValue
+          }}/><br />
           <TextField
-            hintText="Email"
-          /><br />
+            hintText="Email" onChange={(event, newValue) => {
+            emailInput = newValue
+          }}/><br />
           <TextField
-            hintText="Phone Number"
-          /><br />
+            hintText="Phone Number" onChange={(event, newValue) => {
+            phoneInput = newValue
+          }}/><br />
           <TextField
-            hintText="Where did you meet this person?"
-          /><br />
+            defaultValue= {this.props.today} onChange={(event, newValue) => {
+            dateInput = newValue
+          }}/><br />
           <TextField
-            hintText="Notes about this contact"
-          /><br />
+            hintText="Notes about this contact" onChange={(event, newValue) => {
+            notesInput = newValue
+          }}/><br />
           <DatePicker hintText="Next follow up" defaultDate = {this.props.day}/>
           <br />
           <RaisedButton label="Save Contact" primary={true} />
@@ -52,6 +60,7 @@ export class NewContact extends React.Component {
   }
 }
 const mapStateToProps = (state, props) => ({
+  day: state.ContactState.meetDate
 });
 
-export default connect(mapStateToProps, null)(NewContact);
+export default connect(mapStateToProps)(NewContact);
