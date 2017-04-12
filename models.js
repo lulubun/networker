@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const contactSchema = mongoose.Schema({
-  serNextContact: {type: Date, reuired: true},
+  serNextContact: {type: String, reuired: true},
   serFirst: String,
   serLast: String,
   serImportant: Boolean,
@@ -10,6 +10,7 @@ const contactSchema = mongoose.Schema({
   serEmail: String,
   serMeetDate: String,
   serNote: String,
+  serPast: Array
 });
 
 contactSchema.methods.contactApi = function() {
@@ -22,22 +23,23 @@ contactSchema.methods.contactApi = function() {
     serPhone: this.serPhone,
     serEmail: this.serEmail,
     serMeet: this.serMeet,
-    serNote: this.serNote
+    serNote: this.serNote,
+    serPast: this.serPast
   };
 }
 
 const pastContactSchema = mongoose.Schema({
-  serDateContact: {type: Date, required: true},
+  serDateContact: {type: String, required: true},
   serTypeContact: String,
   serNotesContact: String
 });
 
 pastContactSchema.methods.pastApi = function() {
   return {
-    id: this._id
-    //serDateContact:this.Contact.serDateContact,
-    //serTypeContact: this.Contact.serTypeContact,
-    //serNotesContact: this.Contact.serNotesContact
+    contactId: this._id,
+    serDateContact: this.Contact.serDateContact,
+    serTypeContact: this.Contact.serTypeContact,
+    serNotesContact: this.Contact.serNotesContact
   }
 }
 
