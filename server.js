@@ -48,15 +48,11 @@ app.get('/one_contact/:id/past_contact/:contactId', (req, res) => {
 });
 
 app.put('/one_contact/:id', (req, res) => {
-  let serPastDate = req.body.serPast.serDateContact ? req.body.serPast.serDateContact: '';
-  let serPastType = req.body.serPast.serTypeContact ? req.body.serPast.serTypeContact: '';
-  let serPastNotes = req.body.serPast.serNotesContact ? req.body.serPast.serNotesContact: ''
-
   PastModel
   .create({
-    serPastDate: req.body.serPast.serDateContact,
-    serPastType: req.body.serPast.serTypeContact,
-    serPastNotes: req.body.serPast.serNotesContact
+    serDateContact: req.body.serPast.serDateContact,
+    serTypeContact: req.body.serPast.serTypeContact,
+    serNotesContact: req.body.serPast.serNotesContact
   })
   .then(data => res.status(201).json(data.pastApi()))
   .catch(err => {
