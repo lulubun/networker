@@ -12,6 +12,16 @@ export const setNewContact = (newDateNext, newFirstName, newLastName, newImporta
   newMeetNotes
 }
 
+export const SET_ONE_CONTACT = 'SET_ONE_CONTACT';
+export const setOneContact = (newDateNext, newFirstName, newLastName, newImportant, newCompany) => {
+  type: SET_ONE_CONTACT,
+  newDateNext,
+  newFirstName,
+  newLastName,
+  newImportant,
+  newCompany
+}
+
 export const UPDATE_DATE_NEXT = 'UPDATE_DATE_NEXT';
 export const updateDateNext = (newDateNext) => ({
   type: UPDATE_DATE_NEXT,
@@ -71,12 +81,19 @@ export const updateMeetNotes = (newMeetNotes) => ({
   newMeetNotes
 });
 
-export function fetchContact() {
+export function fetchAllContacts() {
   return dispatch => {
     const url =
     fetch(url)
     .then(response => response.json())
-    .then(data => dispatch(listContacts(data)))
+    .then(data => {
+      for (var i = 0; i < data.length; i++) {
+        let newDateNext = data[i].serNextContact
+        let newFirstName = data[i].serFirst;
+        let newLastName = data[i].serLast;
+        let newCompany = data[i].serCompany;}
+        dispatch(setOneContact(newDateNext, newFirstName, newLastName, newCompany))
+      })
     .catch(ex => console.log(ex))
   }
 };
@@ -91,7 +108,7 @@ export function fetchWholeContact() {
   }
 }
 
-const function sendNewContact() {
+export function sendNewContact() {
   const url =
   fetch(url, {
     method: 'POST',

@@ -6,6 +6,7 @@ const contactSchema = mongoose.Schema({
   serLast: String,
   serImportant: Boolean,
   serCompany: String,
+  serJobTitle: String,
   serPhone: String,
   serEmail: String,
   serMeetDate: String,
@@ -13,38 +14,6 @@ const contactSchema = mongoose.Schema({
   serPast: Array
 });
 
-contactSchema.methods.contactApi = function() {
-  return {
-    id: this._id,
-    serFirst: this.serFirst,
-    serLast: this.serLast,
-    serImportant: this.serImportant,
-    serCompany: this.serCompany,
-    serPhone: this.serPhone,
-    serEmail: this.serEmail,
-    serMeet: this.serMeet,
-    serNote: this.serNote,
-    serPast: this.serPast
-  };
-}
-
-const pastContactSchema = mongoose.Schema({
-  serDateContact: {type: String, required: true},
-  serTypeContact: String,
-  serNotesContact: String
-});
-
-pastContactSchema.methods.pastApi = function() {
-  return {
-    contactId: this._id,
-    serDateContact: this.serDateContact,
-    serTypeContact: this.serTypeContact,
-    serNotesContact: this.serNotesContact
-  }
-}
-
 const ContactModel = mongoose.model('ContactModel', contactSchema);
 
-const PastModel = mongoose.model('PastModel', pastContactSchema);
-
-module.exports = {ContactModel}, {PastModel};
+module.exports = {ContactModel};

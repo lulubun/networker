@@ -9,6 +9,8 @@ import {connect} from 'react-redux';
 import DatePicker from 'material-ui/DatePicker';
 import Dialog from 'material-ui/Dialog';
 
+let dateInput = '';
+
 export class ContactLink extends React.Component {
   state = {
     open: false,
@@ -25,7 +27,7 @@ export class ContactLink extends React.Component {
 
  render() {
    const actions = [
-      <FlatButton
+      <RaisedButton
         label="Ok"
         primary={true}
         keyboardFocused={true}

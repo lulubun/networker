@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const {PORT, DATABASE_URL} = require('./config');
-const {ContactModel, PastModel} = require('./models');
+const {ContactModel} = require('./models');
 const app = express();
 app.use(bodyParser.json());
 
@@ -17,7 +17,7 @@ app.get('/contacts', (req, res) => {
     .find()
     .exec()
     .then(data => {
-      res.json(data.map(data => data.contactApi()));
+      res.json(data)
     })
     .catch(err => {
       console.error(err);
@@ -29,37 +29,23 @@ app.get('/one_contact/:id', (req, res) => {
   ContactModel
   .findById(req.params.id)
   .exec()
-  .then(data => res.json(data.contactApi()))
+  .then(data => res.json(data))
   .catch(err => {
     console.error(err);
     res.status(500).json({error: 'cannot retrieve contact'});
   });
 });
 
-app.get('/one_contact/:id/past_contact/:contactId', (req, res) => {
-    PastModel
-    .findById(req.params.id)
-    .exec()
-    .then(data => res.json(data.pastApi()))
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({error: 'cannot retrieve contact history'})
-    })
-});
-
-app.put('/one_contact/:id', (req, res) => {
-  PastModel
-  .create({
-    serDateContact: req.body.serPast.serDateContact,
-    serTypeContact: req.body.serPast.serTypeContact,
-    serNotesContact: req.body.serPast.serNotesContact
-  })
-  .then(data => res.status(201).json(data.pastApi()))
+app.get('/one_contact/:id/:pastId', (req, res) => {
+  ContactModel
+  .findById(req.params.id)
+  .exec()
+  .then(data => res.json(data))
   .catch(err => {
     console.error(err);
-    res.status(500).json({error: 'Could not save contact'})
-  });
-})
+    res.status(500).json({error: 'cannot retrieve contact history'})
+  })
+});
 
 app.post('/new_contact', (req, res) => {
   const needsDate = 'serNextContact';
@@ -96,6 +82,7 @@ app.post('/new_contact', (req, res) => {
   let serLast = req.body.serLast ? req.body.serLast: '';
   let serImportant = req.body.serImportant ? req.body.serImportant: false;
   let serCompany = req.body.serCompany ? req.body.serCompany: '';
+  let serJobTitle = req.body.serJobTitle ? req.body.serJobTitle: '';
   let serPhone = req.body.serPhone ? req.body.serPhone: '';
   let serEmail = req.body.serEmail ? req.body.serEmail: '';
   let serMeetDate = req.body.serMeetDate ? req.body.serMeetDate: '';
@@ -109,13 +96,14 @@ app.post('/new_contact', (req, res) => {
       serLast: serLast,
       serImportant: serImportant,
       serCompany: serCompany,
+      serJobTitle: serJobTitle,
       serPhone: serPhone,
       serEmail: serEmail,
       serMeetDate: serMeetDate,
       serNote: serNote,
       serPast: req.body.serPast
     })
-    .then(data => res.status(201).json(data.contactApi()))
+    .then((data) => {res.status(201).json(data)})
     .catch(err => {
       console.error(err);
       res.status(500).json({error: 'Could not save contact'})
@@ -135,9 +123,9 @@ app.delete('/one_contact/:id', (req, res) => {
   });
 });
 
-app.delete('/one_contact/:id/past_contact:contactId', (req, res) => {
-  PastModel
-  .findByIdAndRemove(req.params.contactId)
+app.delete('/one_contact/:id/:pastId', (req, res) => {
+  ContactModel
+  .findByIdAndRemove(req.params.id)
   .exec()
   .then(() => {
     res.status(201).json({message: 'Contact instance deleted'})
@@ -148,14 +136,14 @@ app.delete('/one_contact/:id/past_contact:contactId', (req, res) => {
   });
 });
 
-app.put('/one_contact/:id', (req, res) => {
+app.put('/one_contact/edit/:id', (req, res) => {
   if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     res.status(400).json({
       error: 'Request path id and request body id values must match'
     });
   }
   const updated = {};
-  const updatableFields = ['serNextContact', 'serFirst', 'serLast', 'serImportant', 'serCompany', 'serPhone', 'serEmail', 'serMeet', 'serNote'];
+  const updatableFields = ['serNextContact', 'serFirst', 'serLast', 'serImportant', 'serCompany', 'serJobTitle', 'serPhone', 'serEmail', 'serMeet', 'serNote'];
   updatableFields.forEach(field => {
     if (field in req.body) {
       updated[field] = req.body[field];
@@ -165,29 +153,22 @@ app.put('/one_contact/:id', (req, res) => {
   ContactModel
     .findByIdAndUpdate(req.params.id, {$set: updated}, {new:true})
     .exec()
-    .then(updatedContact => res.status(201).json(updatedContact.contactApi()))
+    .then(updatedContact => {res.status(201).json(updatedContact)})
     .catch(err => res.status(500).json({message: 'Contact not updated'}));
 });
 
-app.put('/one_contact/:id/past_contact/:contactId', (req, res) => {
-  if(!(req.params.contactId && req.body.contactId && req.params.contactId === req.body.contactId)) {
-    res.status(400).json({
-      error: 'Request path id and request body id values must match'
-    });
-  }
-  const updated = {};
-  const updatableFields = ['serDateContact', 'serTypeContact', 'serNotesContact'];
-  updatableFields.forEach(field => {
-    if (field in req.body) {
-      updated[field] = req.body[field];
-    }
-  });
+app.put('/one_contact/:_id', (req, res) => {
+  ContactModel
+  .findByIdAndUpdate({_id: req.params._id}, {$push: {serPast: req.body.serPast}}, {new: true})
+  .then(updatedContact => {res.json(updatedContact)})
+  .catch(err => res.status(500).json({message: 'Contact not updated'}));
+});
 
-  PastModel
-    .findByIdAndUpdate(req.params.contactId, {$set: updated}, {new:true})
-    .exec()
-    .then(updatedContact => res.status(201).json(updatedContact.pastApi()))
-    .catch(err => res.status(500).json({message: 'Contact not updated'}));
+app.put('/one_contact/:_id/:pastId', (req, res) => {
+  ContactModel
+    .find({_id: req.params._id}, (err, contact) => {
+      console.log(contact);
+    })
 });
 
 // this function connects to our database, then starts the server

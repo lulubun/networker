@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 class Past extends React.Component {
 
   render() {
-    const pastList = {allPastList};
+    let pastList = {this.props.allPastList};
     for (var i = 0; i < pastList.length; i++) {
       pastList.push(<OnePastContact />)
     }
@@ -21,6 +21,7 @@ class Past extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
+  allPastList: AllPastState.allPast
 });
 
 export default connect(mapStateToProps)(Past);

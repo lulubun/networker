@@ -1,4 +1,8 @@
-const initialState = [];
+const initialState = {
+  pastDate: '',
+  pastTypeCon: '',
+  pastNote: ''
+};
 
 const PastState = (sate=initialState, action) => {
   switch (action.type) {

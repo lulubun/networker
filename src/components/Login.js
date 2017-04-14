@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
-import * as actions from '../actions/index';
+import * as actions from '../actions/contactActions';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export class Login extends React.Component {

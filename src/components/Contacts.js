@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 class Contacts extends React.Component {
 
   render() {
-    for (var i = 0; i < contactList.length; i++) {
-      contactList.push(<ContactLink />)
+    for (var i = 0; i < this.props.contactList.length; i++) {
+      this.props.contactList.push(<ContactLink />)
     }
     return (
       <div>
         <div className="allContacts">
-          {contactList}
+          {this.props.contactList}
         </div>
       </div>
     );
@@ -19,7 +19,7 @@ class Contacts extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  contactList: state.ContactState.allContacts
+  contactList: state.AllContactsState.allContacts
 });
 
 export default connect(mapStateToProps)(Contacts);

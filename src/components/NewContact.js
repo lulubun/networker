@@ -1,12 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import DatePicker from 'material-ui/DatePicker';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
+
+let firstInput = '';
+let lastInput = '';
+let companyInput = '';
+let jobTitleInput = '';
+let emailInput = '';
+let phoneInput = '';
+let dateInput = '';
+let notesInput = '';
 
 export class NewContact extends React.Component {
   render() {

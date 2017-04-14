@@ -1,25 +1,45 @@
-const initialState = [];
+const initialState = {
+  dateNext: '',
+  firstName: '',
+  lastName: '',
+  import: '',
+  company: '',
+  jobTitle: '',
+  email: '',
+  phone: '',
+  meetDate: '',
+  meetNotes: ''
+}
 
 const ContactState = (state=initialState, action) => {
   switch (action.type) {
-    case 'SET_NEW_CONTACT':
+/*  case 'SET_NEW_CONTACT':
     let exact = new Date();
     let fullDay = exact.toString();
     let day = fullDay.slice(0, 25)
     console.log(day);
     return {
-      ...state, {
-        dateNext: newDateNext.action,
-        firstName: newFirstName.action,
-        lastName: newLastName.action,
-        import: newImportant.action,
-        company: newCompany.action,
-        jobTitle: newJobTitle.action,
-        email: newEmail.action,
-        phone: newPhone.action,
-        meetDate: day,
-        meetNotes: newMeetNotes.action
-      }
+      ...state,
+      dateNext: newDateNext.action,
+      firstName: newFirstName.action,
+      lastName: newLastName.action,
+      import: newImportant.action,
+      company: newCompany.action,
+      jobTitle: newJobTitle.action,
+      email: newEmail.action,
+      phone: newPhone.action,
+      meetDate: day,
+      meetNotes: newMeetNotes.action
+    };
+
+    case 'SET_ONE_CONTACT':
+    return {
+      ...state,
+      dateNext: newDateNext.action,
+      firstName: newFirstName.action,
+      lastName: newLastName.action,
+      import: newImportant.action,
+      company: newCompany.action,
     };
 
     case 'UPDATE_DATE_NEXT':
@@ -80,7 +100,7 @@ const ContactState = (state=initialState, action) => {
     return {
       ...state,
       meetDate: newMeetDate.action
-    };
+    }; */
 
     default:
     return state
