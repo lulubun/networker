@@ -6,15 +6,19 @@ import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import DatePicker from 'material-ui/DatePicker';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
+import * as actions from '../actions/contactActions';
 
 let firstInput = '';
 let lastInput = '';
+let importantInput = false;
 let companyInput = '';
 let jobTitleInput = '';
 let emailInput = '';
 let phoneInput = '';
-let dateInput = '';
+let meetDateInput = '';
 let notesInput = '';
+let dateNextInput = '';
+
 
 export class NewContact extends React.Component {
   render() {
@@ -23,6 +27,7 @@ export class NewContact extends React.Component {
         <form>
           <p>New Contact</p>
           <TextField
+            id="firstNameInput"
             hintText="First Name" onChange={(event, newValue) => {
             firstInput = newValue
           }}/><br />
@@ -34,6 +39,9 @@ export class NewContact extends React.Component {
           checkedIcon={<ActionFavorite />}
           uncheckedIcon={<ActionFavoriteBorder />}
           label="Select if this is an important contact"
+          onCheck={(event, isInputChecked) => {
+            importantInput = isInputChecked
+          }}
           />
           <TextField
             hintText="Company" onChange={(event, newValue) => {
@@ -51,17 +59,27 @@ export class NewContact extends React.Component {
             hintText="Phone Number" onChange={(event, newValue) => {
             phoneInput = newValue
           }}/><br />
-          <TextField
-            defaultValue= {this.props.today} onChange={(event, newValue) => {
-            dateInput = newValue
-          }}/><br />
-          <TextField
-            hintText="Notes about this contact" onChange={(event, newValue) => {
-            notesInput = newValue
-          }}/><br />
-          <DatePicker hintText="Next follow up" defaultDate = {this.props.day}/>
+          <DatePicker
+            floatingLabelText="Date of meeting this contact"
+            onChange={(event, date) => {meetDateInput = date}}
+          />
           <br />
-          <RaisedButton label="Save Contact" primary={true} />
+          <TextField
+            hintText="Notes about this contact"
+            multiLine={true}
+            onChange={(event, newValue) => {
+              notesInput = newValue
+            }}/><br />
+          <DatePicker
+            floatingLabelText="Date for next follow up"
+            onChange={(date) => {dateNextInput = date}}
+          />
+          <br />
+          <RaisedButton label="Save Contact" primary={true}
+            onTouchTap={(event) => {
+              this.props.saveContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
+            }}
+          />
         </form>
       </div>
     )
@@ -71,4 +89,8 @@ const mapStateToProps = (state, props) => ({
   day: state.ContactState.meetDate
 });
 
-export default connect(mapStateToProps)(NewContact);
+const mapDispatchToProps = (dispatch) => ({
+  saveContact: (firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.sendNewContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewContact);

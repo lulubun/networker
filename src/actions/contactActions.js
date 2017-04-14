@@ -1,5 +1,7 @@
+import DATABASE_URL from '../../config';
+
 export const SET_NEW_CONTACT = 'SET_NEW_CONTACT';
-export const setNewContact = (newDateNext, newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetNotes) => {
+export const setNewContact = (newDateNext, newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetDate, newMeetNotes) => ({
   type: SET_NEW_CONTACT,
   newDateNext,
   newFirstName,
@@ -9,18 +11,25 @@ export const setNewContact = (newDateNext, newFirstName, newLastName, newImporta
   newJobTitle,
   newEmail,
   newPhone,
+  newMeetDate,
   newMeetNotes
-}
+});
 
 export const SET_ONE_CONTACT = 'SET_ONE_CONTACT';
-export const setOneContact = (newDateNext, newFirstName, newLastName, newImportant, newCompany) => {
+export const setOneContact = (id, newDateNext, newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetDate, newMeetNotes) => ({
   type: SET_ONE_CONTACT,
+  id,
   newDateNext,
   newFirstName,
   newLastName,
   newImportant,
-  newCompany
-}
+  newCompany,
+  newJobTitle,
+  newEmail,
+  newPhone,
+  newMeetDate,
+  newMeetNotes
+});
 
 export const UPDATE_DATE_NEXT = 'UPDATE_DATE_NEXT';
 export const updateDateNext = (newDateNext) => ({
@@ -81,36 +90,18 @@ export const updateMeetNotes = (newMeetNotes) => ({
   newMeetNotes
 });
 
-export function fetchAllContacts() {
-  return dispatch => {
-    const url =
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      for (var i = 0; i < data.length; i++) {
-        let newDateNext = data[i].serNextContact
-        let newFirstName = data[i].serFirst;
-        let newLastName = data[i].serLast;
-        let newCompany = data[i].serCompany;}
-        dispatch(setOneContact(newDateNext, newFirstName, newLastName, newCompany))
-      })
-    .catch(ex => console.log(ex))
-  }
-};
 
 export function fetchWholeContact() {
   return dispatch => {
-    const url =
-    fetch(url)
+    fetch(DATABASE_URL)
     .then(response => response.json())
-    .then(data => dispatch(listPast(data)))
+    .then(data => dispatch(setOneContact(data)))
     .catch(ex => console.log(ex))
   }
 }
 
-export function sendNewContact() {
-  const url =
-  fetch(url, {
+export function sendNewContact(newContact) {
+  fetch(DATABASE_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -120,6 +111,40 @@ export function sendNewContact() {
     })
   })
   .then(response => response.json())
-  .then(data => dispatch(listContacts(data)))
-  .then()
+  .then(() => fetchAllContacts())
 }
+
+export const SET_ALL_CONTACTS = 'SET_ALL_CONTACTS';
+export const setAllContacts = (allContacts) => ({
+  type: SET_ALL_CONTACTS,
+  allContacts
+});
+
+export const SET_ONE_CONTACT_LINK = 'SET_ONE_CONTACT_LINK';
+export const setOneContactLink = (id, newDateNext, newFirstName, newLastName, newImportant, newCompany) => ({
+  type: SET_ALL_CONTACTS,
+  id,
+  newDateNext,
+  newFirstName,
+  newLastName,
+  newImportant,
+  newCompany
+});
+
+export function fetchAllContacts() {
+  return dispatch => {
+    fetch(DATABASE_URL)
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(item => {
+        let newDateNext = item.serNextContact;
+        let newFirstName = item.serFirst;
+        let newLastName = item.serLast;
+        let newImportant = item.serImportant;
+        let newCompany = item.serCompany;
+        dispatch(setOneContactLink(newDateNext, newFirstName, newLastName, newImportant, newCompany))
+      })
+    })
+    .catch(ex => console.log(ex))
+  }
+};

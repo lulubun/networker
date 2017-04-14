@@ -167,7 +167,7 @@ app.put('/one_contact/:_id', (req, res) => {
 app.put('/one_contact/:_id/:pastId', (req, res) => {
   ContactModel
     .find({_id: req.params._id}, (err, contact) => {
-      console.log(contact);
+      contact.update()
     })
 });
 

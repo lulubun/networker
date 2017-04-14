@@ -1,6 +1,5 @@
 import React from 'react';
 import Divider from 'material-ui/Divider';
-import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 
 
@@ -15,6 +14,4 @@ export function OnePastContact (props) {
       <RaisedButton label="Edit" />
     </div>
   );
-
-
 }

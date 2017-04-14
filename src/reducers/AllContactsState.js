@@ -7,6 +7,7 @@ const AllContactsState = (state=initialState, action) => {
     case 'SET_ALL_CONTACTS'
     return {
       ...state,
+      allContacts: allContacts.push(action.item)
     };
 
     default:

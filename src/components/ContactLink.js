@@ -8,6 +8,7 @@ import Checkbox from 'material-ui/Checkbox';
 import {connect} from 'react-redux';
 import DatePicker from 'material-ui/DatePicker';
 import Dialog from 'material-ui/Dialog';
+import * as actions from '../actions/contactActions';
 
 let dateInput = '';
 
@@ -22,7 +23,7 @@ export class ContactLink extends React.Component {
 
   handleClose = () => {
     this.setState({open: false});
-    {this.props.changeDate(dateInput)}
+    this.props.changeDate(dateInput)
   };
 
  render() {
@@ -77,7 +78,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeDate: this.props.updateDateNext
+  changeDate: (dateInput) => dispatch(actions.updateDateNext(dateInput))
 })
 
-export default connect(mapStateToProps)(ContactLink);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactLink);

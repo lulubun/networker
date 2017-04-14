@@ -1,3 +1,5 @@
+let today = new Date();
+
 const initialState = {
   dateNext: '',
   firstName: '',
@@ -7,100 +9,121 @@ const initialState = {
   jobTitle: '',
   email: '',
   phone: '',
-  meetDate: '',
+  meetDate: today,
   meetNotes: ''
 }
 
 const ContactState = (state=initialState, action) => {
   switch (action.type) {
-/*  case 'SET_NEW_CONTACT':
+  case 'SET_NEW_CONTACT':
     let exact = new Date();
     let fullDay = exact.toString();
     let day = fullDay.slice(0, 25)
     console.log(day);
     return {
       ...state,
-      dateNext: newDateNext.action,
-      firstName: newFirstName.action,
-      lastName: newLastName.action,
-      import: newImportant.action,
-      company: newCompany.action,
-      jobTitle: newJobTitle.action,
-      email: newEmail.action,
-      phone: newPhone.action,
+      dateNext: action.newDateNext,
+      firstName: action.newFirstName,
+      lastName: action.newLastName,
+      import: action.newImportant,
+      company: action.newCompany,
+      jobTitle: action.newJobTitle,
+      email: action.newEmail,
+      phone: action.newPhone,
       meetDate: day,
-      meetNotes: newMeetNotes.action
+      meetNotes: action.newMeetNotes
     };
 
     case 'SET_ONE_CONTACT':
     return {
       ...state,
-      dateNext: newDateNext.action,
-      firstName: newFirstName.action,
-      lastName: newLastName.action,
-      import: newImportant.action,
-      company: newCompany.action,
+      dateNext: action.newDateNext,
+      firstName: action.newFirstName,
+      lastName: action.newLastName,
+      import: action.newImportant,
+      company: action.newCompany,
+      jobTitle: action.newJobTitle,
+      email: action.newEmail,
+      phone: action.newPhone,
+      meetDate: action.newMeetDate,
+      meetNotes: action.newMeetNotes
+    };
+
+    case 'SET_ONE_CONTACT_LINK':
+    return {
+      ...state,
+      id: action.id,
+      dateNext: action.newDateNext,
+      firstName: action.newFirstName,
+      lastName: action.newLastName,
+      important: action.newImportant,
+      company: action.newCompany,
+      jobTitle: action.newJobTitle,
+      email: action.newEmail,
+      phone: action.newPhone,
+      meetDate: action.newMeetDate,
+      meetNotes: action.newMeetNotes
     };
 
     case 'UPDATE_DATE_NEXT':
     return {
       ...state,
-      dateNext: newDateNext.action
+      dateNext: action.newDateNext
     };
 
     case 'UPDATE_FIRST_NAME':
     return {
       ...state,
-      firstName: newFirstName.action
+      firstName: action.newFirstName
     }
 
     case 'UPDATE_LAST_NAME':
     return {
       ...state,
-      lastName: newLastName.action
+      lastName: action.newLastName
     }
 
     case 'UPDATE_IMPORTANT':
     return {
       ...state,
-      Important: newImportant.action
+      Important: action.newImportant
     }
 
     case 'UPDATE_COMPANY':
     return {
       ...state,
-      company: newCompany.action
+      company: action.newCompany
     }
 
     case 'UPDATE_JOB_TITLE':
     return {
       ...state,
-      jobTitle: newJobTitle.action
+      jobTitle: action.newJobTitle
     }
 
     case 'UPDATE_EMAIL':
     return {
       ...state,
-      email: newEmail.action
+      email: action.newEmail
     }
 
     case 'UPDATE_PHONE':
     return {
       ...state,
-      phone: newPhone.action
+      phone: action.newPhone
     }
 
     case 'UPDATE_MEET_NOTES':
     return {
       ...state,
-      meetNotes: newMeetNotes.action
+      meetNotes: action.newMeetNotes
     }
 
     case 'UPDATE_MEET_DATE':
     return {
       ...state,
-      meetDate: newMeetDate.action
-    }; */
+      meetDate: action.newMeetDate
+    };
 
     default:
     return state
