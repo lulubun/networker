@@ -1,13 +1,9 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
-import * as actions from '../actions/contactActions';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export class Login extends React.Component {
-  componentDidMount() {
-    this.props.getDay();
-  };
   render() {
     return(
       <div>
@@ -30,10 +26,6 @@ export class Login extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  day: state.ContactState.date
+  day: state.ContactState.meetDate
 });
-
-const mapDispatchToProps = (dispatch) => ({
-  getDay: () => dispatch(actions.setDate())
-})
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps)(Login);

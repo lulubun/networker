@@ -1,4 +1,5 @@
-let today = new Date();
+let date = new Date();
+let today = String(date);
 
 const initialState = {
   dateNext: '',

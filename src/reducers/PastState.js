@@ -4,36 +4,34 @@ const initialState = {
   pastNote: ''
 };
 
-const PastState = (sate=initialState, action) => {
+const PastState = (state=initialState, action) => {
   switch (action.type) {
-    case 'SET_PAST_DATE'
+    case 'SET_PAST_DATE':
     return {
-      ...state, {
-        pastDate: newPastDate.action,
-        pastTypeCon : newPastTypeCon.action,
-        pastNote: newPastNote.action
-      }
+      ...state,
+        pastDate: action.newPastDate,
+        pastTypeCon: action.newPastTypeCon,
+        pastNote: action.newPastNote
+
     };
 
-    case 'UPDATE_PAST_DATE'
+    case 'UPDATE_PAST_DATE':
     return {
-      ...state, {
-        pastDate: newPastDate.action
-      }
+      ...state,
+      pastDate: action.newPastDate
+
     };
 
-    case 'UPDATE_PAST_TYPE_CON'
+    case 'UPDATE_PAST_TYPE_CON':
     return {
-      ...state, {
-        pastTypeCon: newPastTypeCon.action
-      }
+      ...state,
+      pastTypeCon: action.newPastTypeCon
     };
 
-    case 'UPDATE_PAST_NOTE'
+    case 'UPDATE_PAST_NOTE':
     return {
-      ...state, {
-        pastNote: newPastNote.action
-      }
+      ...state,
+        pastNote: action.newPastNote
     };
 
     default:

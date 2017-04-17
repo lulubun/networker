@@ -13,16 +13,24 @@ export const setAllContacts = (id, newDateNext, newFirstName, newLastName, newIm
 
 export function fetchAllContacts() {
   return dispatch => {
-    fetch(DATABASE_URL)
+    fetch(DATABASE_URL, {
+      headers : {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+    })
     .then(response => response.json())
-    .then(data.forEach(item => {
-      let id = data.id;
-      let newDateNext = data.serNextContact;
-      let newFirstName = data.serFirst;
-      let newLastName = data.serLast;
-      let newImportant = data.serImportant;
-      let newCompany = data.serCompany;
-      dispatch(setAllContacts(item: {id, newDateNext, newFirstName, newLastName, newImportant, newCompany}))}))
+    .then(data => {
+      data.forEach(item => {
+        let id = item.id;
+        let newDateNext = item.serNextContact;
+        let newFirstName = item.serFirst;
+        let newLastName = item.serLast;
+        let newImportant = item.serImportant;
+        let newCompany = item.serCompany;
+        dispatch(setAllContacts(id, newDateNext, newFirstName, newLastName, newImportant, newCompany))
+      })
+    })
     .catch(ex => console.log(ex))
   }
 };

@@ -22,4 +22,8 @@ const mapStateToProps = (state, props) => ({
   contactList: state.AllContactsState.allContacts
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  start: () => dispatch(actions.fetchAllContacts())
+})
+
 export default connect(mapStateToProps)(Contacts);

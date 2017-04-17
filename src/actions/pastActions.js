@@ -23,3 +23,31 @@ export const updatePastNote = (newPastNote) => ({
   type: UPDATE_PAST_NOTE,
   newPastNote
 });
+
+export function updatePastInstance() {
+  return dispatch => {
+    fetch(DATABASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'serPast.pastId': sendId
+      },
+      {'$set': {
+          'serPast.$.serDateContact': sendPastDate,
+          'serPast.$.serTypeContact': sendTypeContact,
+          'serPast.$.serNotesContact': sendNotesContact
+          }
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+        data.update({
+        }, function(err) { ...
+        dispatch(setOneContactLink(newDateNext, newFirstName, newLastName, newImportant, newCompany))
+      })
+    })
+    .catch(ex => console.log(ex))
+  }
+};

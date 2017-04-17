@@ -1,10 +1,10 @@
-initialState = {
+const initialState = {
   allPast: []
 }
 
 const AllPastState = (state=initialState, action) => {
   switch (action.type) {
-    case 'SET_ALL_PAST'
+    case 'SET_ALL_PAST':
     return {
       ...state,
     };

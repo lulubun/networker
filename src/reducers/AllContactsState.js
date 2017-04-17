@@ -1,13 +1,13 @@
-initialState = {
+const initialState = {
   allContacts: []
 }
 
 const AllContactsState = (state=initialState, action) => {
   switch (action.type) {
-    case 'SET_ALL_CONTACTS'
+    case 'SET_ALL_CONTACTS':
     return {
       ...state,
-      allContacts: allContacts.push(action.item)
+      allContacts: action.allContacts //.push(action.item)
     };
 
     default:

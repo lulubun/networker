@@ -100,19 +100,40 @@ export function fetchWholeContact() {
   }
 }
 
-export function sendNewContact(newContact) {
-  fetch(DATABASE_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      newContact
+export function sendNewContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
+  return dispatch => {
+    let serNextContact = dateNextInput;
+    let serFirst = firstInput;
+    let serLast = lastInput;
+    let serImportant = importantInput;
+    let serCompany = companyInput;
+    let serJobTitle = jobTitleInput;
+    let serPhone = phoneInput;
+    let serEmail = emailInput;
+    let serMeetDate = meetDateInput;
+    let serNote = notesInput
+    fetch(DATABASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        serNextContact,
+        serFirst,
+        serLast,
+        serImportant,
+        serCompany,
+        serJobTitle,
+        serPhone,
+        serEmail,
+        serMeetDate,
+        serNote
+      })
     })
-  })
-  .then(response => response.json())
-  .then(() => fetchAllContacts())
-}
+    .then(response => response.json())
+    .then(() => fetchAllContacts())
+  }
+};
 
 export const SET_ALL_CONTACTS = 'SET_ALL_CONTACTS';
 export const setAllContacts = (allContacts) => ({

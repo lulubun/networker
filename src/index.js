@@ -8,7 +8,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 import Control from './components/Control';
 import Login from './components/Login';
-import Contacts from './components/Contacts';
+import reactContactsContainer from './components/reactContactsContainer';
 import OneContact from './components/OneContact';
 import NewContact from './components/NewContact';
 import ContactState from './reducers/ContactState';
@@ -29,6 +29,15 @@ const reducer = combineReducers({
   routing: routerReducer
 })
 
+const logger = store => next => action => {
+  console.group(action.type)
+  console.info('dispatching', action)
+  let result = next(action)
+  console.log('next state', store.getState())
+  console.groupEnd(action.type)
+  return result
+}
+
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
@@ -46,7 +55,7 @@ const Start = () => (
           <Route path="/login" component={Login} />
           <Route path="/one_contact:id" component={OneContact} />
           <Route path="/new_contact" component={NewContact} />
-          <Route path="/contacts" component={Contacts} />
+          <Route path="/contacts" component={reactContactsContainer} />
         </Route>
       </Router>
     </Provider>

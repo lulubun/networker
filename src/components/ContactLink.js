@@ -23,7 +23,7 @@ export class ContactLink extends React.Component {
 
   handleClose = () => {
     this.setState({open: false});
-    this.props.changeDate(dateInput)
+    {this.props.changeDate(dateInput)}
   };
 
  render() {
