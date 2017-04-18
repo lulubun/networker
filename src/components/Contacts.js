@@ -1,29 +1,32 @@
 import React from 'react';
 import ContactLink from './ContactLink';
 import {connect} from 'react-redux';
+import * as actions from '../actions/contactActions';
+
 
 class Contacts extends React.Component {
+  componentDidMount() {
+    this.props.getAllContacts();
+  };
 
   render() {
-    for (var i = 0; i < this.props.contactList.length; i++) {
-      this.props.contactList.push(<ContactLink />)
-    }
+    const linkList = this.props.contactList.map(contact => {
+      return <ContactLink />
+    });
     return (
-      <div>
-        <div className="allContacts">
-          {this.props.contactList}
-        </div>
+      <div className="Contacts-List">
+        {linkList}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, props) => ({
-  contactList: state.AllContactsState.allContacts
+  contactList: state.ContactState.list
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  start: () => dispatch(actions.fetchAllContacts())
+  getAllContacts: () => dispatch(actions.fetchAllContacts())
 })
 
-export default connect(mapStateToProps)(Contacts);
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

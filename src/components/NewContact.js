@@ -85,6 +85,7 @@ export class NewContact extends React.Component {
     )
   }
 }
+
 const mapStateToProps = (state, props) => ({
   day: state.ContactState.meetDate
 });

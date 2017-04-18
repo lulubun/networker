@@ -2,6 +2,8 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Link} from 'react-router';
+
 
 export class Login extends React.Component {
   render() {
@@ -19,7 +21,11 @@ export class Login extends React.Component {
           hintText="Password"
         /><br />
         <br />
-        <RaisedButton label="Enter" secondary={true} />
+        <RaisedButton label="Enter" secondary={true} onTouchTap={(event) => {
+        }}/>
+        <br />
+        <br/>
+        <Link to={'/new_user'}><RaisedButton label="Register" secondary={true} /></Link>
       </div>
     )
   }

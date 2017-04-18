@@ -2,6 +2,7 @@ let date = new Date();
 let today = String(date);
 
 const initialState = {
+  id: '',
   dateNext: '',
   firstName: '',
   lastName: '',
@@ -11,7 +12,8 @@ const initialState = {
   email: '',
   phone: '',
   meetDate: today,
-  meetNotes: ''
+  meetNotes: '',
+  list: []
 }
 
 const ContactState = (state=initialState, action) => {
@@ -51,8 +53,7 @@ const ContactState = (state=initialState, action) => {
     };
 
     case 'SET_ONE_CONTACT_LINK':
-    return {
-      ...state,
+    let one = {
       id: action.id,
       dateNext: action.newDateNext,
       firstName: action.newFirstName,
@@ -64,6 +65,11 @@ const ContactState = (state=initialState, action) => {
       phone: action.newPhone,
       meetDate: action.newMeetDate,
       meetNotes: action.newMeetNotes
+    }
+    let newList = state.list.push(one);
+    return {
+      ...state,
+      list: newList
     };
 
     case 'UPDATE_DATE_NEXT':
