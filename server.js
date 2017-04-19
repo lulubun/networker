@@ -220,7 +220,7 @@ module.exports = {runServer, app, closeServer};
 
 const router = express.Router();
 
-router.use(jsonParser);
+router.use(bodyParser);
 
 
 // NB: at time of writing, passport uses callbacks, not promises

@@ -18,7 +18,7 @@ export const setNewContact = (newDateNext, newFirstName, newLastName, newImporta
 
 //open one contact with full past
 export const SET_ONE_CONTACT = 'SET_ONE_CONTACT';
-export const setOneContact = (id, newDateNext, newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetDate, newMeetNotes) => ({
+export const setOneContact = (id, newDateNext, newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetDate, newMeetNotes, newPastArray) => ({
   type: SET_ONE_CONTACT,
   id,
   newDateNext,
@@ -30,7 +30,8 @@ export const setOneContact = (id, newDateNext, newFirstName, newLastName, newImp
   newEmail,
   newPhone,
   newMeetDate,
-  newMeetNotes
+  newMeetNotes,
+  newPastArray
 });
 
 export const UPDATE_DATE_NEXT = 'UPDATE_DATE_NEXT';
@@ -93,11 +94,37 @@ export const updateMeetNotes = (newMeetNotes) => ({
 });
 
 
-export function fetchWholeContact() {
+export function fetchWholeContact(id) {
   return dispatch => {
-    fetch(DATABASE_URL)
+    console.log(id);
+    const urlWhole = ('http://localhost:8080/one_contact/' + id)
+    fetch(urlWhole)
     .then(response => response.json())
-    .then(data => dispatch(setOneContact(data)))
+    .then(data => {
+      console.log(data);
+      let id = data._id;
+      let newDateNext = data.serNextContact;
+      let newFirstName = data.serFirst;
+      let newLastName = data.serLast;
+      let newImportant = data.serImportant;
+      let newCompany = data.serCompany;
+      let newJobTitle = data.serJobTitle;
+      let newEmail = data.serEmail;
+      let newPhone = data.serPhone;
+      let newMeetDate = data.serMeetDate;
+      let newMeetNotes = data.serNote;
+      let newPastArray = data.serPast;
+      dispatch(setOneContact(id,
+        newDateNext,
+        newFirstName,
+        newLastName,
+        newImportant,
+        newCompany,
+        newJobTitle,
+        newEmail,
+        newPhone,
+        newMeetDate,
+        newMeetNotes, newPastArray))})
     .catch(ex => console.log(ex))
   }
 }
@@ -144,17 +171,6 @@ export const setAllContacts = (allContacts) => ({
   allContacts
 });
 
-export const SET_ONE_CONTACT_LINK = 'SET_ONE_CONTACT_LINK';
-export const setOneContactLink = (id, newDateNext, newFirstName, newLastName, newImportant, newCompany) => ({
-  type: SET_ALL_CONTACTS,
-  id,
-  newDateNext,
-  newFirstName,
-  newLastName,
-  newImportant,
-  newCompany
-});
-
 export function fetchAllContacts() {
   return dispatch => {
     const url = 'http://localhost:8080/contacts';
@@ -166,20 +182,8 @@ export function fetchAllContacts() {
     })
     .then(response => response.json())
     .then(data => {
-      data.forEach(item => {
-        console.log(item);
-        let id = item.id;
-        let newDateNext = item.serNextContact;
-        dispatch(updateDateNext(newDateNext))
-        let newFirstName = item.serFirst;
-        dispatch(updateFirstName(newFirstName))
-        let newLastName = item.serLast;
-        dispatch(updateLastName(newLastName))
-        let newImportant = item.serImportant;
-        dispatch(updateImportant(newImportant))
-        let newCompany = item.serCompany;
-        dispatch(updateCompany(newCompany))
-      })
+        console.log(data);
+        dispatch(setAllContacts(data))
     })
     .catch(ex => console.log(ex))
   }

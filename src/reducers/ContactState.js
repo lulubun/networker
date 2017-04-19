@@ -6,14 +6,14 @@ const initialState = {
   dateNext: '',
   firstName: '',
   lastName: '',
-  import: '',
+  import: false,
   company: '',
   jobTitle: '',
   email: '',
   phone: '',
   meetDate: today,
   meetNotes: '',
-  list: []
+  allPast: []
 }
 
 const ContactState = (state=initialState, action) => {
@@ -49,27 +49,8 @@ const ContactState = (state=initialState, action) => {
       email: action.newEmail,
       phone: action.newPhone,
       meetDate: action.newMeetDate,
-      meetNotes: action.newMeetNotes
-    };
-
-    case 'SET_ONE_CONTACT_LINK':
-    let one = {
-      id: action.id,
-      dateNext: action.newDateNext,
-      firstName: action.newFirstName,
-      lastName: action.newLastName,
-      important: action.newImportant,
-      company: action.newCompany,
-      jobTitle: action.newJobTitle,
-      email: action.newEmail,
-      phone: action.newPhone,
-      meetDate: action.newMeetDate,
-      meetNotes: action.newMeetNotes
-    }
-    let newList = state.list.push(one);
-    return {
-      ...state,
-      list: newList
+      meetNotes: action.newMeetNotes,
+      allPast: action.newPastArray
     };
 
     case 'UPDATE_DATE_NEXT':

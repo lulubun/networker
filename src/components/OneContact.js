@@ -4,30 +4,50 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import { styles } from 'material-ui/styles';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import Past from './Past';
+import * as actions from '../actions/contactActions';
+import Paper from 'material-ui/Paper';
+import Account_Circle from 'material-ui/svg-icons/action/account-circle';
+import Work from 'material-ui/svg-icons/action/work';
+import Email from 'material-ui/svg-icons/communication/mail-outline';
+import Phone from 'material-ui/svg-icons/communication/phone';
+import Notes from 'material-ui/svg-icons/action/info';
+import Alarm from 'material-ui/svg-icons/action/alarm';
 
+const style = {
+  padding: 20,
+  margin: 20,
+};
 
 export class OneContact extends React.Component {
+  componentDidMount() {
+    this.props.getOneContact(this.props.params.id);
+  }
  render() {
   return(
     <div>
-      <p>name: {this.props.first} {this.props.last}</p>
-      <Checkbox
-      checkedIcon={<ActionFavorite />}
-      uncheckedIcon={<ActionFavoriteBorder />}
-      label="Important"
-      style={styles.checkbox}
-      />
-      <p>co: {this.props.company}</p>
-      <p>p: {this.props.phone}</p>
-      <p>e: {this.props.email}</p>
-      <p>n: {this.props.meet}</p>
-      <FlatButton label="Edit Contact Info" />
-      <p>Appointment for Next Contact: SERVERINFO</p><FlatButton label="Change" />
+      <Paper style={style} zDepth={1}>
+        <p><Account_Circle /> {this.props.first} {this.props.last}</p>
+        <Checkbox
+        checked={this.props.important}
+        checkedIcon={<ActionFavorite />}
+        uncheckedIcon={<ActionFavoriteBorder />}
+        label="Important"
+        />
+        <p><Work /> {this.props.co}</p>
+        <p><Phone /> {this.props.phone}</p>
+        <p><Email /> {this.props.email}</p>
+        <p><Notes /> {this.props.firstMeet}<br /> {this.props.meetInfo}</p>
+        <RaisedButton label="Edit Contact Info"/>
+      </Paper>
+      <Paper style={style} zDepth={1}>
+        <Alarm /><p>Appointment for Next Contact: {this.props.appointment}</p><RaisedButton label="Change" />
+      </Paper>
+      <Paper style={style} zDepth={1}>
       <form>
         <p>Record New Follow Up</p>
         <DatePicker hintText="Date" defaultDate={this.props.day} />
@@ -35,30 +55,27 @@ export class OneContact extends React.Component {
           <RadioButton
             value="call"
             label="Call"
-            style={styles.radioButton}
           />
           <RadioButton
             value="email"
             label="Email"
-            style={styles.radioButton}
           />
           <RadioButton
             value="meeting"
             label="Meeting"
-            style={styles.radioButton}
           />
           <RadioButton
             value="other"
             label="Other"
-            style={styles.radioButton}
           />
         </RadioButtonGroup>
         <TextField
           hintText="notes"
           floatingLabelText="notes"
-        />
-        <FlatButton label="Save Follow Up" />
+        /><br />
+        <RaisedButton label="Save Follow Up" />
       </form>
+      </Paper>
       <Past />
     </div>
   )
@@ -66,8 +83,20 @@ export class OneContact extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  day: state.ContactState.date,
-  appointment: state.ContactState.date
+  appointment: state.ContactState.dateNext,
+  first: state.ContactState.firstName,
+  last: state.ContactState.lastName,
+  important: state.ContactState.import,
+  co: state.ContactState.company,
+  job: state.ContactState.jobTitle,
+  email: state.ContactState.email,
+  phone: state.ContactState.phone,
+  firstMeet: state.ContactState.meetDate,
+  meetInfo: state.ContactState.meetNotes,
 });
 
-export default connect(mapStateToProps, null)(OneContact);
+const mapDispatchToProps = (dispatch) => ({
+  getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(OneContact);

@@ -13,9 +13,7 @@ import OneContact from './components/OneContact';
 import NewContact from './components/NewContact';
 import ContactState from './reducers/ContactState';
 import UsersState from './reducers/UsersState';
-import AllPastState from './reducers/AllPastState';
 import AllContactsState from './reducers/AllContactsState';
-import PastState from './reducers/PastState';
 import NewUser from './components/new_user';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -24,9 +22,7 @@ injectTapEventPlugin();
 
 const reducer = combineReducers({
   ContactState,
-  AllPastState,
   AllContactsState,
-  PastState,
   UsersState,
   routing: routerReducer
 })
@@ -55,7 +51,7 @@ const Start = () => (
         <Route path="/" component={Control}>
           <IndexRoute component={Login} />
           <Route path="/login" component={Login} />
-          <Route path="/one_contact:id" component={OneContact} />
+          <Route path="/one_contact/:id" component={OneContact} />
           <Route path="/new_contact" component={NewContact} />
           <Route path="/contacts" component={Contacts} />
           <Route path="/new_user" component={NewUser} />

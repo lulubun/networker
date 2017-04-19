@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-const STATE_ABBREVIATIONS = Object.keys(require('./state-abbreviations'));
-
 const UserSchema = mongoose.Schema({
   username: {
     type: String,
@@ -38,4 +36,3 @@ UserSchema.statics.hashPassword = function(password) {
 const User = mongoose.model('User', UserSchema);
 
 module.exports = {User};
-Contact GitHub API Training Shop Blog About

@@ -7,7 +7,7 @@ const AllContactsState = (state=initialState, action) => {
     case 'SET_ALL_CONTACTS':
     return {
       ...state,
-      allContacts: action.allContacts //.push(action.item)
+      allContacts: action.allContacts
     };
 
     default:
