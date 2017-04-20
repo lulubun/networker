@@ -31,7 +31,6 @@ class Contacts extends React.Component {
              checked={contact.serImportant}
              checkedIcon={<ActionFavorite />}
              uncheckedIcon={<ActionFavoriteBorder />}
-             disabled={true}
              />
              <Link to={'/one_contact/' + contact._id}>{contact.serFirst} {contact.serLast}</Link>
              <p>{contact.serCompany}</p>

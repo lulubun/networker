@@ -140,14 +140,14 @@ app.delete('/one_contact/:id/:pastId', (req, res) => {
   });
 });
 
-app.put('/one_contact/edit/:id', (req, res) => {
+app.put('/edit_contact/:id', (req, res) => {
   if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     res.status(400).json({
       error: 'Request path id and request body id values must match'
     });
   }
   const updated = {};
-  const updatableFields = ['serNextContact', 'serFirst', 'serLast', 'serImportant', 'serCompany', 'serJobTitle', 'serPhone', 'serEmail', 'serMeet', 'serNote'];
+  const updatableFields = ['serFirst', 'serLast', 'serImportant', 'serCompany', 'serJobTitle', 'serPhone', 'serEmail', 'serMeet', 'serNote'];
   updatableFields.forEach(field => {
     if (field in req.body) {
       updated[field] = req.body[field];

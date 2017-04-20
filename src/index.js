@@ -10,6 +10,7 @@ import Control from './components/Control';
 import Login from './components/Login';
 import Contacts from './components/Contacts';
 import OneContact from './components/OneContact';
+import EditContact from './components/EditContact';
 import NewContact from './components/NewContact';
 import ContactState from './reducers/ContactState';
 import UsersState from './reducers/UsersState';
@@ -55,6 +56,7 @@ const Start = () => (
           <Route path="/new_contact" component={NewContact} />
           <Route path="/contacts" component={Contacts} />
           <Route path="/new_user" component={NewUser} />
+          <Route path="/edit_contact/:id" component={EditContact} />
         </Route>
       </Router>
     </Provider>
