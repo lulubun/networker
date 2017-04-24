@@ -24,30 +24,33 @@ export const updatePastNote = (newPastNote) => ({
   newPastNote
 });
 
-export function updatePastInstance() {
+export function sendNewPast(contactId, pastId, dateInput, typeInput, contactNotesInput) {
   return dispatch => {
-    fetch(DATABASE_URL, {
-      method: 'POST',
-      headers: {
+    let _id = contactId;
+    const pastUrl = 'http://localhost:8080/new_past/' + _id;
+    let serDateContact = dateInput;
+    let serTypeContact = typeInput;
+    let serNotesContact = contactNotesInput;
+    let pastId = pastId;
+    fetch(pastUrl, {
+      method: 'PUT',
+      header: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        'serPast.pastId': sendId
-      },
-      {'$set': {
-          'serPast.$.serDateContact': sendPastDate,
-          'serPast.$.serTypeContact': sendTypeContact,
-          'serPast.$.serNotesContact': sendNotesContact
-          }
+        _id,
+        serPast:
+        {
+          pastId,
+          serDateContact,
+          serTypeContact,
+          serNotesContact
+        }
       })
     })
-    .then(response => response.json())
-    .then(data => {
-        data.update({
-        }, function(err) { ...
-        dispatch(setOneContactLink(newDateNext, newFirstName, newLastName, newImportant, newCompany))
-      })
-    })
+    .then(response =>
+      response.json())
+    //.then(location.assign('http://localhost:3000/one_contact/' + _id))
     .catch(ex => console.log(ex))
   }
-};
+}

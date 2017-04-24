@@ -15,6 +15,11 @@ const UsersState = (state=initialState, action) => {
       username: action.usernameInput,
       password: action.passwordInput
     };
+
+    case 'CHECK_USER':
+    return{
+      ...state
+    }
     default:
     return state
   }

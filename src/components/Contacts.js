@@ -5,8 +5,10 @@ import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Checkbox from 'material-ui/Checkbox';
 import {connect} from 'react-redux';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
-
+import '../index.css';
+import {yellowA200} from 'material-ui/styles/colors';
 
 class Contacts extends React.Component {
   componentDidMount() {
@@ -16,27 +18,42 @@ class Contacts extends React.Component {
   render() {
     const style = {
       height: 200,
-      margin: 20,
+      marginTop: 20,
+      marginBottom: 20,
+      marginLeft: '25%',
+      marginRight: 'auto',
       padding: 20,
-      width: 600,
+      width: '50%',
       display: 'inline-block',
+      backgroundColor: '#B5B4A7',
+      color: '#F1F1EF',
     };
+
     return (
-      <div className="Contacts-List">
-        {this.props.contactList.map((contact, index) => (
-          <div className="oneLink" key={index}>
-            <Paper style={style} zDepth={5} rounded={false}>
-            <p>Appointment for Next Contact: {contact.serNextContact}</p>
-            <Checkbox
-             checked={contact.serImportant}
-             checkedIcon={<ActionFavorite />}
-             uncheckedIcon={<ActionFavoriteBorder />}
-             />
-             <Link to={'/one_contact/' + contact._id}>{contact.serFirst} {contact.serLast}</Link>
-             <p>{contact.serCompany}</p>
-           </Paper>
-          </div>
-        ))}
+      <div className="Contacts">
+        <div className="New_Button">
+          <Link to={'/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+        </div>
+        <div className="Contacts-List">
+          {this.props.contactList.map((contact, index) =>
+            (<div className="oneLink" key={index}>
+              <Paper style={style} zDepth={5} rounded={false} className="onePaper">
+              <p>Appointment for Next Contact: {contact.serNextContact}</p>
+              <Link to={'/one_contact/' + contact._id} className="Link">
+              <Checkbox
+               checked={contact.serImportant}
+               checkedIcon={<ActionFavorite />}
+               uncheckedIcon={<ActionFavoriteBorder />}
+               style={{paddingBottom: 15, margin: '0 auto'}}
+               label={contact.serFirst + ' ' + contact.serLast}
+               labelStyle={{color: '#F1F1EF'}}
+               />
+               </Link>
+               <p>{contact.serCompany}</p>
+             </Paper>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

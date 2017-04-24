@@ -3,7 +3,10 @@ import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router';
+import * as actions from '../actions/userActions';
 
+let usernameInput = '';
+let passwordInput = '';
 
 export class Login extends React.Component {
   render() {
@@ -15,17 +18,24 @@ export class Login extends React.Component {
         <TextField
           className="usernameIP"
           hintText="Username"
+          onChange={(event, newValue) => {
+          usernameInput = newValue
+          }}
         /><br />
         <TextField
           className="passwordIP"
           hintText="Password"
+          onChange={(event, newValue) => {
+          passwordInput = newValue
+          }}
         /><br />
         <br />
         <RaisedButton label="Enter" secondary={true} onTouchTap={(event) => {
+          this.props.login(usernameInput, passwordInput)
         }}/>
         <br />
         <br/>
-        <Link to={'/new_user'}><RaisedButton label="Register" secondary={true} /></Link>
+        <Link to={'/new_user'} className="Link"><RaisedButton label="Register" secondary={true} /></Link>
       </div>
     )
   }
@@ -34,4 +44,8 @@ export class Login extends React.Component {
 const mapStateToProps = (state, props) => ({
   day: state.ContactState.meetDate
 });
-export default connect(mapStateToProps)(Login);
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (usernameInput, passwordInput) => dispatch(actions.fetchOneUser(usernameInput, passwordInput))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

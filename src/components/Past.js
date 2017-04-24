@@ -16,7 +16,7 @@ class Past extends React.Component {
           {this.props.allPastList.map((onePast, index) => (
           <div className="onePast" key={index}>
             <Paper style={style} zDepth={1}>
-            <p>{onePast.serTypeContact} {onePast.serDateContact}</p>
+            <p>{onePast.serTypeContact} on {onePast.serDateContact}</p>
             <Divider />
             <p>{onePast.serNotesContact}</p>
             <RaisedButton label="Edit" />

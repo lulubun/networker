@@ -19,10 +19,6 @@ const initialState = {
 const ContactState = (state=initialState, action) => {
   switch (action.type) {
   case 'SET_NEW_CONTACT':
-    let exact = new Date();
-    let fullDay = exact.toString();
-    let day = fullDay.slice(0, 25)
-    console.log(day);
     return {
       ...state,
       dateNext: action.newDateNext,
@@ -33,7 +29,7 @@ const ContactState = (state=initialState, action) => {
       jobTitle: action.newJobTitle,
       email: action.newEmail,
       phone: action.newPhone,
-      meetDate: day,
+      meetDate: action.newDay,
       meetNotes: action.newMeetNotes
     };
 

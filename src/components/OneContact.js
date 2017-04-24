@@ -1,23 +1,21 @@
 import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import { styles } from 'material-ui/styles';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
-import TextField from 'material-ui/TextField';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import Past from './Past';
 import * as actions from '../actions/contactActions';
 import Paper from 'material-ui/Paper';
-import Account_Circle from 'material-ui/svg-icons/action/account-circle';
-import Work from 'material-ui/svg-icons/action/work';
 import Email from 'material-ui/svg-icons/communication/mail-outline';
 import Phone from 'material-ui/svg-icons/communication/phone';
-import Notes from 'material-ui/svg-icons/action/info';
 import Alarm from 'material-ui/svg-icons/action/alarm';
+import moment from 'moment';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import TextField from 'material-ui/TextField';
+import '../index.css';
 
 const style = {
   padding: 20,
@@ -28,6 +26,7 @@ let typeInput = '';
 let dateInput = '';
 let contactNotesInput = '';
 let pastId = 0;
+let prettyDate = '';
 
 export class OneContact extends React.Component {
   componentDidMount() {
@@ -38,37 +37,40 @@ export class OneContact extends React.Component {
   return(
     <div>
       <Paper style={style} zDepth={1}>
-        <p><Account_Circle /> {this.props.first} {this.props.last}</p>
+        <p>{this.props.first} {this.props.last}</p>
         <Checkbox
         checked={this.props.important}
         checkedIcon={<ActionFavorite />}
         uncheckedIcon={<ActionFavoriteBorder />}
-        label="Important"
-        />
-        <p><Work /> {this.props.co}<br /> {this.props.job}</p>
-        <p><Phone /> {this.props.phone}</p>
-        <p><Email /> {this.props.email}</p>
-        <p><Notes /> {this.props.firstMeet}<br /> {this.props.meetInfo}</p>
-        <Link to={'/edit_contact/' + this.props.params.id}><RaisedButton
+        onCheck={(event, isInputChecked) => {
+          this.props.changeHeart(contactId, isInputChecked)
+        }} />
+        <p>{this.props.co}</p>
+        <p>{this.props.job}</p>
+        <p className="phoneText"><Phone /> {this.props.phone}</p>
+        <p className="emailText"><Email /> {this.props.email}</p>
+        <p>Met this contact on: {this.props.firstMeet}</p>
+        <p>Notes: {this.props.meetInfo}</p>
+        <Link to={'/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
           label="Edit Contact Info"/></Link>
       </Paper>
-      <Paper style={style} zDepth={1} id="dateChanger">
-        <Alarm /><p>Appointment for Next Contact: {this.props.appointment}</p>
-        <RaisedButton
-          label="Change"
-          onTouchTap={(event) => {
-            //document.getElementById("dateChanger").innerHTML = '<DatePicker hintText="Select a New Date" />'
-          }}
-         />
+      <Paper style={style} zDepth={1} name="dateChanger">
+        <p><Alarm />Follow up with this contact on {this.props.appointment}</p>
+          <DatePicker hintText="Change" underlineStyle={{display: 'none'}} onChange={(event, date) => {
+            let sendDate = moment(date).format("MMM Do YYYY");
+            this.props.changeAppointment(contactId, sendDate)
+          }}/>
       </Paper>
+      <Link to={'/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} /></Link>
       <Paper style={style} zDepth={1}>
       <form>
         <p>Record New Follow Up</p>
-        <DatePicker hintText="Date" defaultDate={this.props.day} onChange={(date) => {
-          dateInput = date
+        <DatePicker hintText="Date" onChange={(event, date) => {
+          prettyDate = moment(date).format("MMM Do YYYY");
+          dateInput = prettyDate;
         }} />
         <RadioButtonGroup name="contact" onChange={(event, value) => {
-          typeInput = value
+          typeInput = value;
         }}>
           <RadioButton
             value="call"
@@ -92,7 +94,7 @@ export class OneContact extends React.Component {
           floatingLabelText="notes"
           multiLine={true}
           onChange={(event, newValue) => {
-            contactNotesInput = newValue
+            contactNotesInput = newValue;
           }}
         /><br />
         <RaisedButton label="Save Follow Up"
@@ -123,6 +125,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
+  changeAppointment: (contactId, sendDate) => dispatch(actions.fetchDateUpdate(contactId, sendDate)),
+  changeHeart: (contactId, isInputChecked) => dispatch(actions.fetchHeartUpdate(contactId, isInputChecked)),
   addPast: (contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(contactId, pastId, dateInput, typeInput, contactNotesInput))
 })
 

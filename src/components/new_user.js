@@ -61,8 +61,8 @@ export class NewUser extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => ({
   saveUser: (usernameInput, passwordInput, firstNameInput, lastNameInput) => dispatch(actions.sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput))
-}
+})
 
 export default connect(null, mapDispatchToProps)(NewUser);

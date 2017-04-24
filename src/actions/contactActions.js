@@ -89,6 +89,9 @@ export function fetchWholeContact(id) {
 }
 
 export function sendNewContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
+  if (firstInput == '' && lastInput == '') {
+    alert("You cannot create a contact without a name");
+  } else {
   return dispatch => {
     const url = 'http://localhost:8080/new_contact';
     let serNextContact = dateNextInput;
@@ -122,15 +125,8 @@ export function sendNewContact(firstInput, lastInput, importantInput, companyInp
     })
     .then(response => response.json())
     .then(location.assign('http://localhost:3000/contacts'))
-  }
+  }}
 };
-
-export function sendNewPast(contactId, pastId, dateInput, typeInput, contactNotesInput) {
-  return dispatch => {
-    let _id = contactId;
-    //I WAS HERE!!!!!!!!!!!!!!!!!!!!!!
-  }
-}
 
 export function fetchUpdate(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) {
   return dispatch => {
@@ -190,3 +186,95 @@ export function fetchAllContacts() {
     .catch(ex => console.log(ex))
   }
 };
+
+export function fetchDeleteContact(editId) {
+  let _id = editId;
+  return dispatch => {
+    const urlDel = 'http://localhost:8080/one_contact/' + _id;
+    fetch(urlDel, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        _id
+      })
+    })
+    .then(response => response.json())
+    .then(location.assign('http://localhost:3000/contacts'))
+    .catch(ex => console.log(ex))
+  }
+};
+
+export function fetchDateUpdate(contactId, date) {
+  let serNextContact = date;
+  let _id = contactId;
+  return dispatch => {
+    const urlDate = 'http://localhost:8080/one_contact/' + _id;
+    fetch(urlDate, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        _id,
+        serNextContact
+      })
+    })
+    .then(response => response.json())
+    .then(location.reload())
+    .catch(ex => console.log(ex))
+  }
+};
+
+export function fetchHeartUpdate(contactId, isInputChecked) {
+  let serImportant = isInputChecked;
+  console.log(serImportant);
+  let _id = contactId;
+  return dispatch => {
+    const urlHeart = 'http://localhost:8080/one_contact/' + _id;
+    fetch(urlHeart, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        _id,
+        serImportant
+      })
+    })
+    .then(response => response.json())
+    .then(location.reload())
+    .catch(ex => console.log(ex))
+  }
+};
+
+export function sendNewPast(contactId, pastId, dateInput, typeInput, contactNotesInput) {
+  return dispatch => {
+    let _id = contactId;
+    let pastId = pastId;
+    const pastUrl = 'http://localhost:8080/one_contact/' + _id;
+    let serDateContact = dateInput;
+    let serTypeContact = typeInput;
+    let serNotesContact = contactNotesInput;
+    let serPast = { serPast: {
+      pastId,
+      serDateContact,
+      serTypeContact,
+      serNotesContact
+    }};
+    fetch(pastUrl, {
+      method: 'PUT',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        _id,
+        serPast
+      })
+    })
+    .then(response => response.json())
+    .then(location.assign('http://localhost:3000/one_contact/' + _id))
+    .catch(ex => console.log(ex))
+  }
+}

@@ -7,6 +7,8 @@ import DatePicker from 'material-ui/DatePicker';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
+import moment from 'moment';
+
 
 let firstInput = '';
 let lastInput = '';
@@ -15,9 +17,10 @@ let companyInput = '';
 let jobTitleInput = '';
 let emailInput = '';
 let phoneInput = '';
-let meetDateInput = '';
+let meetDateInput = moment().format("MMM Do YYYY");
 let notesInput = '';
-let dateNextInput = '';
+let startDate = moment().add(14, 'days').calendar();
+let dateNextInput = moment(startDate).format("MMM Do YYYY");
 
 
 export class NewContact extends React.Component {
@@ -61,7 +64,7 @@ export class NewContact extends React.Component {
           }}/><br />
           <DatePicker
             floatingLabelText="Date of meeting this contact"
-            onChange={(event, date) => {meetDateInput = date}}
+            onChange={(event, date) => {meetDateInput = moment(date).format("MMM Do YYYY")}}
           />
           <br />
           <TextField
@@ -72,7 +75,7 @@ export class NewContact extends React.Component {
             }}/><br />
           <DatePicker
             floatingLabelText="Date for next follow up"
-            onChange={(date) => {dateNextInput = date}}
+            onChange={(event, date) => {dateNextInput = moment(date).format("MMM Do YYYY")}}
           />
           <br />
           <RaisedButton label="Save Contact" primary={true}
@@ -86,12 +89,8 @@ export class NewContact extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  day: state.ContactState.meetDate
-});
-
 const mapDispatchToProps = (dispatch) => ({
   saveContact: (firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.sendNewContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewContact);
+export default connect(null, mapDispatchToProps)(NewContact);

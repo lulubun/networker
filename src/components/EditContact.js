@@ -45,6 +45,9 @@ export class EditContact extends React.Component {
           uncheckedIcon={<ActionFavoriteBorder />}
           label="Select if this is an important contact"
           checked={this.props.important}
+          onCheck={(event, isInputChecked) => {
+            console.log(isInputChecked);
+          }}
           />
           <TextField
             name="companyInput"
@@ -85,6 +88,14 @@ export class EditContact extends React.Component {
               this.props.editContact(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
             }}
           />
+          <RaisedButton label="Delete Contact" primary={true}
+            onTouchTap={(event) => {
+              const doubleCheck = confirm("Are you sure?");
+              if (doubleCheck == true) {
+                this.props.delete(editId);
+              }
+            }}
+          />
         </form>
       </div>
     )
@@ -105,7 +116,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
-  editContact: (editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) => dispatch(actions.fetchUpdate(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput))
+  editContact: (editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) => dispatch(actions.fetchUpdate(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput)),
+  delete: (editId) => dispatch(actions.fetchDeleteContact(editId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditContact);
