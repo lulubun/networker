@@ -63,7 +63,6 @@ export class OneContact extends React.Component {
       </Paper>
       <Link to={'/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} /></Link>
       <Paper style={style} zDepth={1}>
-      <form>
         <p>Record New Follow Up</p>
         <DatePicker hintText="Date" onChange={(event, date) => {
           prettyDate = moment(date).format("MMM Do YYYY");
@@ -99,11 +98,11 @@ export class OneContact extends React.Component {
         /><br />
         <RaisedButton label="Save Follow Up"
           onTouchTap={(event) => {
+            event.preventDefault();
             pastId = Math.floor((Math.random() * 10000) + 1);
             console.log(pastId);
             this.props.addPast(contactId, pastId, dateInput, typeInput, contactNotesInput);
           }} />
-      </form>
       </Paper>
       <Past />
     </div>
