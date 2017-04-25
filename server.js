@@ -9,12 +9,14 @@ const {ContactModel} = require('./models');
 const {User} = require('./Users/models');
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
 
 mongoose.Promise = global.Promise;
 
 app.use(express.static('public'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/contacts', (req, res) => {
   ContactModel
@@ -53,7 +55,7 @@ app.get('/one_contact/:id/:pastId', (req, res) => {
 
 app.get('/:username', (username, password, callback) => {
   let user;
-  UserModel
+  User
   .findOne({userName: username})
   .exec()
   .then(_user => {
@@ -256,10 +258,10 @@ app.put('/one_contact/:_id', (req, res) => {
   .catch(err => res.status(500).json({message: 'Contact not updated'}));
 });
 
-app.post('/newPast', (req, res) => {
+app.post('/newPast/:id', (req, res) => {
   console.log('server', req.body);
   ContactModel
-  .update(req.body.id, {$push: {serPast: req.body.serPast}}, (err, updatedPast) => {
+  .update(req.params.id, {$push: {serPast: req.body.serPast}}, (err, updatedPast) => {
     if (err) {
       res.send(err)
     }
