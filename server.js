@@ -9,6 +9,7 @@ const {ContactModel} = require('./models');
 const {User} = require('./Users/models');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
@@ -253,6 +254,18 @@ app.put('/one_contact/:_id', (req, res) => {
   .exec()
   .then(updatedContact => {res.status(201).json(updatedContact)})
   .catch(err => res.status(500).json({message: 'Contact not updated'}));
+});
+
+app.post('/newPast', (req, res) => {
+  console.log('server', req.body);
+  ContactModel
+  .update(req.body.id, {$push: {serPast: req.body.serPast}}, (err, updatedPast) => {
+    if (err) {
+      res.send(err)
+    }
+    res.json(updatedPast)
+  })
+
 });
 
 // this function connects to our database, then starts the server

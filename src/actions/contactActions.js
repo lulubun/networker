@@ -249,32 +249,27 @@ export function fetchHeartUpdate(contactId, isInputChecked) {
   }
 };
 
-export function sendNewPast(contactId, pastId, dateInput, typeInput, contactNotesInput) {
+export function sendNewPast(contactId, pastid, dateInput, typeInput, contactNotesInput) {
   return dispatch => {
-    let _id = contactId;
-    let pastId = pastId;
-    const pastUrl = 'http://localhost:8080/one_contact/' + _id;
+    let id = contactId;
+    let pastId = pastid;
+    console.log('hello', pastId);
+    const pastUrl = 'http://localhost:8080/newPast';
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;
-    let serPast = { serPast: {
-      pastId,
-      serDateContact,
-      serTypeContact,
-      serNotesContact
-    }};
-    fetch(pastUrl, {
-      method: 'PUT',
+    fetch('http://localhost:8080/newPast', {
+      method: 'POST',
       header: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        _id,
-        serPast
-      })
+        name: 'Hubot',
+        login: 'hubot',
+   })
     })
     .then(response => response.json())
-    .then(location.assign('http://localhost:3000/one_contact/' + _id))
+    .then(location.assign('http://localhost:3000/one_contact/' + id))
     .catch(ex => console.log(ex))
   }
 }

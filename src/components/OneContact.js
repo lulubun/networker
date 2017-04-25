@@ -100,6 +100,7 @@ export class OneContact extends React.Component {
         <RaisedButton label="Save Follow Up"
           onTouchTap={(event) => {
             pastId = Math.floor((Math.random() * 10000) + 1);
+            console.log(pastId);
             this.props.addPast(contactId, pastId, dateInput, typeInput, contactNotesInput);
           }} />
       </form>

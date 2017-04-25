@@ -8,7 +8,6 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
 import '../index.css';
-import {yellowA200} from 'material-ui/styles/colors';
 
 class Contacts extends React.Component {
   componentDidMount() {
