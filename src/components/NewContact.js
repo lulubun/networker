@@ -37,7 +37,6 @@ export class NewContact extends React.Component {
             hintText="First Name"
             validations="isWords"
             validationError="please use only letters"
-            required
             onChange={(event, newValue) => {
             firstInput = newValue
           }}/><br />
@@ -46,7 +45,6 @@ export class NewContact extends React.Component {
             hintText="Last Name"
             validations="isWords"
             validationError="please use only letters"
-            required
             onChange={(event, newValue) => {
             lastInput = newValue
           }}/><br />
@@ -89,7 +87,6 @@ export class NewContact extends React.Component {
           <FormsyDate
             name="meetDateInput"
             floatingLabelText="Date of meeting this contact"
-            required
             onChange={(event, date) => {meetDateInput = moment(date).format("MMM Do YYYY")}}
           />
           <br />
@@ -107,6 +104,7 @@ export class NewContact extends React.Component {
           />
           <br />
           <RaisedButton label="Save Contact" primary={true}
+            type="submit"
             onTouchTap={(event) => {
               this.props.saveContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
             }}
