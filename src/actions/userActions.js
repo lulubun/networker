@@ -39,8 +39,17 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = ('http://localhost:8080/' + usernameInput)
-    fetch(user)
+    const user = 'http://localhost:8080/';
+    fetch(user, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: usernameInput,
+        password: passwordInput,
+      })
+    })
     .then(response => response.json())
     .then(data => {
       (console.log(data))})

@@ -9,12 +9,13 @@ const {ContactModel} = require('./models');
 const {User} = require('./Users/models');
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 mongoose.Promise = global.Promise;
 
 app.use(express.static('public'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/contacts', (req, res) => {
   ContactModel
@@ -53,7 +54,7 @@ app.get('/one_contact/:id/:pastId', (req, res) => {
 
 app.get('/:username', (username, password, callback) => {
   let user;
-  UserModel
+  User
   .findOne({userName: username})
   .exec()
   .then(_user => {
@@ -256,16 +257,16 @@ app.put('/one_contact/:_id', (req, res) => {
   .catch(err => res.status(500).json({message: 'Contact not updated'}));
 });
 
-app.post('/newPast', (req, res) => {
-  console.log('server', req.body);
+app.post('/newPast/:id', (req, res) => {
+  console.log(req.body);
   ContactModel
-  .update(req.body.id, {$push: {serPast: req.body.serPast}}, (err, updatedPast) => {
+  .update(req.params.id, {$push: {serPast: {index: req.body.serPast}}}, {upsert: true},
+  (err, updatedPast) => {
     if (err) {
       res.send(err)
     }
     res.json(updatedPast)
   })
-
 });
 
 // this function connects to our database, then starts the server
@@ -309,40 +310,35 @@ if (require.main === module) {
   runServer().catch(err => console.error(err));
 };
 
-module.exports = {runServer, app, closeServer};
-
+const jsonParser = require('body-parser').json();
 const router = express.Router();
+router.use(jsonParser);
 
-router.use(bodyParser);
-
-
-// NB: at time of writing, passport uses callbacks, not promises
-const basicStrategy = new BasicStrategy((username, password, callback) => {
+router.get('/', (username, password, callback) => {
   let user;
   User
-    .findOne({username: username})
-    .exec()
-    .then(_user => {
-      user = _user;
-      if (!user) {
-        return callback(null, false, {message: 'Incorrect username'});
-      }
-      return user.validatePassword(password);
-    })
-    .then(isValid => {
-      if (!isValid) {
-        return callback(null, false, {message: 'Incorrect password'});
-      }
-      else {
-        return callback(null, user)
-      }
-    });
+  .findOne({username: username})
+  .exec()
+  .then(_user => {
+    user = _user;
+    if (!user) {
+      return callback(null, false, {message: 'Incorrect username'});
+    }
+    return user.validatePassword(password);
+  })
+  .then(isValid => {
+    if (!isValid) {
+      return callback(null, false, {message: 'Incorrect password'});
+    }
+    else {
+      return callback(null, user)
+    }
+  })
+  .then((req, res) => res.json({user: req.user.apiRepr()})
+)
 });
 
-passport.use(basicStrategy);
-router.use(passport.initialize());
-
-router.post('/', (req, res) => {
+router.post('/new_user', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
@@ -379,52 +375,28 @@ router.post('/', (req, res) => {
 
   // check for existing user
   return User
-    .find({username})
-    .count()
-    .exec()
-    .then(count => {
-      if (count > 0) {
-        return res.status(422).json({message: 'username already taken'});
-      }
-      // if no existing user, hash password
-      return User.hashPassword(password)
+  .find({username})
+  .count()
+  .exec()
+  .then(count => {
+    if (count > 0) {
+      return res.status(422).json({message: 'username already taken'});
+    }
+    // if no existing user, hash password
+    return User
+    .create({
+      username: username,
+      password: password,
+      firstName: firstName,
+      lastName: lastName
     })
-    .then(hash => {
-      return User
-        .create({
-          username: username,
-          password: hash,
-          firstName: firstName,
-          lastName: lastName
-        })
-    })
-    .then(user => {
-      return res.status(201).json(user.apiRepr());
-    })
-    .catch(err => {
-      res.status(500).json({message: 'Internal server error'})
-    });
+  })
+  .then(user => {
+    return res.status(201).json(user.apiRepr());
+  })
+  .catch(err => {
+    res.status(500).json({message: 'Internal server error'})
+  });
 });
 
-// never expose all your users like below in a prod application
-// we're just doing this so we have a quick way to see
-// if we're creating users. keep in mind, you can also
-// verify this in the Mongo shell.
-router.get('/', (req, res) => {
-  return User
-    .find()
-    .exec()
-    .then(users => res.json(users.map(user => user.apiRepr())))
-    .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
-});
-
-
-
-
-router.get('/me',
-  passport.authenticate('basic', {session: false}),
-  (req, res) => res.json({user: req.user.apiRepr()})
-);
-
-
-module.exports = {router};
+module.exports = {router, runServer, app, closeServer};

@@ -8,6 +8,9 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
 import moment from 'moment';
+import Formsy from 'formsy-react';
+import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup,
+    FormsySelect, FormsyText, FormsyTime, FormsyToggle, FormsyAutoComplete } from 'formsy-material-ui/lib';
 
 
 let firstInput = '';
@@ -27,18 +30,28 @@ export class NewContact extends React.Component {
   render() {
     return(
       <div className="new_contact">
-        <form>
+        <Formsy.Form>
           <p>New Contact</p>
-          <TextField
-            id="firstNameInput"
-            hintText="First Name" onChange={(event, newValue) => {
+          <FormsyText
+            name="firstNameInput"
+            hintText="First Name"
+            validations="isWords"
+            validationError="please use only letters"
+            required
+            onChange={(event, newValue) => {
             firstInput = newValue
           }}/><br />
-          <TextField
-            hintText="Last Name" onChange={(event, newValue) => {
+          <FormsyText
+            name="lastNameInput"
+            hintText="Last Name"
+            validations="isWords"
+            validationError="please use only letters"
+            required
+            onChange={(event, newValue) => {
             lastInput = newValue
           }}/><br />
-          <Checkbox
+          <FormsyCheckbox
+          name="importantInput"
           checkedIcon={<ActionFavorite />}
           uncheckedIcon={<ActionFavoriteBorder />}
           label="Select if this is an important contact"
@@ -46,34 +59,49 @@ export class NewContact extends React.Component {
             importantInput = isInputChecked
           }}
           />
-          <TextField
-            hintText="Company" onChange={(event, newValue) => {
+          <FormsyText
+            name="companyInput"
+            hintText="Company"
+            onChange={(event, newValue) => {
             companyInput = newValue
           }}/><br />
-          <TextField
+          <FormsyText
+            name="jobTitleInput"
             hintText="Job Title" onChange={(event, newValue) => {
             jobTitleInput = newValue
           }}/><br />
-          <TextField
-            hintText="Email" onChange={(event, newValue) => {
+          <FormsyText
+            name="emailInput"
+            hintText="Email"
+            validations="isEmail"
+            validationError="please enter a valid email address"
+            onChange={(event, newValue) => {
             emailInput = newValue
           }}/><br />
-          <TextField
-            hintText="Phone Number" onChange={(event, newValue) => {
+          <FormsyText
+            name="phoneInput"
+            hintText="Phone Number"
+            validations="isNumeric"
+            validationError="please enter a valid phone number"
+            onChange={(event, newValue) => {
             phoneInput = newValue
           }}/><br />
-          <DatePicker
+          <FormsyDate
+            name="meetDateInput"
             floatingLabelText="Date of meeting this contact"
+            required
             onChange={(event, date) => {meetDateInput = moment(date).format("MMM Do YYYY")}}
           />
           <br />
-          <TextField
+          <FormsyText
+            name="notesInput"
             hintText="Notes about this contact"
             multiLine={true}
             onChange={(event, newValue) => {
               notesInput = newValue
             }}/><br />
-          <DatePicker
+          <FormsyDate
+            name="dateNextInput"
             floatingLabelText="Date for next follow up"
             onChange={(event, date) => {dateNextInput = moment(date).format("MMM Do YYYY")}}
           />
@@ -83,7 +111,7 @@ export class NewContact extends React.Component {
               this.props.saveContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
             }}
           />
-        </form>
+        </Formsy.Form>
       </div>
     )
   }

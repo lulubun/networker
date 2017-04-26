@@ -253,23 +253,24 @@ export function sendNewPast(contactId, pastid, dateInput, typeInput, contactNote
   return dispatch => {
     let id = contactId;
     let pastId = pastid;
-    console.log('hello', pastId);
     const pastUrl = 'http://localhost:8080/newPast';
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;
-    fetch('http://localhost:8080/newPast', {
+    fetch('http://localhost:8080/newPast/' + id, {
       method: 'POST',
-      header: {
+      headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: 'Hubot',
-        login: 'hubot',
-   })
+        pastId,
+        serDateContact,
+        serTypeContact,
+        serNotesContact
+      })
     })
     .then(response => response.json())
+    .then(json => console.log(json))
     .then(location.assign('http://localhost:3000/one_contact/' + id))
-    .catch(ex => console.log(ex))
   }
 }

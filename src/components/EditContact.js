@@ -85,7 +85,11 @@ export class EditContact extends React.Component {
           <br />
           <RaisedButton label="Save Edits" primary={true}
             onTouchTap={(event) => {
-              this.props.editContact(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
+              if (firstInput == '' && lastInput == '') {
+                alert("Missing contact name")
+              } else {
+                this.props.editContact(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
+              }
             }}
           />
           <RaisedButton label="Delete Contact" primary={true}

@@ -9,6 +9,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "formsy-material-ui": "^0.6.0",
     "immutability-helper": "^2.1.2",
     "material-ui": "^0.17.1",
     "moment": "^2.18.1",
@@ -24,7 +25,8 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "thunk": "^0.0.1"
+    "thunk": "^0.0.1",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

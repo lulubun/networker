@@ -31,7 +31,13 @@ export class Login extends React.Component {
         /><br />
         <br />
         <RaisedButton label="Enter" secondary={true} onTouchTap={(event) => {
+          if (usernameInput = '') {
+            alert("Username is required");
+          } else if (passwordInput = '') {
+            alert("Password is required")
+          } else {
           this.props.login(usernameInput, passwordInput)
+        }
         }}/>
         <br />
         <br/>
