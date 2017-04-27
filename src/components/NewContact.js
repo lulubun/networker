@@ -20,10 +20,10 @@ let companyInput = '';
 let jobTitleInput = '';
 let emailInput = '';
 let phoneInput = '';
-let meetDateInput = moment().format("MMM Do YYYY");
+let meetDateInput = moment().format("MMM DD YYYY");
 let notesInput = '';
 let startDate = moment().add(14, 'days').calendar();
-let dateNextInput = moment(startDate).format("MMM Do YYYY");
+let dateNextInput = moment(startDate).format("MMM DD YYYY");
 
 
 export class NewContact extends React.Component {
@@ -53,7 +53,8 @@ export class NewContact extends React.Component {
           checkedIcon={<ActionFavorite />}
           uncheckedIcon={<ActionFavoriteBorder />}
           label="Select if this is an important contact"
-          onCheck={(event, isInputChecked) => {
+          onChange={(event, isInputChecked) => {
+            console.log(isInputChecked);
             importantInput = isInputChecked
           }}
           />
@@ -65,7 +66,8 @@ export class NewContact extends React.Component {
           }}/><br />
           <FormsyText
             name="jobTitleInput"
-            hintText="Job Title" onChange={(event, newValue) => {
+            hintText="Job Title"
+            onChange={(event, newValue) => {
             jobTitleInput = newValue
           }}/><br />
           <FormsyText
@@ -87,7 +89,7 @@ export class NewContact extends React.Component {
           <FormsyDate
             name="meetDateInput"
             floatingLabelText="Date of meeting this contact"
-            onChange={(event, date) => {meetDateInput = moment(date).format("MMM Do YYYY")}}
+            onChange={(event, date) => {meetDateInput = moment(date).format("MMM DD YYYY")}}
           />
           <br />
           <FormsyText
@@ -100,13 +102,19 @@ export class NewContact extends React.Component {
           <FormsyDate
             name="dateNextInput"
             floatingLabelText="Date for next follow up"
-            onChange={(event, date) => {dateNextInput = moment(date).format("MMM Do YYYY")}}
+            onChange={(event, date) => {dateNextInput = moment(date).format("MMM DD YYYY")}}
           />
           <br />
           <RaisedButton label="Save Contact" primary={true}
             type="submit"
             onTouchTap={(event) => {
-              this.props.saveContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
+              if (firstInput == '' && lastInput == '') {
+                alert("You must include a contact name")
+              } else if (emailInput == '' && phoneInput == '') {
+                alert("You must include one form of contact")
+              } else {
+                this.props.saveContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
+              }
             }}
           />
         </Formsy.Form>

@@ -66,8 +66,20 @@ const ContactState = (state=initialState, action) => {
     case 'UPDATE_DATE_NEXT':
     return {
       ...state,
-      dateNext: action.newDateNext
+      dateNext: action.newDateNext.serNextContact
     };
+
+    case 'UPDATE_CONTACT_PAST':
+    return {
+      ...state,
+      allPast: action.updatedContact.serPast
+    }
+
+    case 'UPDATE_HEART':
+    return {
+      ...state,
+      import: action.updatedHeart.serImportant
+    }
 
 
     default:

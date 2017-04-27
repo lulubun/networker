@@ -36,7 +36,8 @@ export class EditContact extends React.Component {
           /><br />
           <TextField
             name="lastNameInput"
-            defaultValue={this.props.last} onChange={(event, newValue) => {
+            defaultValue={this.props.last}
+            onChange={(event, newValue) => {
             lastInput = newValue
           }}/><br />
           <Checkbox
@@ -46,7 +47,11 @@ export class EditContact extends React.Component {
           label="Select if this is an important contact"
           checked={this.props.important}
           onCheck={(event, isInputChecked) => {
-            console.log(isInputChecked);
+            if (isInputChecked == true) {
+              isInputChecked == false
+            } else {
+              isInputChecked == true
+            }
           }}
           />
           <TextField
@@ -72,7 +77,9 @@ export class EditContact extends React.Component {
           <DatePicker
             floatingLabelText="Date of meeting this contact"
             defaultDate={this.props.meetDateInput}
-            onChange={(event, date) => {meetDateInput = date}}
+            onChange={(event, date) => {
+              meetDateInput = date;
+            }}
           />
           <br />
           <TextField

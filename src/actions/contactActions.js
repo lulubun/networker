@@ -54,6 +54,18 @@ export const updateDateNext = (newDateNext) => ({
   newDateNext
 });
 
+export const UPDATE_CONTACT_PAST = 'UPDATE_CONTACT_PAST';
+export const updateContactPast = (updatedContact) =>  ({
+  type: UPDATE_CONTACT_PAST,
+  updatedContact
+})
+
+export const UPDATE_HEART = 'UPDATE_HEART';
+export const updateHeart = (updatedHeart) => ({
+  type: UPDATE_HEART,
+  updatedHeart
+})
+
 
 export function fetchWholeContact(id) {
   return dispatch => {
@@ -159,7 +171,7 @@ export function fetchUpdate(editId, firstInput, lastInput, importantInput, compa
         serNote
       })
     })
-    .then(response => response.json())
+    .then(response => console.log(response.json()))
     .then(location.assign('http://localhost:3000/one_contact/' + _id))
   }
 };
@@ -173,6 +185,7 @@ export const setAllContacts = (allContacts) => ({
 export function fetchAllContacts() {
   return dispatch => {
     const url = 'http://localhost:8080/contacts';
+    let sortedArray = [];
     fetch(url, {
       headers : {
         'Content-Type': 'application/json',
@@ -181,7 +194,9 @@ export function fetchAllContacts() {
     })
     .then(response => response.json())
     .then(data => {
-        dispatch(setAllContacts(data))
+        sortedArray = data.sort(function(a, b) {return Date.parse(a.serNextContact) - Date.parse(b.serNextContact)});
+        console.log(sortedArray);
+        dispatch(setAllContacts(sortedArray))
     })
     .catch(ex => console.log(ex))
   }
@@ -222,6 +237,7 @@ export function fetchDateUpdate(contactId, date) {
       })
     })
     .then(response => response.json())
+    .then(json => dispatch(updateDateNext(json)))
     .then(location.reload())
     .catch(ex => console.log(ex))
   }
@@ -244,6 +260,7 @@ export function fetchHeartUpdate(contactId, isInputChecked) {
       })
     })
     .then(response => response.json())
+    .then(json => dispatch(updateHeart(json)))
     .then(location.reload())
     .catch(ex => console.log(ex))
   }
@@ -270,7 +287,6 @@ export function sendNewPast(contactId, pastid, dateInput, typeInput, contactNote
       })
     })
     .then(response => response.json())
-    .then(json => console.log(json))
-    .then(location.assign('http://localhost:3000/one_contact/' + id))
+    .then(json => dispatch(updateContactPast(json)))
   }
 }

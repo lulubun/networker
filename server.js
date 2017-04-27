@@ -259,14 +259,17 @@ app.put('/one_contact/:_id', (req, res) => {
 
 app.post('/newPast/:id', (req, res) => {
   console.log(req.body);
-  ContactModel
-  .update(req.params.id, {$push: {serPast: {index: req.body.serPast}}}, {upsert: true},
-  (err, updatedPast) => {
-    if (err) {
-      res.send(err)
-    }
-    res.json(updatedPast)
-  })
+  ContactModel.findByIdAndUpdate(
+        req.params.id,
+        {$push: {"serPast": req.body}},
+        {new : true},
+        function(err, updatedPast) {
+          if(err) {
+            console.log(err);
+          }
+          res.json(updatedPast)
+        }
+    );
 });
 
 // this function connects to our database, then starts the server
@@ -384,12 +387,13 @@ router.post('/new_user', (req, res) => {
     }
     // if no existing user, hash password
     return User
-    .create({
+    .createUser({
       username: username,
       password: password,
       firstName: firstName,
       lastName: lastName
     })
+    .createCollection("username")
   })
   .then(user => {
     return res.status(201).json(user.apiRepr());

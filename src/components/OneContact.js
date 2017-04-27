@@ -23,7 +23,7 @@ const style = {
 };
 
 let typeInput = '';
-let dateInput = '';
+let dateInput = moment().format("MMM DD YYYY");
 let contactNotesInput = '';
 let pastId = 0;
 let prettyDate = '';
@@ -57,7 +57,7 @@ export class OneContact extends React.Component {
       <Paper style={style} zDepth={1} name="dateChanger">
         <p><Alarm />Follow up with this contact on {this.props.appointment}</p>
           <DatePicker hintText="Change" underlineStyle={{display: 'none'}} onChange={(event, date) => {
-            let sendDate = moment(date).format("MMM Do YYYY");
+            let sendDate = moment(date).format("MMM DD YYYY");
             this.props.changeAppointment(contactId, sendDate)
           }}/>
       </Paper>
@@ -66,7 +66,7 @@ export class OneContact extends React.Component {
       <form>
         <p>Record New Follow Up</p>
         <DatePicker hintText="Date" onChange={(event, date) => {
-          prettyDate = moment(date).format("MMM Do YYYY");
+          prettyDate = moment(date).format("MMM DD YYYY");
           dateInput = prettyDate;
         }} />
         <RadioButtonGroup name="contact" onChange={(event, value) => {
@@ -92,6 +92,7 @@ export class OneContact extends React.Component {
         <TextField
           hintText="notes"
           floatingLabelText="notes"
+          ref={(node) => this.notesText = node}
           multiLine={true}
           onChange={(event, newValue) => {
             contactNotesInput = newValue;
@@ -100,8 +101,12 @@ export class OneContact extends React.Component {
         <RaisedButton label="Save Follow Up"
           onTouchTap={(event) => {
             pastId = Math.floor((Math.random() * 10000) + 1);
-            console.log(pastId);
-            this.props.addPast(contactId, pastId, dateInput, typeInput, contactNotesInput);
+            if (typeInput == '') {
+              alert("Please include the type of contact made")
+            } else {
+              this.props.addPast(contactId, pastId, dateInput, typeInput, contactNotesInput);
+            //  this.notesText.setState({ value: "" })
+            }
           }} />
       </form>
       </Paper>
