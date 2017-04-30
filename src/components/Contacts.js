@@ -11,10 +11,13 @@ import '../index.css';
 
 class Contacts extends React.Component {
   componentDidMount() {
-    this.props.getAllContacts();
+    const user = this.props.params.user;
+    this.props.getAllContacts(user);
   };
 
   render() {
+    const user = this.props.params.user;
+
     const style = {
       height: 200,
       marginTop: 20,
@@ -31,14 +34,14 @@ class Contacts extends React.Component {
     return (
       <div className="Contacts">
         <div className="New_Button">
-          <Link to={'/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+          <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
         </div>
         <div className="Contacts-List">
           {this.props.contactList.map((contact, index) =>
             (<div className="oneLink" key={index}>
               <Paper style={style} zDepth={5} rounded={false} className="onePaper">
               <p>Appointment for Next Contact: {contact.serNextContact}</p>
-              <Link to={'/one_contact/' + contact._id} className="Link">
+              <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
               <Checkbox
                checked={contact.serImportant}
                checkedIcon={<ActionFavorite />}
@@ -63,7 +66,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllContacts: () => dispatch(actions.fetchAllContacts()),
+  getAllContacts: (user) => dispatch(actions.fetchAllContacts(user)),
   handleClick: (linkId) => dispatch(actions.fetchWholeContact(linkId))
 })
 

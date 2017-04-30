@@ -28,6 +28,7 @@ let dateNextInput = moment(startDate).format("MMM DD YYYY");
 
 export class NewContact extends React.Component {
   render() {
+    const user = this.props.params.user;
     return(
       <div className="new_contact">
         <Formsy.Form>
@@ -113,7 +114,7 @@ export class NewContact extends React.Component {
               } else if (emailInput == '' && phoneInput == '') {
                 alert("You must include one form of contact")
               } else {
-                this.props.saveContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
+                this.props.saveContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
               }
             }}
           />
@@ -124,7 +125,7 @@ export class NewContact extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveContact: (firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.sendNewContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput))
+  saveContact: (user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput))
 })
 
 export default connect(null, mapDispatchToProps)(NewContact);

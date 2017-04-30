@@ -32,18 +32,19 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
       })
     })
     .then(response => response.json())
-    .then(location.assign('http://localhost:3000/contacts'))
+    .then(location.assign('http://localhost:3000/:user/contacts'))
     .catch(ex => console.log(ex))
   }
 }
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = 'http://localhost:8080/';
+    const user = 'http://localhost:8080/login';
     fetch(user, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
         username: usernameInput,
@@ -51,8 +52,6 @@ export function fetchOneUser(usernameInput, passwordInput) {
       })
     })
     .then(response => response.json())
-    .then(data => {
-      (console.log(data))})
     .catch(ex => console.log(ex))
   }
 }

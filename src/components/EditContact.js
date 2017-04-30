@@ -23,17 +23,21 @@ export class EditContact extends React.Component {
     let phoneInput = this.props.phone;
     let meetDateInput = this.props.meetDate;
     let notesInput = this.props.meetNotes;
+    const dateStyle = {
+      width: 100,
+    };
     return(
       <div className="edit_contact">
         <form>
           <p>Edit Contact</p>
-          <TextField
+          <p>First Name:</p><TextField
             name="firstNameInput"
             onChange={(event, newValue) => {
             firstInput = newValue
           }}
             defaultValue={this.props.first}
           /><br />
+          <p>Last Name:</p>
           <TextField
             name="lastNameInput"
             defaultValue={this.props.last}
@@ -54,34 +58,40 @@ export class EditContact extends React.Component {
             }
           }}
           />
+          <p>Company:</p>
           <TextField
             name="companyInput"
             defaultValue={this.props.company} onChange={(event, newValue) => {
             companyInput = newValue
           }}/><br />
+          <p>Job Title:</p>
           <TextField
             name="jobTitleInput"
             defaultValue={this.props.jobTitle} onChange={(event, newValue) => {
             jobTitleInput = newValue
           }}/><br />
+          <p>Email:</p>
           <TextField
             name="emailInput"
             defaultValue={this.props.email} onChange={(event, newValue) => {
             emailInput = newValue
           }}/><br />
+          <p>Phone:</p>
           <TextField
             name="phoneInput"
             defaultValue={this.props.phone} onChange={(event, newValue) => {
             phoneInput = newValue
           }}/><br />
           <DatePicker
-            floatingLabelText="Date of meeting this contact"
+            floatingLabelText={"Date of meeting this contact " + meetDateInput}
+            style={dateStyle}
             defaultDate={this.props.meetDateInput}
             onChange={(event, date) => {
               meetDateInput = date;
             }}
           />
           <br />
+          <p>Notes:</p>
           <TextField
             name="meetingNotes"
             defaultValue={this.props.meetNotes}
@@ -99,6 +109,8 @@ export class EditContact extends React.Component {
               }
             }}
           />
+          <br />
+          <br />
           <RaisedButton label="Delete Contact" primary={true}
             onTouchTap={(event) => {
               const doubleCheck = confirm("Are you sure?");

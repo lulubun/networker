@@ -17,9 +17,9 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/contacts', (req, res) => {
+app.get('/:user/contacts', (req, res) => {
   ContactModel
-    .find()
+    .find({user: req.params.user})
     .exec()
     .then(data => {
       res.json(data)
@@ -30,7 +30,7 @@ app.get('/contacts', (req, res) => {
     });
 });
 
-app.get('/one_contact/:id', (req, res) => {
+app.get('/:user/one_contact/:id', (req, res) => {
   ContactModel
   .findById(req.params.id)
   .exec()
@@ -41,7 +41,7 @@ app.get('/one_contact/:id', (req, res) => {
   });
 });
 
-app.get('/one_contact/:id/:pastId', (req, res) => {
+app.get('/:user/one_contact/:id/:pastId', (req, res) => {
   ContactModel
   .findById(req.params.id)
   .exec()
@@ -52,10 +52,10 @@ app.get('/one_contact/:id/:pastId', (req, res) => {
   })
 });
 
-app.get('/:username', (username, password, callback) => {
+app.get('/:user', (username, password, callback) => {
   let user;
   User
-  .findOne({userName: username})
+  .findOne({username: username})
   .exec()
   .then(_user => {
     user = _user;
@@ -138,37 +138,7 @@ app.post('/', (req, res) => {
     });
 });
 
-app.post('/new_contact', (req, res) => {
-  const needsDate = 'serNextContact';
-  needsDate => {
-    if(!(needsDate in req.body)) {
-      alert('You must pick a date to follow up with this person')
-      res.status(400).json(
-        {error: `Missing follow up date in request body`}
-        );
-    }
-  }
-  const needsName1 ='serFirst';
-  const needsName2 = 'serLast';
-  (needsName1, needsName2) => {
-    if (!(needsName1 || needsName2 in req.body)) {
-      alert('You must include at least either a first or last name for your contact')
-      res.status(400).json(
-        {error: 'Missing a name in request body'}
-      );
-    }
-  }
-
-  const needsContact1 = 'serPhone';
-  const needsContact2 = 'serEmail';
-  (needsContact1, needsContact2) => {
-    if (!(needsContact1 || needsContact2 in req.body)) {
-      alert('You must include at least one method to contact this person')
-      res.status(400).json(
-        {error: 'Missing contact info in request body'}
-      );
-    }
-  }
+app.post('/:user/new_contact', (req, res) => {
   let serFirst = req.body.serFirst ? req.body.serFirst : '';
   let serLast = req.body.serLast ? req.body.serLast: '';
   let serImportant = req.body.serImportant ? req.body.serImportant: false;
@@ -182,6 +152,7 @@ app.post('/new_contact', (req, res) => {
 
   ContactModel
     .create({
+      user: req.body.user,
       serNextContact: req.body.serNextContact,
       serFirst: serFirst,
       serLast: serLast,
@@ -201,7 +172,7 @@ app.post('/new_contact', (req, res) => {
     });
 });
 
-app.delete('/one_contact/:id', (req, res) => {
+app.delete('/:user/one_contact/:id', (req, res) => {
   ContactModel
   .findByIdAndRemove(req.params.id)
   .exec()
@@ -214,7 +185,7 @@ app.delete('/one_contact/:id', (req, res) => {
   });
 });
 
-app.delete('/one_contact/:id/:pastId', (req, res) => {
+app.delete('/:user/one_contact/:id/:pastId', (req, res) => {
   ContactModel
   .findByIdAndRemove(req.params.id)
   .exec()
@@ -227,7 +198,7 @@ app.delete('/one_contact/:id/:pastId', (req, res) => {
   });
 });
 
-app.put('/edit_contact/:id', (req, res) => {
+app.put('/:user/edit_contact/:id', (req, res) => {
   if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     res.status(400).json({
       error: 'Request path id and request body id values must match'
@@ -248,7 +219,7 @@ app.put('/edit_contact/:id', (req, res) => {
     .catch(err => res.status(500).json({message: 'Contact not updated'}));
 });
 
-app.put('/one_contact/:_id', (req, res) => {
+app.put('/:user/one_contact/:_id', (req, res) => {
   console.log(req.body);
   ContactModel
   .findByIdAndUpdate(req.params._id, req.body)
@@ -257,7 +228,7 @@ app.put('/one_contact/:_id', (req, res) => {
   .catch(err => res.status(500).json({message: 'Contact not updated'}));
 });
 
-app.post('/newPast/:id', (req, res) => {
+app.post('/:user/newPast/:id', (req, res) => {
   console.log(req.body);
   ContactModel.findByIdAndUpdate(
         req.params.id,
@@ -314,34 +285,14 @@ if (require.main === module) {
 };
 
 const jsonParser = require('body-parser').json();
-const router = express.Router();
-router.use(jsonParser);
 
-router.get('/', (username, password, callback) => {
-  let user;
-  User
-  .findOne({username: username})
-  .exec()
-  .then(_user => {
-    user = _user;
-    if (!user) {
-      return callback(null, false, {message: 'Incorrect username'});
-    }
-    return user.validatePassword(password);
-  })
-  .then(isValid => {
-    if (!isValid) {
-      return callback(null, false, {message: 'Incorrect password'});
-    }
-    else {
-      return callback(null, user)
-    }
-  })
-  .then((req, res) => res.json({user: req.user.apiRepr()})
-)
+app.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+  res.redirect('/users/' + req.user.username);
 });
 
-router.post('/new_user', (req, res) => {
+app.post('/new_user', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
@@ -403,4 +354,4 @@ router.post('/new_user', (req, res) => {
   });
 });
 
-module.exports = {router, runServer, app, closeServer};
+module.exports = {runServer, app, closeServer};

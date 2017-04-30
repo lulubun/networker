@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const contactSchema = mongoose.Schema({
+  user: String,
   serNextContact: {type: String, reuired: true},
   serFirst: String,
   serLast: String,

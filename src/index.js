@@ -43,11 +43,11 @@ const Start = () => (
         <Route path="/" component={Control}>
           <IndexRoute component={Login} />
           <Route path="/login" component={Login} />
-          <Route path="/one_contact/:id" component={OneContact} />
-          <Route path="/new_contact" component={NewContact} />
-          <Route path="/contacts" component={Contacts} />
+          <Route path=":user/one_contact/:id" component={OneContact} />
+          <Route path=":user/new_contact" component={NewContact} />
+          <Route path=":user/contacts" component={Contacts} />
           <Route path="/new_user" component={NewUser} />
-          <Route path="/edit_contact/:id" component={EditContact} />
+          <Route path=":user/edit_contact/:id" component={EditContact} />
         </Route>
       </Router>
     </Provider>

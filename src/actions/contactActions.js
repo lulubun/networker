@@ -67,9 +67,9 @@ export const updateHeart = (updatedHeart) => ({
 })
 
 
-export function fetchWholeContact(id) {
+export function fetchWholeContact(id, user) {
   return dispatch => {
-    const urlWhole = ('http://localhost:8080/one_contact/' + id)
+    const urlWhole = ('http://localhost:8080/' + user + '/one_contact/' + id)
     fetch(urlWhole)
     .then(response => response.json())
     .then(data => {
@@ -100,12 +100,10 @@ export function fetchWholeContact(id) {
   }
 }
 
-export function sendNewContact(firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
-  if (firstInput == '' && lastInput == '') {
-    alert("You cannot create a contact without a name");
-  } else {
+export function sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
   return dispatch => {
-    const url = 'http://localhost:8080/new_contact';
+    const user = user;
+    const url = 'http://localhost:8080/' + user + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
     let serLast = lastInput;
@@ -116,13 +114,13 @@ export function sendNewContact(firstInput, lastInput, importantInput, companyInp
     let serEmail = emailInput;
     let serMeetDate = meetDateInput;
     let serNote = notesInput;
-    console.log(serMeetDate, serNextContact);
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        user,
         serNextContact,
         serFirst,
         serLast,
@@ -136,14 +134,15 @@ export function sendNewContact(firstInput, lastInput, importantInput, companyInp
       })
     })
     .then(response => response.json())
-    .then(location.assign('http://localhost:3000/contacts'))
-  }}
+    .then(location.assign('http://localhost:3000/' + user + '/contacts'))
+  }
 };
 
-export function fetchUpdate(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) {
+export function fetchUpdate(user, editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) {
   return dispatch => {
+    const user = user;
     let _id = editId;
-    const url = 'http://localhost:8080/edit_contact/' + _id;
+    const url = 'http://localhost:8080/' + user + '/edit_contact/' + _id;
     let serFirst = firstInput;
     let serLast = lastInput;
     let serImportant = importantInput;
@@ -172,7 +171,7 @@ export function fetchUpdate(editId, firstInput, lastInput, importantInput, compa
       })
     })
     .then(response => console.log(response.json()))
-    .then(location.assign('http://localhost:3000/one_contact/' + _id))
+    .then(location.assign('http://localhost:3000/' + this.params.user + '/one_contact/' + _id))
   }
 };
 
@@ -182,9 +181,9 @@ export const setAllContacts = (allContacts) => ({
   allContacts
 });
 
-export function fetchAllContacts() {
+export function fetchAllContacts(user) {
   return dispatch => {
-    const url = 'http://localhost:8080/contacts';
+    const url = 'http://localhost:8080/' + user + '/contacts';
     let sortedArray = [];
     fetch(url, {
       headers : {
@@ -202,10 +201,11 @@ export function fetchAllContacts() {
   }
 };
 
-export function fetchDeleteContact(editId) {
+export function fetchDeleteContact(userEdit, editId) {
   let _id = editId;
+  const user = userEdit;
   return dispatch => {
-    const urlDel = 'http://localhost:8080/one_contact/' + _id;
+    const urlDel = 'http://localhost:8080/' + user + '/one_contact/' + _id;
     fetch(urlDel, {
       method: 'DELETE',
       headers: {
@@ -216,16 +216,17 @@ export function fetchDeleteContact(editId) {
       })
     })
     .then(response => response.json())
-    .then(location.assign('http://localhost:3000/contacts'))
+    .then(location.assign('http://localhost:3000/' + user + '/contacts'))
     .catch(ex => console.log(ex))
   }
 };
 
-export function fetchDateUpdate(contactId, date) {
+export function fetchDateUpdate(userUpdate, contactId, date) {
+  let user = userUpdate;
   let serNextContact = date;
   let _id = contactId;
   return dispatch => {
-    const urlDate = 'http://localhost:8080/one_contact/' + _id;
+    const urlDate = 'http://localhost:8080/' + user + '/one_contact/' + _id;
     fetch(urlDate, {
       method: 'PUT',
       headers: {
@@ -243,12 +244,13 @@ export function fetchDateUpdate(contactId, date) {
   }
 };
 
-export function fetchHeartUpdate(contactId, isInputChecked) {
+export function fetchHeartUpdate(userHeart, contactId, isInputChecked) {
+  const user = userHeart;
   let serImportant = isInputChecked;
   console.log(serImportant);
   let _id = contactId;
   return dispatch => {
-    const urlHeart = 'http://localhost:8080/one_contact/' + _id;
+    const urlHeart = 'http://localhost:8080/' + user + '/one_contact/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
@@ -266,11 +268,12 @@ export function fetchHeartUpdate(contactId, isInputChecked) {
   }
 };
 
-export function sendNewPast(contactId, pastid, dateInput, typeInput, contactNotesInput) {
+export function sendNewPast(user, contactId, pastid, dateInput, typeInput, contactNotesInput) {
   return dispatch => {
+    let user = user;
     let id = contactId;
     let pastId = pastid;
-    const pastUrl = 'http://localhost:8080/newPast';
+    const pastUrl = 'http://localhost:8080/' + user + '/newPast';
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;
@@ -280,6 +283,7 @@ export function sendNewPast(contactId, pastid, dateInput, typeInput, contactNote
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        user,
         pastId,
         serDateContact,
         serTypeContact,

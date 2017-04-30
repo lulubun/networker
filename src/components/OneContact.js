@@ -34,6 +34,7 @@ export class OneContact extends React.Component {
   }
  render() {
    const contactId = this.props.params.id;
+   const user = this.props.params.user;
   return(
     <div>
       <Paper style={style} zDepth={1}>
@@ -51,7 +52,7 @@ export class OneContact extends React.Component {
         <p className="emailText"><Email /> {this.props.email}</p>
         <p>Met this contact on: {this.props.firstMeet}</p>
         <p>Notes: {this.props.meetInfo}</p>
-        <Link to={'/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
+        <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
           label="Edit Contact Info"/></Link>
       </Paper>
       <Paper style={style} zDepth={1} name="dateChanger">
@@ -61,7 +62,7 @@ export class OneContact extends React.Component {
             this.props.changeAppointment(contactId, sendDate)
           }}/>
       </Paper>
-      <Link to={'/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} /></Link>
+      <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} /></Link>
       <Paper style={style} zDepth={1}>
       <form>
         <p>Record New Follow Up</p>
@@ -104,7 +105,7 @@ export class OneContact extends React.Component {
             if (typeInput == '') {
               alert("Please include the type of contact made")
             } else {
-              this.props.addPast(contactId, pastId, dateInput, typeInput, contactNotesInput);
+              this.props.addPast(contactId, user, pastId, dateInput, typeInput, contactNotesInput);
             //  this.notesText.setState({ value: "" })
             }
           }} />
@@ -133,7 +134,7 @@ const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
   changeAppointment: (contactId, sendDate) => dispatch(actions.fetchDateUpdate(contactId, sendDate)),
   changeHeart: (contactId, isInputChecked) => dispatch(actions.fetchHeartUpdate(contactId, isInputChecked)),
-  addPast: (contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(contactId, pastId, dateInput, typeInput, contactNotesInput))
+  addPast: (contactId, user, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(contactId, user, pastId, dateInput, typeInput, contactNotesInput))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OneContact);
