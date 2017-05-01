@@ -47,7 +47,7 @@ export class NewUser extends React.Component {
           onChange={(event, newValue) => {
           confirmPassword = newValue
         }}/><br />
-        <RaisedButton label="Register" secondary={true}
+        <RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF"
         onTouchTap={(event) => {
           if (!(passwordInput === confirmPassword)) {
             alert('Password does not match')

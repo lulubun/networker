@@ -100,7 +100,7 @@ export class EditContact extends React.Component {
               notesInput = newValue
             }}/>
           <br />
-          <RaisedButton label="Save Edits" primary={true}
+          <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF"
             onTouchTap={(event) => {
               if (firstInput == '' && lastInput == '') {
                 alert("Missing contact name")
@@ -111,7 +111,7 @@ export class EditContact extends React.Component {
           />
           <br />
           <br />
-          <RaisedButton label="Delete Contact" primary={true}
+          <RaisedButton label="Delete Contact" backgroundColor="#5D576B" labelColor="#F1F1EF"
             onTouchTap={(event) => {
               const doubleCheck = confirm("Are you sure?");
               if (doubleCheck == true) {

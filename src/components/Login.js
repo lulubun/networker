@@ -4,15 +4,19 @@ import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router';
 import * as actions from '../actions/userActions';
+import '../index.css';
+import moment from 'moment';
 
 let usernameInput = '';
 let passwordInput = '';
 
 export class Login extends React.Component {
   render() {
+    let today = moment().format('MMM DD YYYY')
+
     return(
-      <div>
-        <p>Today is: {this.props.day}</p>
+      <div className="Login">
+        <p className="formDate">Today is {today}</p>
         <p className="form_header">Log In to Networker</p><br />
         <br />
         <TextField
@@ -30,7 +34,7 @@ export class Login extends React.Component {
           }}
         /><br />
         <br />
-        <RaisedButton label="Enter" secondary={true} onTouchTap={(event) => {
+        <RaisedButton label="Enter" backgroundColor="#5D576B" labelColor="#F1F1EF" onTouchTap={(event) => {
           if (usernameInput = '') {
             alert("Username is required");
           } else if (passwordInput = '') {
@@ -41,7 +45,7 @@ export class Login extends React.Component {
         }}/>
         <br />
         <br/>
-        <Link to={'/new_user'} className="Link"><RaisedButton label="Register" secondary={true} /></Link>
+        <Link to={'/new_user'} className="Link"><RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
       </div>
     )
   }

@@ -2,6 +2,19 @@
   color: white;
 }
 
+.form_header {
+  font-size: 25px;
+  color: #5D576B;
+}
+
+.formDate {
+  color: #5D576B;
+}
+
+.Login {
+  text-align: center;
+}
+
 body {
   margin: 0;
   padding: 0;

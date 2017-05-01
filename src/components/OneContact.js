@@ -53,7 +53,7 @@ export class OneContact extends React.Component {
         <p>Met this contact on: {this.props.firstMeet}</p>
         <p>Notes: {this.props.meetInfo}</p>
         <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
-          label="Edit Contact Info"/></Link>
+          label="Edit Contact Info" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       </Paper>
       <Paper style={style} zDepth={1} name="dateChanger">
         <p><Alarm />Follow up with this contact on {this.props.appointment}</p>
@@ -62,7 +62,7 @@ export class OneContact extends React.Component {
             this.props.changeAppointment(contactId, sendDate)
           }}/>
       </Paper>
-      <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} /></Link>
+      <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1}>
       <form>
         <p>Record New Follow Up</p>
@@ -70,7 +70,8 @@ export class OneContact extends React.Component {
           prettyDate = moment(date).format("MMM DD YYYY");
           dateInput = prettyDate;
         }} />
-        <RadioButtonGroup name="contact" onChange={(event, value) => {
+        <RadioButtonGroup name="contact"
+          onChange={(event, value) => {
           typeInput = value;
         }}>
           <RadioButton
@@ -100,12 +101,14 @@ export class OneContact extends React.Component {
           }}
         /><br />
         <RaisedButton label="Save Follow Up"
+          backgroundColor="#5D576B" labelColor="#F1F1EF"
           onTouchTap={(event) => {
             pastId = Math.floor((Math.random() * 10000) + 1);
             if (typeInput == '') {
               alert("Please include the type of contact made")
             } else {
-              this.props.addPast(contactId, user, pastId, dateInput, typeInput, contactNotesInput);
+              console.log(contactId, user, pastId);
+              this.props.addPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput);
             //  this.notesText.setState({ value: "" })
             }
           }} />
@@ -134,7 +137,7 @@ const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
   changeAppointment: (contactId, sendDate) => dispatch(actions.fetchDateUpdate(contactId, sendDate)),
   changeHeart: (contactId, isInputChecked) => dispatch(actions.fetchHeartUpdate(contactId, isInputChecked)),
-  addPast: (contactId, user, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(contactId, user, pastId, dateInput, typeInput, contactNotesInput))
+  addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OneContact);

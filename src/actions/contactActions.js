@@ -103,6 +103,7 @@ export function fetchWholeContact(id, user) {
 export function sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
   return dispatch => {
     const user = user;
+    console.log(user);
     const url = 'http://localhost:8080/' + user + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
@@ -272,18 +273,20 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
   return dispatch => {
     let user = user;
     let id = contactId;
+    console.log(user, id);
     let pastId = pastid;
-    const pastUrl = 'http://localhost:8080/' + user + '/newPast';
+    const pastUrl = 'http://localhost:8080/' + user + '/newPast/' + id;
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;
-    fetch('http://localhost:8080/newPast/' + id, {
+    fetch(pastUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         user,
+        id,
         pastId,
         serDateContact,
         serTypeContact,

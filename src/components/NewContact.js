@@ -106,7 +106,7 @@ export class NewContact extends React.Component {
             onChange={(event, date) => {dateNextInput = moment(date).format("MMM DD YYYY")}}
           />
           <br />
-          <RaisedButton label="Save Contact" primary={true}
+          <RaisedButton label="Save Contact" backgroundColor="#5D576B" labelColor="#F1F1EF"
             type="submit"
             onTouchTap={(event) => {
               if (firstInput == '' && lastInput == '') {
@@ -114,6 +114,7 @@ export class NewContact extends React.Component {
               } else if (emailInput == '' && phoneInput == '') {
                 alert("You must include one form of contact")
               } else {
+                console.log(user);
                 this.props.saveContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
               }
             }}
