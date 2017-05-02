@@ -2,7 +2,6 @@ const {BasicStrategy} = require('passport-http');
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const passport = require('passport');
-
 const {User} = require('./models');
 
 const router = express.Router();
@@ -36,7 +35,9 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
 passport.use(basicStrategy);
 router.use(passport.initialize());
 
-router.post('/', (req, res) => {
+
+//create a new user
+router.post('/users', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
@@ -80,14 +81,13 @@ router.post('/', (req, res) => {
       if (count > 0) {
         return res.status(422).json({message: 'username already taken'});
       }
-      // if no existing user, hash password
-      return User.hashPassword(password)
+      return User
     })
-    .then(hash => {
+    .then(data => {
       return User
         .create({
           username: username,
-          password: hash,
+          password: password,
           firstName: firstName,
           lastName: lastName
         })
@@ -100,22 +100,9 @@ router.post('/', (req, res) => {
     });
 });
 
-// never expose all your users like below in a prod application
-// we're just doing this so we have a quick way to see
-// if we're creating users. keep in mind, you can also
-// verify this in the Mongo shell.
-router.get('/', (req, res) => {
-  return User
-    .find()
-    .exec()
-    .then(users => res.json(users.map(user => user.apiRepr())))
-    .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
-});
 
-
-
-
-router.get('/me',
+//validate a user?
+router.post('/',
   passport.authenticate('basic', {session: false}),
   (req, res) => res.json({user: req.user.apiRepr()})
 );

@@ -7,12 +7,11 @@ import * as actions from '../actions/userActions';
 import '../index.css';
 import moment from 'moment';
 
-let usernameInput = '';
-let passwordInput = '';
-
 export class Login extends React.Component {
   render() {
     let today = moment().format('MMM DD YYYY')
+    let usernameInput = '';
+    let passwordInput = '';
 
     return(
       <div className="Login">
@@ -35,9 +34,9 @@ export class Login extends React.Component {
         /><br />
         <br />
         <RaisedButton label="Enter" backgroundColor="#5D576B" labelColor="#F1F1EF" onTouchTap={(event) => {
-          if (usernameInput = '') {
+          if (usernameInput === '') {
             alert("Username is required");
-          } else if (passwordInput = '') {
+          } else if (passwordInput === '') {
             alert("Password is required")
           } else {
           this.props.login(usernameInput, passwordInput)

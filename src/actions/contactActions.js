@@ -95,16 +95,17 @@ export function fetchWholeContact(id, user) {
         newEmail,
         newPhone,
         newMeetDate,
-        newMeetNotes, newPastArray))})
+        newMeetNotes,
+        newPastArray))})
     .catch(ex => console.log(ex))
   }
 }
 
 export function sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
   return dispatch => {
-    const user = user;
-    console.log(user);
-    const url = 'http://localhost:8080/' + user + '/new_contact';
+    const serUser = user;
+    console.log(serUser);
+    const url = 'http://localhost:8080/' + serUser + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
     let serLast = lastInput;
@@ -121,7 +122,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user,
+        serUser,
         serNextContact,
         serFirst,
         serLast,
@@ -222,12 +223,12 @@ export function fetchDeleteContact(userEdit, editId) {
   }
 };
 
-export function fetchDateUpdate(userUpdate, contactId, date) {
-  let user = userUpdate;
+export function fetchDateUpdate(user, contactId, date) {
+  let serUser = user;
   let serNextContact = date;
   let _id = contactId;
   return dispatch => {
-    const urlDate = 'http://localhost:8080/' + user + '/one_contact/' + _id;
+    const urlDate = 'http://localhost:8080/' + serUser + '/one_contact/' + _id;
     fetch(urlDate, {
       method: 'PUT',
       headers: {
@@ -235,6 +236,7 @@ export function fetchDateUpdate(userUpdate, contactId, date) {
       },
       body: JSON.stringify({
         _id,
+        serUser,
         serNextContact
       })
     })
@@ -245,13 +247,13 @@ export function fetchDateUpdate(userUpdate, contactId, date) {
   }
 };
 
-export function fetchHeartUpdate(userHeart, contactId, isInputChecked) {
-  const user = userHeart;
+export function fetchHeartUpdate(user, contactId, isInputChecked) {
+  const serUser = user;
   let serImportant = isInputChecked;
   console.log(serImportant);
   let _id = contactId;
   return dispatch => {
-    const urlHeart = 'http://localhost:8080/' + user + '/one_contact/' + _id;
+    const urlHeart = 'http://localhost:8080/' + serUser + '/one_contact/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
@@ -259,6 +261,7 @@ export function fetchHeartUpdate(userHeart, contactId, isInputChecked) {
       },
       body: JSON.stringify({
         _id,
+        serUser,
         serImportant
       })
     })
@@ -271,7 +274,7 @@ export function fetchHeartUpdate(userHeart, contactId, isInputChecked) {
 
 export function sendNewPast(user, contactId, pastid, dateInput, typeInput, contactNotesInput) {
   return dispatch => {
-    let user = user;
+    let serUser = user;
     let id = contactId;
     console.log(user, id);
     let pastId = pastid;
@@ -285,7 +288,7 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user,
+        serUser,
         id,
         pastId,
         serDateContact,

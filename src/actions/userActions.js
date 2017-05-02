@@ -17,7 +17,7 @@ export const checkUser = (userName, password) => ({
 
 export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput) {
   return dispatch => {
-    const userUrl = 'http://localhost:8080/';
+    const userUrl = 'http://localhost:8080/users';
     fetch(userUrl, {
       method: 'POST',
       headers: {
@@ -39,12 +39,13 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = 'http://localhost:8080/login';
+    const user = 'http://localhost:8080/';
+    console.log(usernameInput, passwordInput);
     fetch(user, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'no-cors'
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
         username: usernameInput,

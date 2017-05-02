@@ -11,6 +11,8 @@ const style = {
 
 class Past extends React.Component {
   render() {
+  let array = this.props.allPastList;
+  let sortedArray = array.sort(function(a, b) {return Date.parse(a.serDateContact) - Date.parse(b.serDateContact)});
     return (
         <div className="allPast">
           {this.props.allPastList.map((onePast, index) => (

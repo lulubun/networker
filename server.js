@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const {PORT, DATABASE_URL} = require('./config');
 const {ContactModel} = require('./models');
-const {User} = require('./Users/models');
+const {User, router: userRouter} = require('./Users');
 
 const app = express();
 
@@ -17,9 +17,11 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
+//return all contacts for a user
 app.get('/:user/contacts', (req, res) => {
   ContactModel
-    .find({user: req.params.user})
+    .find({serUser: req.params.user})
     .exec()
     .then(data => {
       res.json(data)
@@ -30,6 +32,8 @@ app.get('/:user/contacts', (req, res) => {
     });
 });
 
+
+//get all data for one contact
 app.get('/:user/one_contact/:id', (req, res) => {
   ContactModel
   .findById(req.params.id)
@@ -41,6 +45,8 @@ app.get('/:user/one_contact/:id', (req, res) => {
   });
 });
 
+
+//get one past instance to edit it
 app.get('/:user/one_contact/:id/:pastId', (req, res) => {
   ContactModel
   .findById(req.params.id)
@@ -52,92 +58,93 @@ app.get('/:user/one_contact/:id/:pastId', (req, res) => {
   })
 });
 
-app.get('/:user', (username, password, callback) => {
-  let user;
-  User
-  .findOne({username: username})
-  .exec()
-  .then(_user => {
-    user = _user;
-    if (!user) {
-      return callback(null, false, {message: 'Incorrect username'});
-    }
-    return user.validatePassword(password);
-  })
-  .then(isValid => {
-    if (!isValid) {
-      return callback(null, false, {message: 'Incorrect password'});
-    }
-    else {
-      return callback(null, user)
-    }
-  });
-});
+// app.get('/:user', (username, password, callback) => {
+//   let user;
+//   User
+//   .findOne({username: username})
+//   .exec()
+//   .then(_user => {
+//     user = _user;
+//     if (!user) {
+//       return callback(null, false, {message: 'Incorrect username'});
+//     }
+//     return user.validatePassword(password);
+//   })
+//   .then(isValid => {
+//     if (!isValid) {
+//       return callback(null, false, {message: 'Incorrect password'});
+//     }
+//     else {
+//       return callback(null, user)
+//     }
+//   });
+// });
 
-app.post('/', (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({message: 'No request body'});
-  }
+// app.post('/', (req, res) => {
+//   if (!req.body) {
+//     return res.status(400).json({message: 'No request body'});
+//   }
+//
+//   if (!('username' in req.body)) {
+//     return res.status(422).json({message: 'Missing field: username'});
+//   }
+//
+//   let {username, password, firstName, lastName} = req.body;
+//
+//   if (typeof username !== 'string') {
+//     return res.status(422).json({message: 'Incorrect field type: username'});
+//   }
+//
+//   username = username.trim();
+//
+//   if (username === '') {
+//     return res.status(422).json({message: 'Incorrect field length: username'});
+//   }
+//
+//   if (!(password)) {
+//     return res.status(422).json({message: 'Missing field: password'});
+//   }
+//
+//   if (typeof password !== 'string') {
+//     return res.status(422).json({message: 'Incorrect field type: password'});
+//   }
+//
+//   password = password.trim();
+//
+//   if (password === '') {
+//     return res.status(422).json({message: 'Incorrect field length: password'});
+//   }
+//
+//   // check for existing user
+//   return User
+//     .find({username})
+//     .count()
+//     .exec()
+//     .then(count => {
+//       if (count > 0) {
+//         return res.status(422).json({message: 'username already taken'});
+//       }
+//       // if no existing user, hash password
+//       return User
+//     })
+//     .then(hash => {
+//       return User
+//         .create({
+//           username: username,
+//           password: password,
+//           firstName: firstName,
+//           lastName: lastName
+//         })
+//     })
+//     .then(user => {
+//       return res.status(201).json(user.apiRepr());
+//     })
+//     .catch(err => {
+//       res.status(500).json({message: 'Internal server error'})
+//     });
+// });
 
-  if (!('username' in req.body)) {
-    return res.status(422).json({message: 'Missing field: username'});
-  }
-
-  let {username, password, firstName, lastName} = req.body;
-
-  if (typeof username !== 'string') {
-    return res.status(422).json({message: 'Incorrect field type: username'});
-  }
-
-  username = username.trim();
-
-  if (username === '') {
-    return res.status(422).json({message: 'Incorrect field length: username'});
-  }
-
-  if (!(password)) {
-    return res.status(422).json({message: 'Missing field: password'});
-  }
-
-  if (typeof password !== 'string') {
-    return res.status(422).json({message: 'Incorrect field type: password'});
-  }
-
-  password = password.trim();
-
-  if (password === '') {
-    return res.status(422).json({message: 'Incorrect field length: password'});
-  }
-
-  // check for existing user
-  return User
-    .find({username})
-    .count()
-    .exec()
-    .then(count => {
-      if (count > 0) {
-        return res.status(422).json({message: 'username already taken'});
-      }
-      // if no existing user, hash password
-      return User
-    })
-    .then(hash => {
-      return User
-        .create({
-          username: username,
-          password: password,
-          firstName: firstName,
-          lastName: lastName
-        })
-    })
-    .then(user => {
-      return res.status(201).json(user.apiRepr());
-    })
-    .catch(err => {
-      res.status(500).json({message: 'Internal server error'})
-    });
-});
-
+//create a new contact
 app.post('/:user/new_contact', (req, res) => {
   let serFirst = req.body.serFirst ? req.body.serFirst : '';
   let serLast = req.body.serLast ? req.body.serLast: '';
@@ -152,7 +159,7 @@ app.post('/:user/new_contact', (req, res) => {
 
   ContactModel
     .create({
-      user: req.body.user,
+      serUser: req.body.serUser,
       serNextContact: req.body.serNextContact,
       serFirst: serFirst,
       serLast: serLast,
@@ -172,6 +179,8 @@ app.post('/:user/new_contact', (req, res) => {
     });
 });
 
+
+//delete a contact
 app.delete('/:user/one_contact/:id', (req, res) => {
   ContactModel
   .findByIdAndRemove(req.params.id)
@@ -185,6 +194,8 @@ app.delete('/:user/one_contact/:id', (req, res) => {
   });
 });
 
+
+//delete a past instance
 app.delete('/:user/one_contact/:id/:pastId', (req, res) => {
   ContactModel
   .findByIdAndRemove(req.params.id)
@@ -198,6 +209,8 @@ app.delete('/:user/one_contact/:id/:pastId', (req, res) => {
   });
 });
 
+
+//edit a contact
 app.put('/:user/edit_contact/:id', (req, res) => {
   if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     res.status(400).json({
@@ -219,6 +232,8 @@ app.put('/:user/edit_contact/:id', (req, res) => {
     .catch(err => res.status(500).json({message: 'Contact not updated'}));
 });
 
+
+//edit a data point on one contact
 app.put('/:user/one_contact/:_id', (req, res) => {
   console.log(req.body);
   ContactModel
@@ -228,6 +243,7 @@ app.put('/:user/one_contact/:_id', (req, res) => {
   .catch(err => res.status(500).json({message: 'Contact not updated'}));
 });
 
+//add a new past instance
 app.post('/:user/newPast/:id', (req, res) => {
   console.log(req.body);
   ContactModel.findByIdAndUpdate(
@@ -286,72 +302,106 @@ if (require.main === module) {
 
 const jsonParser = require('body-parser').json();
 
-app.post('/login',
-  passport.authenticate('local'),
-  function(req, res) {
-  res.redirect('/users/' + req.user.username);
-});
+// const basicStrategy = new BasicStrategy(function(username, password, callback) {
+//   let user;
+//   User
+//     .findOne({username: username})
+//     .exec()
+//     .then(_user => {
+//       user = _user;
+//       if (!user) {
+//         return callback(null, false, {message: 'Incorrect username'});
+//       }
+//       return user.validatePassword(password);
+//     })
+//     .then(isValid => {
+//       if (!isValid) {
+//         return callback(null, false, {message: 'Incorrect password'});
+//       }
+//       else {
+//         return callback(null, user)
+//       }
+//     });
+// });
+//
+// passport.use(basicStrategy);
+// router.use(passport.initialize());
+//
+// router.get('/login',
+//   passport.authenticate('basic', {session: false}),
+//   (req, res) => res.json(user.apiRepr())
+// );
+//
+// app.use(router)
 
-app.post('/new_user', (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({message: 'No request body'});
-  }
+// app.post('/login',
+//   passport.authenticate('basicStrategy'),
+//   function(req, res) {
+//   res.redirect(req.user.username + '/contacts');
+// });
 
-  if (!('username' in req.body)) {
-    return res.status(422).json({message: 'Missing field: username'});
-  }
+// app.post('/new_user', (req, res) => {
+//   if (!req.body) {
+//     return res.status(400).json({message: 'No request body'});
+//   }
+//
+//   if (!('username' in req.body)) {
+//     return res.status(422).json({message: 'Missing field: username'});
+//   }
+//
+//   let {username, password, firstName, lastName} = req.body;
+//
+//   if (typeof username !== 'string') {
+//     return res.status(422).json({message: 'Incorrect field type: username'});
+//   }
+//
+//   username = username.trim();
+//
+//   if (username === '') {
+//     return res.status(422).json({message: 'Incorrect field length: username'});
+//   }
+//
+//   if (!(password)) {
+//     return res.status(422).json({message: 'Missing field: password'});
+//   }
+//
+//   if (typeof password !== 'string') {
+//     return res.status(422).json({message: 'Incorrect field type: password'});
+//   }
+//
+//   password = password.trim();
+//
+//   if (password === '') {
+//     return res.status(422).json({message: 'Incorrect field length: password'});
+//   }
+//
+//   // check for existing user
+//   return User
+//   .find({username})
+//   .count()
+//   .exec()
+//   .then(count => {
+//     if (count > 0) {
+//       return res.status(422).json({message: 'username already taken'});
+//     }
+//     // if no existing user, hash password
+//     return User
+//     .create({
+//       username: username,
+//       password: password,
+//       firstName: firstName,
+//       lastName: lastName
+//     })
+//   })
+//   .then(user => {
+//     return res.status(201).json(user.apiRepr());
+//   })
+//   .catch(err => {
+//     res.status(500).json({message: 'Internal server error'})
+//   });
+// });
 
-  let {username, password, firstName, lastName} = req.body;
+app.use('/users/', userRouter);
 
-  if (typeof username !== 'string') {
-    return res.status(422).json({message: 'Incorrect field type: username'});
-  }
-
-  username = username.trim();
-
-  if (username === '') {
-    return res.status(422).json({message: 'Incorrect field length: username'});
-  }
-
-  if (!(password)) {
-    return res.status(422).json({message: 'Missing field: password'});
-  }
-
-  if (typeof password !== 'string') {
-    return res.status(422).json({message: 'Incorrect field type: password'});
-  }
-
-  password = password.trim();
-
-  if (password === '') {
-    return res.status(422).json({message: 'Incorrect field length: password'});
-  }
-
-  // check for existing user
-  return User
-  .find({username})
-  .count()
-  .exec()
-  .then(count => {
-    if (count > 0) {
-      return res.status(422).json({message: 'username already taken'});
-    }
-    // if no existing user, hash password
-    return User
-    .createUser({
-      username: username,
-      password: password,
-      firstName: firstName,
-      lastName: lastName
-    })
-    .createCollection("username")
-  })
-  .then(user => {
-    return res.status(201).json(user.apiRepr());
-  })
-  .catch(err => {
-    res.status(500).json({message: 'Internal server error'})
-  });
-});
 
 module.exports = {runServer, app, closeServer};

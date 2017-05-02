@@ -44,7 +44,8 @@ export class OneContact extends React.Component {
         checkedIcon={<ActionFavorite />}
         uncheckedIcon={<ActionFavoriteBorder />}
         onCheck={(event, isInputChecked) => {
-          this.props.changeHeart(contactId, isInputChecked)
+          console.log(isInputChecked);
+          this.props.changeHeart(user, contactId, isInputChecked)
         }} />
         <p>{this.props.co}</p>
         <p>{this.props.job}</p>
@@ -59,7 +60,7 @@ export class OneContact extends React.Component {
         <p><Alarm />Follow up with this contact on {this.props.appointment}</p>
           <DatePicker hintText="Change" underlineStyle={{display: 'none'}} onChange={(event, date) => {
             let sendDate = moment(date).format("MMM DD YYYY");
-            this.props.changeAppointment(contactId, sendDate)
+            this.props.changeAppointment(user, contactId, sendDate)
           }}/>
       </Paper>
       <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
@@ -135,8 +136,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
-  changeAppointment: (contactId, sendDate) => dispatch(actions.fetchDateUpdate(contactId, sendDate)),
-  changeHeart: (contactId, isInputChecked) => dispatch(actions.fetchHeartUpdate(contactId, isInputChecked)),
+  changeAppointment: (user, contactId, sendDate) => dispatch(actions.fetchDateUpdate(user, contactId, sendDate)),
+  changeHeart: (user, contactId, isInputChecked) => dispatch(actions.fetchHeartUpdate(user, contactId, isInputChecked)),
   addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput))
 })
 
