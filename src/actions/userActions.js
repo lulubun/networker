@@ -17,7 +17,7 @@ export const checkUser = (userName, password) => ({
 
 export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput) {
   return dispatch => {
-    const userUrl = 'http://localhost:8080/users';
+    const userUrl = 'http://localhost:8080/users/create';
     fetch(userUrl, {
       method: 'POST',
       headers: {
@@ -32,14 +32,14 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
       })
     })
     .then(response => response.json())
-    .then(location.assign('http://localhost:3000/:user/contacts'))
+    .then(location.assign('http://localhost:3000/' + usernameInput + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = 'http://localhost:8080/';
+    const user = 'http://localhost:8080/users/me';
     console.log(usernameInput, passwordInput);
     fetch(user, {
       method: 'POST',
@@ -53,6 +53,7 @@ export function fetchOneUser(usernameInput, passwordInput) {
       })
     })
     .then(response => response.json())
+    .then(data => console.log(data))
     .catch(ex => console.log(ex))
   }
 }

@@ -196,17 +196,20 @@ app.delete('/:user/one_contact/:id', (req, res) => {
 
 
 //delete a past instance
-app.delete('/:user/one_contact/:id/:pastId', (req, res) => {
+app.put('/:user/one_contact/:id/:pastId', (req, res) => {
+  console.log('hit server');
   ContactModel
-  .findByIdAndRemove(req.params.id)
-  .exec()
-  .then(() => {
-    res.status(201).json({message: 'Contact instance deleted'})
-  })
-  .catch(err => {
-    console.error(err);
-    res.status(500).json({error: 'Contact instance not deleted'})
-  });
+  .findByIdAndUpdate(
+    req.params.id,
+    {$pull: {"serPast": {$elemMatch: {"pastId": req.params.pastId}}}},
+    function(err, updatedPast) {
+      console.log(updatedPast);
+      if(err) {
+        console.log(err);
+      }
+      res.json(updatedPast)
+    }
+  );
 });
 
 
@@ -235,7 +238,6 @@ app.put('/:user/edit_contact/:id', (req, res) => {
 
 //edit a data point on one contact
 app.put('/:user/one_contact/:_id', (req, res) => {
-  console.log(req.body);
   ContactModel
   .findByIdAndUpdate(req.params._id, req.body)
   .exec()
@@ -245,7 +247,6 @@ app.put('/:user/one_contact/:_id', (req, res) => {
 
 //add a new past instance
 app.post('/:user/newPast/:id', (req, res) => {
-  console.log(req.body);
   ContactModel.findByIdAndUpdate(
         req.params.id,
         {$push: {"serPast": req.body}},
@@ -401,7 +402,7 @@ const jsonParser = require('body-parser').json();
 //   });
 // });
 
-app.use('/users/', userRouter);
+app.use('/users', userRouter);
 
 
 module.exports = {runServer, app, closeServer};

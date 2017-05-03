@@ -300,3 +300,32 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
     .then(json => dispatch(updateContactPast(json)))
   }
 }
+
+export function fetchDeletePast(userOne, contactId, oneId) {
+  let _id = contactId;
+  const user = userOne;
+  const pastId = oneId;
+  return dispatch => {
+    const urlDel = 'http://localhost:8080/' + user + '/one_contact/' + _id + '/' + pastId;
+    fetch(urlDel, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        _id,
+        user,
+        pastId
+      })
+    })
+    .then(response => response.json())
+    .then(data => ({
+        data: data,
+        status: data.status
+    })).
+    then(res => {
+    console.log(res.status, res.data)
+    })
+    .catch(ex => console.log(ex))
+  }
+};

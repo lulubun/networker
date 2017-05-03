@@ -21,13 +21,16 @@ UserSchema.methods.apiRepr = function() {
   return {
     username: this.username || '',
     firstName: this.firstName || '',
-    lastName: this.lastName || '',
-    password: this.password || ''
+    lastName: this.lastName || ''
   };
 }
 
 UserSchema.methods.validatePassword = function(password) {
   return compare(password, this.password);
+}
+
+UserSchema.statics.hashPassword = function(password) {
+  return bcrypt.hash(password, 10);
 }
 
 const User = mongoose.model('User', UserSchema);

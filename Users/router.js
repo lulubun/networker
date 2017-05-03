@@ -16,6 +16,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
     .findOne({username: username})
     .exec()
     .then(_user => {
+      console.log(_user);
       user = _user;
       if (!user) {
         return callback(null, false, {message: 'Incorrect username'});
@@ -37,14 +38,7 @@ router.use(passport.initialize());
 
 
 //create a new user
-router.post('/users', (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({message: 'No request body'});
-  }
-
-  if (!('username' in req.body)) {
-    return res.status(422).json({message: 'Missing field: username'});
-  }
+router.post('/create', (req, res) => {
 
   let {username, password, firstName, lastName} = req.body;
 
@@ -73,7 +67,7 @@ router.post('/users', (req, res) => {
   }
 
   // check for existing user
-  return User
+  User
     .find({username})
     .count()
     .exec()
@@ -81,13 +75,13 @@ router.post('/users', (req, res) => {
       if (count > 0) {
         return res.status(422).json({message: 'username already taken'});
       }
-      return User
+      return User.hashPassword(password)
     })
-    .then(data => {
+    .then(hash => {
       return User
         .create({
           username: username,
-          password: password,
+          password: hash,
           firstName: firstName,
           lastName: lastName
         })
@@ -101,10 +95,10 @@ router.post('/users', (req, res) => {
 });
 
 
-//validate a user?
-router.post('/',
+//validate a user
+router.post('/me',
   passport.authenticate('basic', {session: false}),
-  (req, res) => res.json({user: req.user.apiRepr()})
+  (req, res) => console.log(req)
 );
 
 
