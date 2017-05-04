@@ -28,6 +28,7 @@ export class Login extends React.Component {
         <TextField
           className="passwordIP"
           hintText="Password"
+          type='password'
           onChange={(event, newValue) => {
           passwordInput = newValue
           }}

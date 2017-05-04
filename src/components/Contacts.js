@@ -13,6 +13,7 @@ class Contacts extends React.Component {
   componentDidMount() {
     const user = this.props.params.user;
     this.props.getAllContacts(user);
+    this.props.startGoogle();
   };
 
   render() {
@@ -62,12 +63,13 @@ class Contacts extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  contactList: state.AllContactsState.allContacts
+  contactList: state.AllContactsState.allContacts,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getAllContacts: (user) => dispatch(actions.fetchAllContacts(user)),
-  handleClick: (linkId) => dispatch(actions.fetchWholeContact(linkId))
+  handleClick: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
+  startGoogle: () => dispatch(actions.initClient())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

@@ -1,3 +1,5 @@
+/* global gapi */
+
 import DATABASE_URL from '../../config';
 
 //open a contact just created
@@ -242,6 +244,7 @@ export function fetchDateUpdate(user, contactId, date) {
     })
     .then(response => response.json())
     .then(json => dispatch(updateDateNext(json)))
+    //*******!!!!!!!!!!!!!!Here's where I want to add a function to sign in and add a calendar event!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     .then(location.reload())
     .catch(ex => console.log(ex))
   }
@@ -322,10 +325,30 @@ export function fetchDeletePast(userOne, contactId, oneId) {
     .then(data => ({
         data: data,
         status: data.status
-    })).
-    then(res => {
+    }))
+    .then(res => {
     console.log(res.status, res.data)
     })
     .catch(ex => console.log(ex))
   }
 };
+
+export function initClient() {
+  return dispatch => {
+    gapi.client.init({
+      'apiKey': 'AIzaSyDrPOJSRRwaNr2Jc5fSTX412czMyiLh5Ug',
+      'clientId': '42592128683-4eruu5b4pjfk70nmpmdp9t5c2n1e33bn.apps.googleusercontent.com',
+      'scope': 'https://www.googleapis.com/auth/calendar',
+      'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
+    })
+    .then(function () {
+      let GoogleAuth;
+      GoogleAuth = gapi.auth2.getAuthInstance();
+    });
+  }
+}
+
+export function signInGoogle() {
+let GoogleAuth = gapi.auth2.getAuthInstance();
+  GoogleAuth.signIn();
+}
