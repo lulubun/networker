@@ -8,12 +8,16 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
 import '../index.css';
+import GoogleLogin from 'react-google-login';
+
+const responseGoogle = (response) => {
+  console.log(response);
+}
 
 class Contacts extends React.Component {
   componentDidMount() {
     const user = this.props.params.user;
     this.props.getAllContacts(user);
-    this.props.startGoogle();
   };
 
   render() {
@@ -34,6 +38,15 @@ class Contacts extends React.Component {
 
     return (
       <div className="Contacts">
+        <GoogleLogin
+          style={{width: '110%', marginRight: -5, marginLeft: -10}}
+          clientId={'42592128683-4eruu5b4pjfk70nmpmdp9t5c2n1e33bn.apps.googleusercontent.com'}
+          onSuccess={this.props.setLogin(true)}
+          onFailure={this.props.setLogin(false)}
+          offline={false}
+        >
+          <RaisedButton label="Login with Google to add follow up reminders to your calendar" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/>
+        </GoogleLogin>
         <div className="New_Button">
           <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
         </div>
@@ -69,7 +82,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch) => ({
   getAllContacts: (user) => dispatch(actions.fetchAllContacts(user)),
   handleClick: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
-  startGoogle: () => dispatch(actions.initClient())
+  startGoogle: () => dispatch(actions.initClient()),
+  setLogin: (boolean) => dispatch(actions.setGoogleLogin(boolean))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

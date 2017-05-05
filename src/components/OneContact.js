@@ -28,13 +28,25 @@ let contactNotesInput = '';
 let pastId = 0;
 let prettyDate = '';
 
+//If login is true, render a button to add an event, else disable button? CallAPI
+
 export class OneContact extends React.Component {
   componentDidMount() {
     this.props.getOneContact(this.props.params.id);
   }
  render() {
-   const contactId = this.props.params.id;
-   const user = this.props.params.user;
+  const contactId = this.props.params.id;
+  const user = this.props.params.user;
+  let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
+  var event = {
+    'summary': 'Follw up with' + this.props.first + this.props.last,
+    'start': {
+      'date': dayNext
+    },
+    'end': {
+    'date': dayNext
+  }
+};
   return(
     <div>
       <Paper style={style} zDepth={1}>
@@ -62,6 +74,10 @@ export class OneContact extends React.Component {
             let sendDate = moment(date).format("MMM DD YYYY");
             this.props.changeAppointment(user, contactId, sendDate)
           }}/>
+          <RaisedButton
+            label="Add to Google Calendar" backgroundColor="#5D576B" labelColor="#F1F1EF"
+            onTouchTap= //ADD API STUFF HERE!!!!!!!!!!!!!
+          />
       </Paper>
       <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1}>
@@ -132,6 +148,7 @@ const mapStateToProps = (state, props) => ({
   phone: state.ContactState.phone,
   firstMeet: state.ContactState.meetDate,
   meetInfo: state.ContactState.meetNotes,
+  googleLogin: state.ContactState.login
 });
 
 const mapDispatchToProps = (dispatch) => ({

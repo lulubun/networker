@@ -2,6 +2,12 @@
 
 import DATABASE_URL from '../../config';
 
+export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
+export const setGoogleLogin = (boolean) => ({
+  type: SET_GOOGLE_LOGIN,
+  boolean
+})
+
 //open a contact just created
 export const SET_NEW_CONTACT = 'SET_NEW_CONTACT';
 export const setNewContact = (newDateNext, newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetDate, newMeetNotes) => ({
@@ -244,11 +250,21 @@ export function fetchDateUpdate(user, contactId, date) {
     })
     .then(response => response.json())
     .then(json => dispatch(updateDateNext(json)))
-    //*******!!!!!!!!!!!!!!Here's where I want to add a function to sign in and add a calendar event!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    .then(location.reload())
+    .then(() => dispatch(askForGoogle()))
     .catch(ex => console.log(ex))
   }
 };
+
+export function askForGoogle() {
+  return dispatch => {
+    let ask = confirm("Do you want to add this appointment to your Google Calendar?");
+    if (ask = true) {
+      () => dispatch(signInGoogle())
+    } else {
+      location.reload()
+    }
+  }
+}
 
 export function fetchHeartUpdate(user, contactId, isInputChecked) {
   const serUser = user;

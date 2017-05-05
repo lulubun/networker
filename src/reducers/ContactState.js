@@ -13,11 +13,19 @@ const initialState = {
   phone: '',
   meetDate: today,
   meetNotes: '',
+  login: false,
   allPast: []
 }
 
 const ContactState = (state=initialState, action) => {
   switch (action.type) {
+  case 'SET_GOOGLE_LOGIN':
+    return {
+      ...state,
+      login: action.boolean
+    }
+
+
   case 'SET_NEW_CONTACT':
     return {
       ...state,
