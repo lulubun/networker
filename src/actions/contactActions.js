@@ -1,4 +1,5 @@
 /* global gapi */
+/* global appendPre */
 
 import DATABASE_URL from '../../config';
 
@@ -257,7 +258,7 @@ export function fetchDateUpdate(user, contactId, date) {
 
 export function askForGoogle() {
   return dispatch => {
-    let ask = confirm("Do you want to add this appointment to your Google Calendar?");
+    let ask = confirm("Do you want to add follow up reminders to your Google Calendar?");
     if (ask = true) {
       () => dispatch(signInGoogle())
     } else {
@@ -360,11 +361,30 @@ export function initClient() {
     .then(function () {
       let GoogleAuth;
       GoogleAuth = gapi.auth2.getAuthInstance();
-    });
+    })
+    .then(() => dispatch.setGoogleLogin(true))
   }
 }
 
 export function signInGoogle() {
 let GoogleAuth = gapi.auth2.getAuthInstance();
   GoogleAuth.signIn();
+}
+
+function appendPre(message) {
+  var pre = document.getElementById('content');
+  var textContent = document.createTextNode(message + '\n');
+  pre.appendChild(textContent);
+}
+
+
+export function pushToGoogle(event) {
+  console.log(gapi.client);
+  let request = gapi.client.calendar.events.insert({
+    'calendarId': 'primary',
+    'resource': event
+  });
+  request.execute(function(event) {
+  appendPre('Event created: ' + event.htmlLink);
+});
 }

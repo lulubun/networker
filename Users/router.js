@@ -1,8 +1,9 @@
-const {BasicStrategy} = require('passport-http');
+//const {BasicStrategy} = require('passport-http');
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const passport = require('passport');
 const {User} = require('./models');
+const LocalStrategy = require('passport-local');
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.use(jsonParser);
 
 
 // NB: at time of writing, passport uses callbacks, not promises
-const basicStrategy = new BasicStrategy((username, password, callback) => {
+const localStrategy = new LocalStrategy((username, password, callback) => {
   let user;
   User
     .findOne({username: username})
@@ -33,7 +34,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
     });
 });
 
-passport.use(basicStrategy);
+passport.use(localStrategy);
 router.use(passport.initialize());
 
 
@@ -97,8 +98,13 @@ router.post('/create', (req, res) => {
 
 //validate a user
 router.post('/me',
-  passport.authenticate('basic', {session: false}),
-  (req, res) => console.log(req)
+  passport.authenticate('local', {session: false}),
+  (req, res) => {
+    res.json({user: req.user.apiRepr()})
+    .catch(err => {
+      res.status(500).json({message: 'Internal server error'})
+    });
+  }  
 );
 
 

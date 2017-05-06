@@ -35,6 +35,7 @@ export class OneContact extends React.Component {
     this.props.getOneContact(this.props.params.id);
   }
  render() {
+  let loginStat = this.props.googleLogin;
   const contactId = this.props.params.id;
   const user = this.props.params.user;
   let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
@@ -76,7 +77,13 @@ export class OneContact extends React.Component {
           }}/>
           <RaisedButton
             label="Add to Google Calendar" backgroundColor="#5D576B" labelColor="#F1F1EF"
-            onTouchTap= //ADD API STUFF HERE!!!!!!!!!!!!!
+            onTouchTap={(event) => {
+              // if (loginStat == false) {
+              // alert("You must be signed in to Google to use this feature")
+              // } else {
+              this.props.runApiPush(event)
+              //}
+            }}
           />
       </Paper>
       <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
@@ -155,7 +162,8 @@ const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
   changeAppointment: (user, contactId, sendDate) => dispatch(actions.fetchDateUpdate(user, contactId, sendDate)),
   changeHeart: (user, contactId, isInputChecked) => dispatch(actions.fetchHeartUpdate(user, contactId, isInputChecked)),
-  addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput))
+  addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput)),
+  runApiPush: (event) => dispatch(actions.pushToGoogle(event))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OneContact);
