@@ -12,6 +12,7 @@ import GoogleLogin from 'react-google-login';
 
 const responseGoogle = (response) => {
   console.log(response);
+  response.grant({scope: 'https://www.googleapis.com/auth/calendar'})
 }
 
 class Contacts extends React.Component {
@@ -36,13 +37,17 @@ class Contacts extends React.Component {
       color: '#F1F1EF',
     };
 
+    const responseGoogle = (response) => {
+      console.log(response);
+    }
+
     return (
       <div className="Contacts">
         <GoogleLogin
           style={{width: '110%', marginRight: -5, marginLeft: -10}}
           clientId={'42592128683-4eruu5b4pjfk70nmpmdp9t5c2n1e33bn.apps.googleusercontent.com'}
-          onSuccess={this.props.setLogin(true)}
-          onFailure={this.props.setLogin(false)}
+          onSuccess={this.props.setLogin(true), responseGoogle}
+          onFailure={this.props.setLogin(false), responseGoogle}
           offline={false}
         >
           <RaisedButton label="Login with Google to add follow up reminders to your calendar" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/>

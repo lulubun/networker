@@ -53,7 +53,7 @@ export function fetchOneUser(usernameInput, passwordInput) {
       })
     })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => location.assign('http://localhost:3000/' + data.user.username + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }

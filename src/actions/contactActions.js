@@ -251,21 +251,9 @@ export function fetchDateUpdate(user, contactId, date) {
     })
     .then(response => response.json())
     .then(json => dispatch(updateDateNext(json)))
-    .then(() => dispatch(askForGoogle()))
     .catch(ex => console.log(ex))
   }
 };
-
-export function askForGoogle() {
-  return dispatch => {
-    let ask = confirm("Do you want to add follow up reminders to your Google Calendar?");
-    if (ask = true) {
-      () => dispatch(signInGoogle())
-    } else {
-      location.reload()
-    }
-  }
-}
 
 export function fetchHeartUpdate(user, contactId, isInputChecked) {
   const serUser = user;
@@ -350,36 +338,14 @@ export function fetchDeletePast(userOne, contactId, oneId) {
   }
 };
 
-export function initClient() {
-  return dispatch => {
-    gapi.client.init({
-      'apiKey': 'AIzaSyDrPOJSRRwaNr2Jc5fSTX412czMyiLh5Ug',
-      'clientId': '42592128683-4eruu5b4pjfk70nmpmdp9t5c2n1e33bn.apps.googleusercontent.com',
-      'scope': 'https://www.googleapis.com/auth/calendar',
-      'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']
-    })
-    .then(function () {
-      let GoogleAuth;
-      GoogleAuth = gapi.auth2.getAuthInstance();
-    })
-    .then(() => dispatch.setGoogleLogin(true))
-  }
-}
-
-export function signInGoogle() {
-let GoogleAuth = gapi.auth2.getAuthInstance();
-  GoogleAuth.signIn();
-}
-
-function appendPre(message) {
+export function appendPre(message) {
   var pre = document.getElementById('content');
   var textContent = document.createTextNode(message + '\n');
   pre.appendChild(textContent);
 }
 
 
-export function pushToGoogle(event) {
-  console.log(gapi.client);
+export function pushToGoogleFirstTry(event) {
   let request = gapi.client.calendar.events.insert({
     'calendarId': 'primary',
     'resource': event
@@ -387,4 +353,19 @@ export function pushToGoogle(event) {
   request.execute(function(event) {
   appendPre('Event created: ' + event.htmlLink);
 });
+}
+
+export function pushToGoogle(event) {
+  fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: event
+  })
+  .then(response => response.json())
+  .then(res => {
+    console.log(res)
+  })
+  .catch(ex => console.log(ex))
 }

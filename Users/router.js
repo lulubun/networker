@@ -99,12 +99,7 @@ router.post('/create', (req, res) => {
 //validate a user
 router.post('/me',
   passport.authenticate('local', {session: false}),
-  (req, res) => {
-    res.json({user: req.user.apiRepr()})
-    .catch(err => {
-      res.status(500).json({message: 'Internal server error'})
-    });
-  }  
+  (req, res) => res.json({user: req.user.apiRepr()})
 );
 
 

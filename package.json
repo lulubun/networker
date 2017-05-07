@@ -21,6 +21,7 @@
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
     "react": "^15.4.2",
+    "react-add-to-calendar": "^0.0.9",
     "react-dom": "^15.4.2",
     "react-google-login": "^2.8.9",
     "react-redux": "^5.0.3",
