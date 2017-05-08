@@ -7,7 +7,7 @@ import { Route, Router, IndexRoute, browserHistory } from 'react-router';
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 import Control from './components/Control';
-import Login from './components/Login';
+import LoginContainer from './components/LoginContainer';
 import Contacts from './components/Contacts';
 import OneContact from './components/OneContact';
 import EditContact from './components/EditContact';
@@ -41,8 +41,8 @@ const Start = () => (
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={Control}>
-          <IndexRoute component={Login} />
-          <Route path="/login" component={Login} />
+          <IndexRoute component={LoginContainer} />
+          <Route path="/login" component={LoginContainer} />
           <Route path=":user/one_contact/:id" component={OneContact} />
           <Route path=":user/new_contact" component={NewContact} />
           <Route path=":user/contacts" component={Contacts} />

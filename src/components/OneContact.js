@@ -33,14 +33,21 @@ let prettyDate = '';
 export class OneContact extends React.Component {
   componentDidMount() {
     this.props.getOneContact(this.props.params.id);
+    this.props.removeHide();
+  }
+  componentWillUnmount() {
+    this.props.hide()
   }
  render() {
   let loginStat = this.props.googleLogin;
   const contactId = this.props.params.id;
   const user = this.props.params.user;
   let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
-  var event = {
-    'summary': 'Follw up with' + this.props.first + this.props.last,
+  if (dayNext < moment().format("YYYY-MM-DD")) {
+    alert('Following up with this contact is overdue!')
+  }
+  var pushEvent = {
+    'summary': 'Follw up with ' + this.props.first + ' ' + this.props.last,
     'start': {
       'date': dayNext
     },
@@ -51,8 +58,9 @@ export class OneContact extends React.Component {
   return(
     <div>
       <Paper style={style} zDepth={1}>
-        <p>{this.props.first} {this.props.last}</p>
+        <p className="contactName">{this.props.first} {this.props.last}</p>
         <Checkbox
+        label="Important"
         checked={this.props.important}
         checkedIcon={<ActionFavorite />}
         uncheckedIcon={<ActionFavoriteBorder />}
@@ -60,17 +68,16 @@ export class OneContact extends React.Component {
           console.log(isInputChecked);
           this.props.changeHeart(user, contactId, isInputChecked)
         }} />
-        <p>{this.props.co}</p>
-        <p>{this.props.job}</p>
-        <p className="phoneText"><Phone /> {this.props.phone}</p>
-        <p className="emailText"><Email /> {this.props.email}</p>
+        <p>{this.props.job} at {this.props.co}</p>
+        <p className="phoneText"><Phone className="conIcon"/> {this.props.phone}</p>
+        <p className="emailText"><Email className="conIcon"/> {this.props.email}</p>
         <p>Met this contact on: {this.props.firstMeet}</p>
         <p>Notes: {this.props.meetInfo}</p>
         <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
           label="Edit Contact Info" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       </Paper>
       <Paper style={style} zDepth={1} name="dateChanger">
-        <p><Alarm />Follow up with this contact on {this.props.appointment}</p>
+        <p><Alarm className="conIcon"/>Follow up with this contact on {this.props.appointment}</p>
           <DatePicker hintText="Change" underlineStyle={{display: 'none'}} onChange={(event, date) => {
             let sendDate = moment(date).format("MMM DD YYYY");
             this.props.changeAppointment(user, contactId, sendDate)
@@ -81,7 +88,7 @@ export class OneContact extends React.Component {
               // if (loginStat == false) {
               // alert("You must be signed in to Google to use this feature")
               // } else {
-              this.props.runApiPush(event)
+              this.props.runApiPush(pushEvent)
               //}
             }}
           />
@@ -99,25 +106,25 @@ export class OneContact extends React.Component {
           typeInput = value;
         }}>
           <RadioButton
-            value="call"
+            value="Call"
             label="Call"
           />
           <RadioButton
-            value="email"
+            value="Email"
             label="Email"
           />
           <RadioButton
-            value="meeting"
+            value="Meeting"
             label="Meeting"
           />
           <RadioButton
-            value="other"
+            value="Other"
             label="Other"
           />
         </RadioButtonGroup>
         <TextField
           hintText="notes"
-          floatingLabelText="notes"
+          floatingLabelText="Notes"
           ref={(node) => this.notesText = node}
           multiLine={true}
           onChange={(event, newValue) => {
@@ -163,7 +170,9 @@ const mapDispatchToProps = (dispatch) => ({
   changeAppointment: (user, contactId, sendDate) => dispatch(actions.fetchDateUpdate(user, contactId, sendDate)),
   changeHeart: (user, contactId, isInputChecked) => dispatch(actions.fetchHeartUpdate(user, contactId, isInputChecked)),
   addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput)),
-  runApiPush: (event) => dispatch(actions.pushToGoogle(event))
+  runApiPush: (pushEvent) => dispatch(actions.pushToGoogle(pushEvent)),
+  removeHide: () => dispatch(actions.removeCssHide()),
+  hide: () => dispatch(actions.cssHide())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OneContact);

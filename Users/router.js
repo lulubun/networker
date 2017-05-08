@@ -102,5 +102,9 @@ router.post('/me',
   (req, res) => res.json({user: req.user.apiRepr()})
 );
 
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = {router};

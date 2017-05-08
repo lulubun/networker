@@ -149,9 +149,9 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
   }
 };
 
-export function fetchUpdate(user, editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) {
+export function fetchUpdate(editUser, editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) {
   return dispatch => {
-    const user = user;
+    const user = editUser;
     let _id = editId;
     const url = 'http://localhost:8080/' + user + '/edit_contact/' + _id;
     let serFirst = firstInput;
@@ -182,7 +182,8 @@ export function fetchUpdate(user, editId, firstInput, lastInput, importantInput,
       })
     })
     .then(response => console.log(response.json()))
-    .then(location.assign('http://localhost:3000/' + this.params.user + '/one_contact/' + _id))
+    .then(location.assign('http://localhost:3000/' + user + '/one_contact/' + _id))
+    .catch(ex => console.log(ex))
   }
 };
 
@@ -212,9 +213,9 @@ export function fetchAllContacts(user) {
   }
 };
 
-export function fetchDeleteContact(userEdit, editId) {
+export function fetchDeleteContact(editId, editUser) {
   let _id = editId;
-  const user = userEdit;
+  const user = editUser;
   return dispatch => {
     const urlDel = 'http://localhost:8080/' + user + '/one_contact/' + _id;
     fetch(urlDel, {
@@ -251,6 +252,7 @@ export function fetchDateUpdate(user, contactId, date) {
     })
     .then(response => response.json())
     .then(json => dispatch(updateDateNext(json)))
+    .then(location.reload())
     .catch(ex => console.log(ex))
   }
 };
@@ -339,33 +341,44 @@ export function fetchDeletePast(userOne, contactId, oneId) {
 };
 
 export function appendPre(message) {
-  var pre = document.getElementById('content');
-  var textContent = document.createTextNode(message + '\n');
-  pre.appendChild(textContent);
+  return dispatch => {
+    var pre = document.getElementById('content');
+    var textContent = document.createTextNode(message + '\n');
+    pre.appendChild(textContent);
+  }
 }
 
 
-export function pushToGoogleFirstTry(event) {
-  let request = gapi.client.calendar.events.insert({
-    'calendarId': 'primary',
-    'resource': event
-  });
-  request.execute(function(event) {
-  appendPre('Event created: ' + event.htmlLink);
-});
+export function pushToGoogle(pushEvent) {
+  return dispatch => {
+    let request = gapi.client.calendar.events.insert({
+      'calendarId': 'primary',
+      'resource': pushEvent
+    });
+    request.execute(function(pushEvent) {
+      console.log(pushEvent);
+      alert('Follow up added to your Google Calendar');
+    });
+  }
 }
 
-export function pushToGoogle(event) {
-  fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: event
-  })
-  .then(response => response.json())
-  .then(res => {
-    console.log(res)
-  })
-  .catch(ex => console.log(ex))
+export function removeCssHide() {
+  return dispatch => {
+    document.getElementById("google_stuff").classList.remove("hideMe");
+  }
+}
+
+export function cssHide() {
+  return dispatch => {
+    document.getElementById("google_stuff").classList.add("hideMe");
+  }
+}
+
+export function fetchLogOut() {
+  return dispatch => {
+    const logOut = 'http://localhost:8080/users/logout';
+    fetch(logOut)
+    .then(location.assign('http://localhost:3000/'))
+    .catch(ex => console.log(ex))
+  }
 }

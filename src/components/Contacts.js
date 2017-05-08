@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
 import '../index.css';
+import Work from 'material-ui/svg-icons/action/work';
 import GoogleLogin from 'react-google-login';
 
 const responseGoogle = (response) => {
@@ -43,15 +44,6 @@ class Contacts extends React.Component {
 
     return (
       <div className="Contacts">
-        <GoogleLogin
-          style={{width: '110%', marginRight: -5, marginLeft: -10}}
-          clientId={'42592128683-4eruu5b4pjfk70nmpmdp9t5c2n1e33bn.apps.googleusercontent.com'}
-          onSuccess={this.props.setLogin(true), responseGoogle}
-          onFailure={this.props.setLogin(false), responseGoogle}
-          offline={false}
-        >
-          <RaisedButton label="Login with Google to add follow up reminders to your calendar" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/>
-        </GoogleLogin>
         <div className="New_Button">
           <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
         </div>
@@ -70,11 +62,14 @@ class Contacts extends React.Component {
                labelStyle={{color: '#F1F1EF'}}
                />
                </Link>
-               <p>{contact.serCompany}</p>
+               <p><Work className="companyDisplay" color={"#5D576B"}/>{contact.serCompany}</p>
              </Paper>
             </div>
           ))}
         </div>
+        <RaisedButton
+          onTouchTap={(event) => {this.props.logOutNow()}}
+          className="DoneButton" label="Log Out" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/>
       </div>
     );
   }
@@ -88,7 +83,7 @@ const mapDispatchToProps = (dispatch) => ({
   getAllContacts: (user) => dispatch(actions.fetchAllContacts(user)),
   handleClick: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
   startGoogle: () => dispatch(actions.initClient()),
-  setLogin: (boolean) => dispatch(actions.setGoogleLogin(boolean))
+  logOutNow: () => dispatch(actions.fetchLogOut())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

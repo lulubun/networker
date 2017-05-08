@@ -9,13 +9,12 @@ import moment from 'moment';
 
 export class Login extends React.Component {
   render() {
-    let today = moment().format('MMM DD YYYY')
     let usernameInput = '';
     let passwordInput = '';
 
     return(
       <div className="Login">
-        <p className="formDate">Today is {today}</p>
+        <div className="loginBox">
         <p className="form_header">Log In to Networker</p><br />
         <br />
         <TextField
@@ -46,6 +45,7 @@ export class Login extends React.Component {
         <br />
         <br/>
         <Link to={'/new_user'} className="Link"><RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
+        </div>
       </div>
     )
   }

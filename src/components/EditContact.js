@@ -13,6 +13,7 @@ export class EditContact extends React.Component {
     this.props.getOneContact(this.props.params.id);
   }
   render() {
+    let editUser = this.props.params.user;
     let editId = this.props.params.id
     let firstInput = this.props.first;
     let lastInput = this.props.last;
@@ -102,11 +103,7 @@ export class EditContact extends React.Component {
           <br />
           <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF"
             onTouchTap={(event) => {
-              if (firstInput == '' && lastInput == '') {
-                alert("Missing contact name")
-              } else {
-                this.props.editContact(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
-              }
+                this.props.editContact(editUser, editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
             }}
           />
           <br />
@@ -115,7 +112,7 @@ export class EditContact extends React.Component {
             onTouchTap={(event) => {
               const doubleCheck = confirm("Are you sure?");
               if (doubleCheck == true) {
-                this.props.delete(editId);
+                this.props.delete(editId, editUser);
               }
             }}
           />
@@ -139,8 +136,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
-  editContact: (editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) => dispatch(actions.fetchUpdate(editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput)),
-  delete: (editId) => dispatch(actions.fetchDeleteContact(editId))
+  editContact: (editUser, editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) => dispatch(actions.fetchUpdate(editUser, editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput)),
+  delete: (editId, editUser) => dispatch(actions.fetchDeleteContact(editId, editUser))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditContact);
