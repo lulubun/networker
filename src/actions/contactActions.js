@@ -78,7 +78,7 @@ export const updateHeart = (updatedHeart) => ({
 
 export function fetchWholeContact(id, user) {
   return dispatch => {
-    const urlWhole = ('http://localhost:8080/' + user + '/one_contact/' + id)
+    const urlWhole = (DATABASE_URL + '/' + user + '/one_contact/' + id)
     fetch(urlWhole)
     .then(response => response.json())
     .then(data => {
@@ -114,7 +114,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
   return dispatch => {
     const serUser = user;
     console.log(serUser);
-    const url = 'http://localhost:8080/' + serUser + '/new_contact';
+    const url = DATABASE_URL + '/' + serUser + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
     let serLast = lastInput;
@@ -153,7 +153,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
   return dispatch => {
     const user = editUser;
     let _id = editId;
-    const url = 'http://localhost:8080/' + user + '/edit_contact/' + _id;
+    const url = DATABASE_URL + '/' + user + '/edit_contact/' + _id;
     let serFirst = firstInput;
     let serLast = lastInput;
     let serImportant = importantInput;
@@ -195,7 +195,7 @@ export const setAllContacts = (allContacts) => ({
 
 export function fetchAllContacts(user) {
   return dispatch => {
-    const url = 'http://localhost:8080/' + user + '/contacts';
+    const url = DATABASE_URL + '/' + user + '/contacts';
     let sortedArray = [];
     fetch(url, {
       headers : {
@@ -217,7 +217,7 @@ export function fetchDeleteContact(editId, editUser) {
   let _id = editId;
   const user = editUser;
   return dispatch => {
-    const urlDel = 'http://localhost:8080/' + user + '/one_contact/' + _id;
+    const urlDel = DATABASE_URL + '/' + user + '/one_contact/' + _id;
     fetch(urlDel, {
       method: 'DELETE',
       headers: {
@@ -238,7 +238,7 @@ export function fetchDateUpdate(user, contactId, date) {
   let serNextContact = date;
   let _id = contactId;
   return dispatch => {
-    const urlDate = 'http://localhost:8080/' + serUser + '/one_contact/' + _id;
+    const urlDate = DATABASE_URL + '/' + serUser + '/one_contact/' + _id;
     fetch(urlDate, {
       method: 'PUT',
       headers: {
@@ -263,7 +263,7 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
   console.log(serImportant);
   let _id = contactId;
   return dispatch => {
-    const urlHeart = 'http://localhost:8080/' + serUser + '/one_contact/' + _id;
+    const urlHeart = DATABASE_URL + '/' + serUser + '/one_contact/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
@@ -288,7 +288,7 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
     let id = contactId;
     console.log(user, id);
     let pastId = pastid;
-    const pastUrl = 'http://localhost:8080/' + user + '/newPast/' + id;
+    const pastUrl = DATABASE_URL + '/' + user + '/newPast/' + id;
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;
@@ -316,7 +316,7 @@ export function fetchDeletePast(userOne, contactId, oneId) {
   const user = userOne;
   const pastId = oneId;
   return dispatch => {
-    const urlDel = 'http://localhost:8080/' + user + '/one_contact/' + _id + '/' + pastId;
+    const urlDel = DATABASE_URL + '/' + user + '/one_contact/' + _id + '/' + pastId;
     fetch(urlDel, {
       method: 'PUT',
       headers: {
@@ -376,7 +376,7 @@ export function cssHide() {
 
 export function fetchLogOut() {
   return dispatch => {
-    const logOut = 'http://localhost:8080/users/logout';
+    const logOut = DATABASE_URL + '/users/logout';
     fetch(logOut)
     .then(location.assign('http://localhost:3000/'))
     .catch(ex => console.log(ex))

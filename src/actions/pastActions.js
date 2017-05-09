@@ -9,7 +9,7 @@ export const setNewPast = (newPastDate, newPastTypeCon, newPastNote) => ({
 export function sendNewPast(contactId, pastId, dateInput, typeInput, contactNotesInput) {
   return dispatch => {
     let _id = contactId;
-    const pastUrl = 'http://localhost:8080/:user/new_past/' + _id;
+    const pastUrl = DATABASE_URL + '/:user/new_past/' + _id;
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;

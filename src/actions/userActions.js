@@ -1,3 +1,5 @@
+import DATABASE_URL from '../../config';
+
 export const SET_USER = 'SET_USER';
 export const setUser = (firstNameInput, lastNameInput,
 usernameInput, passwordInput) => ({
@@ -17,7 +19,7 @@ export const checkUser = (userName, password) => ({
 
 export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput) {
   return dispatch => {
-    const userUrl = 'http://localhost:8080/users/create';
+    const userUrl = DATABASE_URL + 'users/create';
     fetch(userUrl, {
       method: 'POST',
       headers: {
@@ -32,14 +34,14 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
       })
     })
     .then(response => response.json())
-    .then(location.assign('http://localhost:3000/' + usernameInput + '/contacts'))
+    .then(location.assign(DATABASE_URL + usernameInput + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = 'http://localhost:8080/users/me';
+    const user = DATABASE_URL + '/users/me';
     console.log(usernameInput, passwordInput);
     fetch(user, {
       method: 'POST',
