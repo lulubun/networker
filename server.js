@@ -197,19 +197,32 @@ app.delete('/:user/one_contact/:id', (req, res) => {
 
 //delete a past instance
 app.put('/:user/one_contact/:id/:pastId', (req, res) => {
-  console.log('hit server');
+  console.log(req.params);
   ContactModel
-  .findByIdAndUpdate(
-    req.params.id,
-    {$pull: {"serPast": {$elemMatch: {"pastId": req.params.pastId}}}},
-    function(err, updatedPast) {
-      console.log(updatedPast);
+  .update(
+    { _id: req.params.id },
+    { $pull: { 'serPast': { 'pastId':  parseInt(req.params.pastId) } } }, (err, updatedObj) => {
       if(err) {
         console.log(err);
       }
-      res.json(updatedPast)
+      res.json(updatedObj)
+
     }
   );
+
+  // console.log(req.params);
+  // ContactModel
+  // .update(
+  //   req.params.id,
+  //   {$pull: {"serPast": [{"pastId": req.params.pastId}]}},
+  //   function(err, updatedPast) {
+  //     console.log(updatedPast);
+  //     if(err) {
+  //       console.log(err);
+  //     }
+  //     res.json(updatedPast)
+  //   }
+  // );
 });
 
 
@@ -241,7 +254,7 @@ app.put('/:user/one_contact/:_id', (req, res) => {
   ContactModel
   .findByIdAndUpdate(req.params._id, req.body)
   .exec()
-  .then(updatedContact => {res.status(201).json(updatedContact)})
+  .then(update => {res.status(201).json(update)})
   .catch(err => res.status(500).json({message: 'Contact not updated'}));
 });
 

@@ -1,4 +1,4 @@
-import DATABASE_URL from '../../config';
+const APP_URL = 'https://thenetworker.herokuapp.com/'
 
 export const SET_USER = 'SET_USER';
 export const setUser = (firstNameInput, lastNameInput,
@@ -19,7 +19,7 @@ export const checkUser = (userName, password) => ({
 
 export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput) {
   return dispatch => {
-    const userUrl = DATABASE_URL + 'users/create';
+    const userUrl = APP_URL + 'users/create';
     fetch(userUrl, {
       method: 'POST',
       headers: {
@@ -34,14 +34,14 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
       })
     })
     .then(response => response.json())
-    .then(location.assign(DATABASE_URL + usernameInput + '/contacts'))
+    .then(location.assign(APP_URL + usernameInput + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = DATABASE_URL + '/users/me';
+    const user = APP_URL + 'users/me';
     console.log(usernameInput, passwordInput);
     fetch(user, {
       method: 'POST',
@@ -55,7 +55,7 @@ export function fetchOneUser(usernameInput, passwordInput) {
       })
     })
     .then(response => response.json())
-    .then(data => location.assign('http://localhost:3000/' + data.user.username + '/contacts'))
+    .then(data => location.assign(APP_URL + data.user.username + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }

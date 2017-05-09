@@ -1,7 +1,6 @@
 /* global gapi */
-/* global appendPre */
 
-import DATABASE_URL from '../../config';
+const APP_URL = 'https://thenetworker.herokuapp.com/'
 
 export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
 export const setGoogleLogin = (boolean) => ({
@@ -78,7 +77,7 @@ export const updateHeart = (updatedHeart) => ({
 
 export function fetchWholeContact(id, user) {
   return dispatch => {
-    const urlWhole = (DATABASE_URL + '/' + user + '/one_contact/' + id)
+    const urlWhole = (APP_URL + user + '/one_contact/' + id)
     fetch(urlWhole)
     .then(response => response.json())
     .then(data => {
@@ -114,7 +113,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
   return dispatch => {
     const serUser = user;
     console.log(serUser);
-    const url = DATABASE_URL + '/' + serUser + '/new_contact';
+    const url = APP_URL + serUser + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
     let serLast = lastInput;
@@ -145,7 +144,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
       })
     })
     .then(response => response.json())
-    .then(location.assign('http://localhost:3000/' + user + '/contacts'))
+    .then(location.assign(APP_URL + user + '/contacts'))
   }
 };
 
@@ -153,7 +152,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
   return dispatch => {
     const user = editUser;
     let _id = editId;
-    const url = DATABASE_URL + '/' + user + '/edit_contact/' + _id;
+    const url = APP_URL + user + '/edit_contact/' + _id;
     let serFirst = firstInput;
     let serLast = lastInput;
     let serImportant = importantInput;
@@ -182,7 +181,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
       })
     })
     .then(response => console.log(response.json()))
-    .then(location.assign('http://localhost:3000/' + user + '/one_contact/' + _id))
+    .then(location.assign(APP_URL + user + '/one_contact/' + _id))
     .catch(ex => console.log(ex))
   }
 };
@@ -195,7 +194,7 @@ export const setAllContacts = (allContacts) => ({
 
 export function fetchAllContacts(user) {
   return dispatch => {
-    const url = DATABASE_URL + '/' + user + '/contacts';
+    const url = APP_URL + user + '/contacts';
     let sortedArray = [];
     fetch(url, {
       headers : {
@@ -217,7 +216,7 @@ export function fetchDeleteContact(editId, editUser) {
   let _id = editId;
   const user = editUser;
   return dispatch => {
-    const urlDel = DATABASE_URL + '/' + user + '/one_contact/' + _id;
+    const urlDel = APP_URL + user + '/one_contact/' + _id;
     fetch(urlDel, {
       method: 'DELETE',
       headers: {
@@ -228,7 +227,7 @@ export function fetchDeleteContact(editId, editUser) {
       })
     })
     .then(response => response.json())
-    .then(location.assign('http://localhost:3000/' + user + '/contacts'))
+    .then(location.assign(APP_URL + user + '/contacts'))
     .catch(ex => console.log(ex))
   }
 };
@@ -237,8 +236,9 @@ export function fetchDateUpdate(user, contactId, date) {
   let serUser = user;
   let serNextContact = date;
   let _id = contactId;
+  console.log(serNextContact);
   return dispatch => {
-    const urlDate = DATABASE_URL + '/' + serUser + '/one_contact/' + _id;
+    const urlDate = APP_URL + serUser + '/one_contact/' + _id;
     fetch(urlDate, {
       method: 'PUT',
       headers: {
@@ -251,8 +251,21 @@ export function fetchDateUpdate(user, contactId, date) {
       })
     })
     .then(response => response.json())
-    .then(json => dispatch(updateDateNext(json)))
-    .then(location.reload())
+    .then(res => {
+      console.log(res);
+      dispatch(setOneContact(res.id,
+      res.serNextContact,
+      res.serFirst,
+      res.serLast,
+      res.serImportant,
+      res.serCompany,
+      res.serJobTitle,
+      res.serEmail,
+      res.serPhone,
+      res.serMeetDate,
+      res.serNote,
+      res.serPast))})
+    //.then(location.reload())
     .catch(ex => console.log(ex))
   }
 };
@@ -263,7 +276,7 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
   console.log(serImportant);
   let _id = contactId;
   return dispatch => {
-    const urlHeart = DATABASE_URL + '/' + serUser + '/one_contact/' + _id;
+    const urlHeart = APP_URL + serUser + '/one_contact/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
@@ -277,7 +290,7 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
     })
     .then(response => response.json())
     .then(json => dispatch(updateHeart(json)))
-    .then(location.reload())
+    //.then(location.reload())
     .catch(ex => console.log(ex))
   }
 };
@@ -288,7 +301,7 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
     let id = contactId;
     console.log(user, id);
     let pastId = pastid;
-    const pastUrl = DATABASE_URL + '/' + user + '/newPast/' + id;
+    const pastUrl = APP_URL + user + '/newPast/' + id;
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;
@@ -316,7 +329,7 @@ export function fetchDeletePast(userOne, contactId, oneId) {
   const user = userOne;
   const pastId = oneId;
   return dispatch => {
-    const urlDel = DATABASE_URL + '/' + user + '/one_contact/' + _id + '/' + pastId;
+    const urlDel = 'http://thenetworker.heroku.com/' + user + '/one_contact/' + _id + '/' + pastId;
     fetch(urlDel, {
       method: 'PUT',
       headers: {
@@ -376,9 +389,9 @@ export function cssHide() {
 
 export function fetchLogOut() {
   return dispatch => {
-    const logOut = DATABASE_URL + '/users/logout';
+    const logOut = 'http://localhost:8080/users/logout';
     fetch(logOut)
-    .then(location.assign('http://localhost:3000/'))
+    .then(location.assign(APP_URL))
     .catch(ex => console.log(ex))
   }
 }

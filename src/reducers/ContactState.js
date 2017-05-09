@@ -86,7 +86,7 @@ const ContactState = (state=initialState, action) => {
     case 'UPDATE_HEART':
     return {
       ...state,
-      import: action.updatedHeart.serImportant
+      import: !state.import
     }
 
 
