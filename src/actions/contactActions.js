@@ -1,6 +1,6 @@
 /* global gapi */
 
-const APP_URL = 'https://thenetworker.herokuapp.com/'
+const APP_URL = 'https://warm-harbor-59021.herokuapp.com/'
 
 export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
 export const setGoogleLogin = (boolean) => ({
