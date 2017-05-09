@@ -1,6 +1,7 @@
 /* global gapi */
 
-const APP_URL = 'https://warm-harbor-59021.herokuapp.com/'
+const SER_URL = 'https://warm-harbor-59021.herokuapp.com/';
+const APP_URL = 'https://be-a-networker.herokuapp.com/';
 
 export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
 export const setGoogleLogin = (boolean) => ({
@@ -77,7 +78,7 @@ export const updateHeart = (updatedHeart) => ({
 
 export function fetchWholeContact(id, user) {
   return dispatch => {
-    const urlWhole = (APP_URL + user + '/one_contact/' + id)
+    const urlWhole = (SER_URL + user + '/one_contact/' + id)
     fetch(urlWhole)
     .then(response => response.json())
     .then(data => {
@@ -113,7 +114,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
   return dispatch => {
     const serUser = user;
     console.log(serUser);
-    const url = APP_URL + serUser + '/new_contact';
+    const url = SER_URL + serUser + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
     let serLast = lastInput;
@@ -152,7 +153,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
   return dispatch => {
     const user = editUser;
     let _id = editId;
-    const url = APP_URL + user + '/edit_contact/' + _id;
+    const url = SER_URL + user + '/edit_contact/' + _id;
     let serFirst = firstInput;
     let serLast = lastInput;
     let serImportant = importantInput;
@@ -194,7 +195,7 @@ export const setAllContacts = (allContacts) => ({
 
 export function fetchAllContacts(user) {
   return dispatch => {
-    const url = APP_URL + user + '/contacts';
+    const url = SER_URL + user + '/contacts';
     let sortedArray = [];
     fetch(url, {
       headers : {
@@ -216,7 +217,7 @@ export function fetchDeleteContact(editId, editUser) {
   let _id = editId;
   const user = editUser;
   return dispatch => {
-    const urlDel = APP_URL + user + '/one_contact/' + _id;
+    const urlDel = SER_URL + user + '/one_contact/' + _id;
     fetch(urlDel, {
       method: 'DELETE',
       headers: {
@@ -227,7 +228,7 @@ export function fetchDeleteContact(editId, editUser) {
       })
     })
     .then(response => response.json())
-    .then(location.assign(APP_URL + user + '/contacts'))
+    .then(location.assign(SER_URL + user + '/contacts'))
     .catch(ex => console.log(ex))
   }
 };
@@ -238,7 +239,7 @@ export function fetchDateUpdate(user, contactId, date) {
   let _id = contactId;
   console.log(serNextContact);
   return dispatch => {
-    const urlDate = APP_URL + serUser + '/one_contact/' + _id;
+    const urlDate = SER_URL + serUser + '/one_contact/' + _id;
     fetch(urlDate, {
       method: 'PUT',
       headers: {
@@ -276,7 +277,7 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
   console.log(serImportant);
   let _id = contactId;
   return dispatch => {
-    const urlHeart = APP_URL + serUser + '/one_contact/' + _id;
+    const urlHeart = SER_URL + serUser + '/one_contact/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
@@ -301,7 +302,7 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
     let id = contactId;
     console.log(user, id);
     let pastId = pastid;
-    const pastUrl = APP_URL + user + '/newPast/' + id;
+    const pastUrl = SER_URL + user + '/newPast/' + id;
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;
@@ -391,7 +392,7 @@ export function fetchLogOut() {
   return dispatch => {
     const logOut = 'http://localhost:8080/users/logout';
     fetch(logOut)
-    .then(location.assign(APP_URL))
+    .then(location.assign(SER_URL))
     .catch(ex => console.log(ex))
   }
 }

@@ -1,4 +1,6 @@
-const APP_URL = 'https://warm-harbor-59021.herokuapp.com/'
+const SER_URL = 'https://warm-harbor-59021.herokuapp.com/';
+const APP_URL = 'https://be-a-networker.herokuapp.com/';
+
 
 export const SET_USER = 'SET_USER';
 export const setUser = (firstNameInput, lastNameInput,
@@ -19,7 +21,7 @@ export const checkUser = (userName, password) => ({
 
 export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput) {
   return dispatch => {
-    const userUrl = APP_URL + 'users/create';
+    const userUrl = SER_URL + 'users/create';
     fetch(userUrl, {
       method: 'POST',
       headers: {
@@ -41,7 +43,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = APP_URL + 'users/me';
+    const user = SER_URL + 'users/me';
     console.log(usernameInput, passwordInput);
     fetch(user, {
       method: 'POST',
