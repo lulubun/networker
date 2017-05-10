@@ -21,7 +21,7 @@ export const checkUser = (userName, password) => ({
 
 export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput) {
   return dispatch => {
-    const userUrl = SER_URL + 'users/create';
+    const userUrl = SER_URL + '/create';
     fetch(userUrl, {
       method: 'POST',
       headers: {
@@ -43,7 +43,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = SER_URL + 'users/me';
+    const user = SER_URL + '/me';
     console.log(usernameInput, passwordInput);
     fetch(user, {
       method: 'POST',
