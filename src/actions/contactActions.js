@@ -228,7 +228,7 @@ export function fetchDeleteContact(editId, editUser) {
       })
     })
     .then(response => response.json())
-    .then(location.assign(SER_URL + user + '/contacts'))
+    .then(location.assign(SER_URL + '/' + user + '/contacts'))
     .catch(ex => console.log(ex))
   }
 };
@@ -277,7 +277,7 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
   console.log(serImportant);
   let _id = contactId;
   return dispatch => {
-    const urlHeart = SER_URL + serUser + '/one_contact/' + _id;
+    const urlHeart = SER_URL + '/' + serUser + '/one_contact/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {

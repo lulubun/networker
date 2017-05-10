@@ -36,7 +36,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
       })
     })
     .then(response => response.json())
-    .then(location.assign(APP_URL + usernameInput + '/contacts'))
+    .then(location.assign(APP_URL + '/' + usernameInput + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }
@@ -57,7 +57,7 @@ export function fetchOneUser(usernameInput, passwordInput) {
       })
     })
     .then(response => response.json())
-    .then(data => location.assign(APP_URL + data.user.username + '/contacts'))
+    .then(data => location.assign(APP_URL + '/' + data.user.username + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }
