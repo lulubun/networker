@@ -1,4 +1,5 @@
 /* global gapi */
+import { browserHistory } from 'react-router'
 
 const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
 const APP_URL = 'https://be-a-networker.herokuapp.com';
@@ -114,7 +115,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
   return dispatch => {
     const serUser = user;
     console.log(serUser);
-    const url = SER_URL + serUser + '/new_contact';
+    const url = SER_URL + '/' + serUser + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
     let serLast = lastInput;
@@ -228,7 +229,7 @@ export function fetchDeleteContact(editId, editUser) {
       })
     })
     .then(response => response.json())
-    .then(location.assign(SER_URL + '/' + user + '/contacts'))
+    .then(browserHistory.push('/' + user + '/contacts'))
     .catch(ex => console.log(ex))
   }
 };
@@ -266,7 +267,6 @@ export function fetchDateUpdate(user, contactId, date) {
       res.serMeetDate,
       res.serNote,
       res.serPast))})
-    //.then(location.reload())
     .catch(ex => console.log(ex))
   }
 };
@@ -291,7 +291,6 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
     })
     .then(response => response.json())
     .then(json => dispatch(updateHeart(json)))
-    //.then(location.reload())
     .catch(ex => console.log(ex))
   }
 };
@@ -392,7 +391,7 @@ export function fetchLogOut() {
   return dispatch => {
     const logOut = SER_URL + '/logout';
     fetch(logOut)
-    .then(location.assign(SER_URL))
+    .then(browserHistory.push())
     .catch(ex => console.log(ex))
   }
 }

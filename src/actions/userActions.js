@@ -1,5 +1,7 @@
 const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
 const APP_URL = 'https://be-a-networker.herokuapp.com';
+import { browserHistory } from 'react-router'
+
 
 
 export const SET_USER = 'SET_USER';
@@ -38,7 +40,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
     })
     .then(response => response.json())
     .then(data => {console.log('hi there', data)})
-    //.then(location.assign(APP_URL + '/' + usernameInput + '/contacts'))
+    .then(browserHistory.push('/' + usernameInput + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }
@@ -59,9 +61,9 @@ export function fetchOneUser(usernameInput, passwordInput) {
     })
     .then(response => response.json())
     .then(data => {
-      const endpoint = data.user.username
+      const endpoint = data.user.username;
       console.log(endpoint);
-      location.href = (APP_URL + '/' + endpoint + '/contacts')})
+      browserHistory.push('/' + endpoint + '/contacts')})
     .catch(ex => console.log(ex))
   }
 }
