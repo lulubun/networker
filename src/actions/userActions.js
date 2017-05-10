@@ -1,5 +1,5 @@
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com/';
-const APP_URL = 'https://be-a-networker.herokuapp.com/';
+const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
+const APP_URL = 'https://be-a-networker.herokuapp.com';
 
 
 export const SET_USER = 'SET_USER';

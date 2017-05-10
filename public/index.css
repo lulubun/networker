@@ -1,0 +1,123 @@
+.hideMe {
+  display: none;
+}
+
+#google_stuff {
+  padding-left: 25px;
+}
+
+.contactName {
+  font-size: 35px;
+}
+
+
+.Login {
+  width: 27%;
+  float: right;
+  margin-right: 30px;
+}
+
+.title {
+  color: #5D576B;
+  text-align: center;
+  padding-bottom: 30px;
+  font-size: 75px;
+  font-style: oblique;
+  letter-spacing: 10px;
+}
+
+.Landing {
+  font-size: 20px;
+  margin-left: 30px;
+  margin-top: 5%;
+  padding-top: 2%;
+  text-indent:-2.3em;
+}
+
+.otherImage {
+  width: 40%;
+  position: relative;
+  float: right;
+  margin-right: 10px;
+  margin-left: 20px;
+  border: 5px solid #5D576B;
+  margin-top: -17px;
+}
+
+.star {
+  position: relative;
+  top: 6px;
+  left: 20px;
+  padding-right: 20px;
+}
+
+.conIcon {
+  position: relative;
+  top: 6px;
+  padding-right: 13px;
+}
+
+.companyDisplay {
+  position: relative;
+  top: 6px;
+  padding-right: 15px;
+}
+
+.googleButton {
+  background-color: #5D576B;
+  color: #F1F1EF;
+  border-radius: 1px;
+  border-style: none;
+  margin-right: 10px;
+}
+
+.googleButton:hover {
+  background-color: #6d6779;
+}
+
+.onePaper {
+  color: white;
+}
+
+.form_header {
+  font-size: 25px;
+  color: #5D576B;
+}
+
+.formDate {
+  color: #5D576B;
+}
+
+.Login {
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #F1F1EF;
+
+}
+
+.nameLine {
+  display: block;
+}
+
+.Link {
+  text-decoration: none;
+}
+
+.Link:hover {
+  color: #FFFF00;
+}
+
+.Link:visited {
+  color: white;
+  text-decoration-style: solid;
+}
+
+.DoneButton {
+  position: relative;
+  bottom: 0;
+}

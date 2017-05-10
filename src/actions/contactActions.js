@@ -1,7 +1,7 @@
 /* global gapi */
 
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com/';
-const APP_URL = 'https://be-a-networker.herokuapp.com/';
+const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
+const APP_URL = 'https://be-a-networker.herokuapp.com';
 
 export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
 export const setGoogleLogin = (boolean) => ({
@@ -78,7 +78,7 @@ export const updateHeart = (updatedHeart) => ({
 
 export function fetchWholeContact(id, user) {
   return dispatch => {
-    const urlWhole = (SER_URL + user + '/one_contact/' + id)
+    const urlWhole = (SER_URL + '/' + user + '/one_contact/' + id)
     fetch(urlWhole)
     .then(response => response.json())
     .then(data => {
@@ -145,7 +145,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
       })
     })
     .then(response => response.json())
-    .then(location.assign(APP_URL + user + '/contacts'))
+    .then(location.assign(APP_URL + '/' + user + '/contacts'))
   }
 };
 
@@ -182,7 +182,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
       })
     })
     .then(response => console.log(response.json()))
-    .then(location.assign(APP_URL + user + '/one_contact/' + _id))
+    .then(location.assign(APP_URL + '/' + user + '/one_contact/' + _id))
     .catch(ex => console.log(ex))
   }
 };
@@ -217,7 +217,7 @@ export function fetchDeleteContact(editId, editUser) {
   let _id = editId;
   const user = editUser;
   return dispatch => {
-    const urlDel = SER_URL + user + '/one_contact/' + _id;
+    const urlDel = SER_URL + '/' + user + '/one_contact/' + _id;
     fetch(urlDel, {
       method: 'DELETE',
       headers: {
@@ -239,7 +239,7 @@ export function fetchDateUpdate(user, contactId, date) {
   let _id = contactId;
   console.log(serNextContact);
   return dispatch => {
-    const urlDate = SER_URL + serUser + '/one_contact/' + _id;
+    const urlDate = SER_URL + '/' + serUser + '/one_contact/' + _id;
     fetch(urlDate, {
       method: 'PUT',
       headers: {
@@ -330,7 +330,7 @@ export function fetchDeletePast(userOne, contactId, oneId) {
   const user = userOne;
   const pastId = oneId;
   return dispatch => {
-    const urlDel = 'http://thenetworker.heroku.com/' + user + '/one_contact/' + _id + '/' + pastId;
+    const urlDel = SER_URL + '/' + user + '/one_contact/' + _id + '/' + pastId;
     fetch(urlDel, {
       method: 'PUT',
       headers: {
@@ -390,7 +390,7 @@ export function cssHide() {
 
 export function fetchLogOut() {
   return dispatch => {
-    const logOut = 'http://localhost:8080/users/logout';
+    const logOut = SER_URL + '/logout';
     fetch(logOut)
     .then(location.assign(SER_URL))
     .catch(ex => console.log(ex))
