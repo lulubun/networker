@@ -58,8 +58,10 @@ export function fetchOneUser(usernameInput, passwordInput) {
       })
     })
     .then(response => response.json())
-    .then(data => console.log(data))
-      //location.assign(APP_URL + '/' + data.user.username + '/contacts')})
+    .then(data => {
+      const endpoint = data.user.username
+      console.log(endpoint);
+      location.href = (APP_URL + '/' + endpoint + '/contacts')})
     .catch(ex => console.log(ex))
   }
 }
