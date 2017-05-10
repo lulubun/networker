@@ -195,7 +195,7 @@ export const setAllContacts = (allContacts) => ({
 
 export function fetchAllContacts(user) {
   return dispatch => {
-    const url = SER_URL + user + '/contacts';
+    const url = SER_URL + '/' + user + '/contacts';
     let sortedArray = [];
     fetch(url, {
       headers : {
