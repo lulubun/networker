@@ -153,7 +153,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
   return dispatch => {
     const user = editUser;
     let _id = editId;
-    const url = SER_URL + user + '/edit_contact/' + _id;
+    const url = SER_URL + '/' + user + '/edit_contact/' + _id;
     let serFirst = firstInput;
     let serLast = lastInput;
     let serImportant = importantInput;
@@ -302,7 +302,7 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
     let id = contactId;
     console.log(user, id);
     let pastId = pastid;
-    const pastUrl = SER_URL + user + '/newPast/' + id;
+    const pastUrl = SER_URL + '/' + user + '/newPast/' + id;
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;

@@ -22,6 +22,7 @@ export const checkUser = (userName, password) => ({
 export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput) {
   return dispatch => {
     const userUrl = SER_URL + '/create';
+    console.log(userUrl);
     fetch(userUrl, {
       method: 'POST',
       headers: {
@@ -36,28 +37,33 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
       })
     })
     .then(response => response.json())
-    .then(location.assign(APP_URL + '/' + usernameInput + '/contacts'))
+    .then(data => {console.log('hi there', data)})
+    //.then(location.assign(APP_URL + '/' + usernameInput + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }
 
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
-    const user = SER_URL + '/me';
-    console.log(usernameInput, passwordInput);
-    fetch(user, {
+    const userVer = SER_URL + '/me';
+    console.log('hi there!');
+    fetch(userVer, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
         username: usernameInput,
         password: passwordInput,
       })
     })
-    .then(response => response.json())
-    .then(data => location.assign(APP_URL + '/' + data.user.username + '/contacts'))
+    .then(response => {
+      response.json(),
+      console.log(response.json())}
+    )
+    .then(data => {
+      console.log(data);
+      location.assign(APP_URL + '/' + data.user.username + '/contacts')})
     .catch(ex => console.log(ex))
   }
 }
