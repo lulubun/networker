@@ -146,7 +146,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
       })
     })
     .then(response => response.json())
-    .then(location.assign(APP_URL + '/' + user + '/contacts'))
+    .then(browserHistory.push('/' + user + '/contacts'))
   }
 };
 
@@ -183,7 +183,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
       })
     })
     .then(response => console.log(response.json()))
-    .then(location.assign(APP_URL + '/' + user + '/one_contact/' + _id))
+    .then(browserHistory.push('/' + user + '/one_contact' + _id))
     .catch(ex => console.log(ex))
   }
 };
