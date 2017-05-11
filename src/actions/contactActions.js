@@ -183,7 +183,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
       })
     })
     .then(response => console.log(response.json()))
-    .then(browserHistory.push('/' + user + '/one_contact' + _id))
+    .then(browserHistory.push('/' + user + '/one_contact/' + _id))
     .catch(ex => console.log(ex))
   }
 };
