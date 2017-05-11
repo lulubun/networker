@@ -48,8 +48,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
 export function fetchOneUser(usernameInput, passwordInput) {
   return dispatch => {
     const userVer = SER_URL + '/me';
-    console.log('hi there!');
-    fetch('https://warm-harbor-59021.herokuapp.com/me', {
+    fetch(userVer, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

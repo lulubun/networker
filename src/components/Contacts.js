@@ -67,9 +67,9 @@ class Contacts extends React.Component {
             </div>
           ))}
         </div>
-        <RaisedButton
+        {/* <RaisedButton
           onTouchTap={(event) => {this.props.logOutNow()}}
-          className="DoneButton" label="Log Out" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/>
+          className="DoneButton" label="Log Out" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/> */}
       </div>
     );
   }

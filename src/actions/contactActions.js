@@ -391,7 +391,7 @@ export function fetchLogOut() {
   return dispatch => {
     const logOut = SER_URL + '/logout';
     fetch(logOut)
-    .then(browserHistory.push())
+    .then(browserHistory.push('/'))
     .catch(ex => console.log(ex))
   }
 }
