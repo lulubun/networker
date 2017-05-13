@@ -11,9 +11,16 @@ export class Login extends React.Component {
   render() {
     let usernameInput = '';
     let passwordInput = '';
-
+    const style={
+      width: '100%',
+      'marginBottom': '100px',
+      'marginTop': '20px'
+    };
+    const buttonStyle={
+      'width': '100px'
+    }
     return(
-      <div className="Login">
+      <div style={style} className="Login">
         <div className="loginBox">
         <p className="form_header">Log In to Networker</p><br />
         <br />
@@ -33,7 +40,7 @@ export class Login extends React.Component {
           }}
         /><br />
         <br />
-        <RaisedButton label="Enter" backgroundColor="#5D576B" labelColor="#F1F1EF" onTouchTap={(event) => {
+        <RaisedButton label="Enter" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" onTouchTap={(event) => {
           if (usernameInput === '') {
             alert("Username is required");
           } else if (passwordInput === '') {
@@ -44,7 +51,13 @@ export class Login extends React.Component {
         }}/>
         <br />
         <br/>
-        <Link to={'/new_user'} className="Link"><RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
+        <Link to={'/new_user'} className="Link"><RaisedButton label="Register" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
+        <br/>
+        <br/>
+        <RaisedButton label="Demo" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" onTouchTap={(event) => {
+          this.props.login('User', 'password')
+        }
+        }/>
         </div>
       </div>
     )

@@ -9,10 +9,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
 import moment from 'moment';
 import Formsy from 'formsy-react';
-import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup,
-    FormsySelect, FormsyText, FormsyTime, FormsyToggle, FormsyAutoComplete } from 'formsy-material-ui/lib';
+import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup, FormsySelect, FormsyText, FormsyTime, FormsyToggle, FormsyAutoComplete } from 'formsy-material-ui/lib';
 
-
+let startId = 0;
 let firstInput = '';
 let lastInput = '';
 let importantInput = false;
@@ -27,8 +26,13 @@ let dateNextInput = moment(startDate).format("MMM DD YYYY");
 
 
 export class NewContact extends React.Component {
+  componentDidMount() {
+    this.props.clear(startId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
+  };
+
   render() {
     const user = this.props.params.user;
+
     return(
       <div className="new_contact">
         <Formsy.Form>
@@ -126,7 +130,8 @@ export class NewContact extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveContact: (user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput))
+  saveContact: (user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput)),
+  clear: (startId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.setOneContact(startId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput))
 })
 
 export default connect(null, mapDispatchToProps)(NewContact);

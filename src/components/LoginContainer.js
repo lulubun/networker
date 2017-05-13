@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './Login';
 import Landing from './Landing';
+import LoginImg from './LoginImg';
 
 class LoginContainer extends React.Component {
 
@@ -8,9 +9,8 @@ class LoginContainer extends React.Component {
     return (
       <div>
         <div className="loginContainer">
-          <h1 className="title">Networker</h1>
+          <LoginImg />
           <Login />
-          <img src="https://c1.staticflickr.com/9/8450/7975205041_7a5e4b65ff_b.jpg" className="otherImage"/>
           <Landing />
         </div>
       </div>

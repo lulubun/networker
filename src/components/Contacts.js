@@ -38,6 +38,12 @@ class Contacts extends React.Component {
       color: '#F1F1EF',
     };
 
+    const iconStyle = {
+      position: 'relative',
+      top: '6px',
+      paddingRight: '15px'
+    }
+
     const responseGoogle = (response) => {
       console.log(response);
     }
@@ -62,7 +68,7 @@ class Contacts extends React.Component {
                labelStyle={{color: '#F1F1EF'}}
                />
                </Link>
-               <p><Work className="companyDisplay" color={"#5D576B"}/>{contact.serCompany}</p>
+               <p><Work style={iconStyle} color={"#5D576B"}/>{contact.serCompany}</p>
              </Paper>
             </div>
           ))}
