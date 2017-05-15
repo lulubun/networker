@@ -1,3 +1,7 @@
+@media (max-width: 350px) {
+  .loginIm
+}
+
 .hideMe {
   display: none;
 }
@@ -16,11 +20,6 @@
   background-image: url('./n_Fotor.jpg');
   background-size: contain;
   padding-top: 20px;
-}
-
-.Landing {
-  font-size: 20px;
-  width: 100%;
 }
 
 .Login {
