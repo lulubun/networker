@@ -38,6 +38,7 @@ export class NewUser extends React.Component {
         <TextField
           className="passwordRegister"
           hintText="Password"
+          type={"password"}
           onChange={(event, newValue) => {
           passwordInput = newValue
         }}/><br />
