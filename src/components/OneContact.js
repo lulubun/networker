@@ -31,6 +31,12 @@ let prettyDate = '';
 //If login is true, render a button to add an event, else disable button? CallAPI
 
 export class OneContact extends React.Component {
+
+  state = {
+    notes: '',
+    type: '',
+    date: {}
+  }
   componentDidMount() {
     this.props.getOneContact(this.props.params.id);
     this.props.removeHide();
@@ -97,14 +103,17 @@ export class OneContact extends React.Component {
       <Paper style={style} zDepth={1}>
       <form>
         <p>Record New Follow Up</p>
-        <DatePicker hintText="Date" onChange={(event, date) => {
+        <DatePicker hintText="Date" value={this.state.date} onChange={(event, date) => {
           prettyDate = moment(date).format("MMM DD YYYY");
-          dateInput = prettyDate;
+          this.setState({date})
         }} />
-        <RadioButtonGroup name="contact"
+        <RadioButtonGroup
+          name="contact"
+          valueSelected={this.state.type}
           onChange={(event, value) => {
-          typeInput = value;
-        }}>
+            this.setState({type: value})
+        }}
+        value={this.state.type}>
           <RadioButton
             value="Call"
             label="Call"
@@ -127,20 +136,21 @@ export class OneContact extends React.Component {
           floatingLabelText="Notes"
           ref={(node) => this.notesText = node}
           multiLine={true}
+          value={this.state.notes}
           onChange={(event, newValue) => {
-            contactNotesInput = newValue;
+            this.setState({notes: newValue})
           }}
         /><br />
         <RaisedButton label="Save Follow Up"
           backgroundColor="#5D576B" labelColor="#F1F1EF"
           onTouchTap={(event) => {
             pastId = Math.floor((Math.random() * 10000) + 1);
-            if (typeInput == '') {
+            if (this.state.type == '') {
               alert("Please include the type of contact made")
             } else {
-              console.log(contactId, user, pastId);
-              this.props.addPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput);
-            //  this.notesText.setState({ value: "" })
+              console.log(this.state);
+              this.props.addPast(user, contactId, pastId, this.state.date, this.state.type, this.state.notes);
+             this.setState({ notes: '', type: '', date: {} })
             }
           }} />
       </form>
