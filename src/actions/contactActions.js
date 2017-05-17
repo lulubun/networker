@@ -244,7 +244,7 @@ export function fetchDateUpdate(user, contactId, date) {
   let _id = contactId;
   console.log(serNextContact);
   return dispatch => {
-    const urlDate = SER_URL + '/' + serUser + '/one_contact/' + _id;
+    const urlDate = SER_URL + '/' + serUser + '/one_contact/' + _id + '/dateUpdate';
     fetch(urlDate, {
       method: 'PUT',
       headers: {
@@ -281,7 +281,7 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
   console.log(serImportant);
   let _id = contactId;
   return dispatch => {
-    const urlHeart = SER_URL + '/' + serUser + '/one_contact/' + _id;
+    const urlHeart = SER_URL + '/' + serUser + '/one_contact/' + _id + '/heartUpdate';
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
@@ -294,7 +294,22 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
       })
     })
     .then(response => response.json())
-    .then(json => dispatch(updateHeart(json)))
+    .then(res => {
+      console.log(res);
+      dispatch(setOneContact(
+      res.id,
+      res.serNextContact,
+      res.serFirst,
+      res.serLast,
+      res.serImportant,
+      res.serCompany,
+      res.serJobTitle,
+      res.serEmail,
+      res.serPhone,
+      res.serMeetDate,
+      res.serNote,
+      res.serPast
+    ))})
     .catch(ex => console.log(ex))
   }
 };

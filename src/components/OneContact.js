@@ -149,7 +149,8 @@ export class OneContact extends React.Component {
             } else {
               console.log(this.state);
               prettyDate = moment(this.state.date).format("MMM DD YYYY");
-              console.log(prettyDate);
+              console.log(prettyDate
+              );
               this.props.addPast(user, contactId, pastId, prettyDate, this.state.type, this.state.notes);
              this.setState({ notes: '', type: '', date: {} })
             }
