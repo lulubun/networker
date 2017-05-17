@@ -1,11 +1,11 @@
 /* global gapi */
 import { browserHistory } from 'react-router'
 
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
-const APP_URL = 'https://be-a-networker.herokuapp.com';
+// const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
+// const APP_URL = 'https://be-a-networker.herokuapp.com';
 
-// const SER_URL = 'http://localhost:8080';
-// const APP_URL = 'http://localhost:3000';
+const SER_URL = 'http://localhost:8080';
+const APP_URL = 'http://localhost:3000';
 
 
 export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
@@ -211,7 +211,6 @@ export function fetchAllContacts(user) {
     .then(response => response.json())
     .then(data => {
         sortedArray = data.sort(function(a, b) {return Date.parse(a.serNextContact) - Date.parse(b.serNextContact)});
-        console.log(sortedArray);
         dispatch(setAllContacts(sortedArray))
     })
     .catch(ex => console.log(ex))
@@ -244,7 +243,7 @@ export function fetchDateUpdate(user, contactId, date) {
   let _id = contactId;
   console.log(serNextContact);
   return dispatch => {
-    const urlDate = SER_URL + '/' + serUser + '/one_contact/' + _id + '/dateUpdate';
+    const urlDate = SER_URL + '/' + serUser + '/one_contact/' + _id;
     fetch(urlDate, {
       method: 'PUT',
       headers: {
@@ -257,20 +256,21 @@ export function fetchDateUpdate(user, contactId, date) {
       })
     })
     .then(response => response.json())
-    .then(res => {
-      console.log(res);
-      dispatch(setOneContact(res.id,
-      res.serNextContact,
-      res.serFirst,
-      res.serLast,
-      res.serImportant,
-      res.serCompany,
-      res.serJobTitle,
-      res.serEmail,
-      res.serPhone,
-      res.serMeetDate,
-      res.serNote,
-      res.serPast))})
+    .then(response => {
+      console.log(response);
+      // dispatch(setOneContact(res.id,
+      // res.serNextContact,
+      // res.serFirst,
+      // res.serLast,
+      // res.serImportant,
+      // res.serCompany,
+      // res.serJobTitle,
+      // res.serEmail,
+      // res.serPhone,
+      // res.serMeetDate,
+      // res.serNote,
+      // res.serPast))
+    })
     .catch(ex => console.log(ex))
   }
 };
@@ -281,7 +281,7 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
   console.log(serImportant);
   let _id = contactId;
   return dispatch => {
-    const urlHeart = SER_URL + '/' + serUser + '/one_contact/' + _id + '/heartUpdate';
+    const urlHeart = SER_URL + '/' + serUser + '/one_contact/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
