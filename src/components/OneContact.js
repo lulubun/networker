@@ -104,7 +104,6 @@ export class OneContact extends React.Component {
       <form>
         <p>Record New Follow Up</p>
         <DatePicker hintText="Date" value={this.state.date} onChange={(event, date) => {
-          prettyDate = moment(date).format("MMM DD YYYY");
           this.setState({date})
         }} />
         <RadioButtonGroup
@@ -149,7 +148,9 @@ export class OneContact extends React.Component {
               alert("Please include the type of contact made")
             } else {
               console.log(this.state);
-              this.props.addPast(user, contactId, pastId, this.state.date, this.state.type, this.state.notes);
+              prettyDate = moment(this.state.date).format("MMM DD YYYY");
+              console.log(prettyDate);
+              this.props.addPast(user, contactId, pastId, prettyDate, this.state.type, this.state.notes);
              this.setState({ notes: '', type: '', date: {} })
             }
           }} />
