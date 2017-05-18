@@ -99,6 +99,7 @@ export function fetchWholeContact(id, user) {
       let newMeetDate = data.serMeetDate;
       let newMeetNotes = data.serNote;
       let newPastArray = data.serPast;
+      console.log(newPastArray);
       dispatch(setOneContact(id,
         newDateNext,
         newFirstName,

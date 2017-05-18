@@ -18,6 +18,7 @@ class Past extends React.Component {
   let contactId = '';
   let pastId = '';
   let array = this.props.allPastList;
+  console.log(array);
   let sortedArray;
   if (array == []) {
     sortedArray = []
