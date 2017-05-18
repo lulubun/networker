@@ -20,7 +20,7 @@ class Past extends React.Component {
   let array = this.props.allPastList;
   console.log(array);
   let sortedArray;
-  if (array == []) {
+  if (array == undefined) {
     sortedArray = []
   } else {
     sortedArray = array.sort(function(a, b) {return Date.parse(a.serDateContact) - Date.parse(b.serDateContact)});
