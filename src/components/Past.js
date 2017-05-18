@@ -18,7 +18,12 @@ class Past extends React.Component {
   let contactId = '';
   let pastId = '';
   let array = this.props.allPastList;
-  let sortedArray = array.sort(function(a, b) {return Date.parse(a.serDateContact) - Date.parse(b.serDateContact)});
+  let sortedArray;
+  if (array == []) {
+    sortedArray = []
+  } else {
+    sortedArray = array.sort(function(a, b) {return Date.parse(a.serDateContact) - Date.parse(b.serDateContact)});
+  }
     return (
         <div className="allPast">
           {sortedArray.map((onePast, index) => (
