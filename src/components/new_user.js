@@ -45,6 +45,7 @@ export class NewUser extends React.Component {
         <TextField
           className="confirmPasswordRegister"
           hintText="Confirm Password"
+          type={"password"}
           onChange={(event, newValue) => {
           confirmPassword = newValue
         }}/><br />

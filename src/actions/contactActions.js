@@ -237,49 +237,50 @@ export function fetchDeleteContact(editId, editUser) {
   }
 };
 
-export function fetchDateUpdate(user, contactId, date) {
-  let serUser = user;
-  let serNextContact = date;
-  let _id = contactId;
-  console.log(serNextContact);
-  return dispatch => {
-    const urlDate = SER_URL + '/' + serUser + '/one_contact/' + _id;
-    fetch(urlDate, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        _id,
-        serUser,
-        serNextContact
-      })
-    })
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-      // dispatch(setOneContact(res.id,
-      // res.serNextContact,
-      // res.serFirst,
-      // res.serLast,
-      // res.serImportant,
-      // res.serCompany,
-      // res.serJobTitle,
-      // res.serEmail,
-      // res.serPhone,
-      // res.serMeetDate,
-      // res.serNote,
-      // res.serPast))
-    })
-    .catch(ex => console.log(ex))
-  }
-};
+// export function fetchDateUpdate(user, contactId, date) {
+//   let serUser = user;
+//   let serNextContact = date;
+//   let _id = contactId;
+//   console.log(serNextContact);
+//   return dispatch => {
+//     const urlDate = SER_URL + '/' + serUser + '/one_contact/' + _id;
+//     fetch(urlDate, {
+//       method: 'PUT',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({
+//         _id,
+//         serUser,
+//         serNextContact
+//       })
+//     })
+//     .then(response => response.json())
+//     .then(response => {
+//       console.log(response);
+//       // dispatch(setOneContact(res.id,
+//       // res.serNextContact,
+//       // res.serFirst,
+//       // res.serLast,
+//       // res.serImportant,
+//       // res.serCompany,
+//       // res.serJobTitle,
+//       // res.serEmail,
+//       // res.serPhone,
+//       // res.serMeetDate,
+//       // res.serNote,
+//       // res.serPast))
+//     })
+//     .catch(ex => console.log(ex))
+//   }
+// };
 
-export function fetchHeartUpdate(user, contactId, isInputChecked) {
+export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
   const serUser = user;
   let serImportant = isInputChecked;
   console.log(serImportant);
   let _id = contactId;
+  const serNextContact = appDate;
   return dispatch => {
     const urlHeart = SER_URL + '/' + serUser + '/one_contact/' + _id;
     fetch(urlHeart, {
@@ -290,7 +291,8 @@ export function fetchHeartUpdate(user, contactId, isInputChecked) {
       body: JSON.stringify({
         _id,
         serUser,
-        serImportant
+        serImportant,
+        serNextContact
       })
     })
     .then(response => response.json())

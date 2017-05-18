@@ -28,8 +28,6 @@ let contactNotesInput = '';
 let pastId = 0;
 let prettyDate = '';
 
-//If login is true, render a button to add an event, else disable button? CallAPI
-
 export class OneContact extends React.Component {
 
   state = {
@@ -71,8 +69,8 @@ export class OneContact extends React.Component {
         checkedIcon={<ActionFavorite />}
         uncheckedIcon={<ActionFavoriteBorder />}
         onCheck={(event, isInputChecked) => {
-          console.log(isInputChecked);
-          this.props.changeHeart(user, contactId, isInputChecked)
+          const dateSend = this.props.appointment;
+          this.props.changeHeartDate(user, contactId, isInputChecked, dateSend)
         }} />
         <p>{this.props.job} at {this.props.co}</p>
         <p className="phoneText"><Phone className="conIcon"/> {this.props.phone}</p>
@@ -86,7 +84,8 @@ export class OneContact extends React.Component {
         <p><Alarm className="conIcon"/>Follow up with this contact on {this.props.appointment}</p>
           <DatePicker hintText="Change" underlineStyle={{display: 'none'}} onChange={(event, date) => {
             let sendDate = moment(date).format("MMM DD YYYY");
-            this.props.changeAppointment(user, contactId, sendDate)
+            let heart = this.props.important;
+            this.props.changeHeartDate(user, contactId, heart, sendDate)
           }}/>
           <RaisedButton
             label="Add to Google Calendar" backgroundColor="#5D576B" labelColor="#F1F1EF"
@@ -179,8 +178,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
-  changeAppointment: (user, contactId, sendDate) => dispatch(actions.fetchDateUpdate(user, contactId, sendDate)),
-  changeHeart: (user, contactId, isInputChecked) => dispatch(actions.fetchHeartUpdate(user, contactId, isInputChecked)),
+  //changeAppointment: (user, contactId, sendDate) => dispatch(actions.fetchDateUpdate(user, contactId, sendDate)),
+  changeHeartDate: (user, contactId, isInputChecked, appDate) => dispatch(actions.fetchHeartDateUpdate(user, contactId, isInputChecked, appDate)),
   addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput)),
   runApiPush: (pushEvent) => dispatch(actions.pushToGoogle(pushEvent)),
   removeHide: () => dispatch(actions.removeCssHide()),
