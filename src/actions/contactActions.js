@@ -1,11 +1,11 @@
 /* global gapi */
 import { browserHistory } from 'react-router'
 
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
-const APP_URL = 'https://be-a-networker.herokuapp.com';
+// const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
+// const APP_URL = 'https://be-a-networker.herokuapp.com';
 
-// const SER_URL = 'http://localhost:8080';
-// const APP_URL = 'http://localhost:3000';
+const SER_URL = 'http://localhost:8080';
+const APP_URL = 'http://localhost:3000';
 
 
 export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
@@ -237,44 +237,6 @@ export function fetchDeleteContact(editId, editUser) {
   }
 };
 
-// export function fetchDateUpdate(user, contactId, date) {
-//   let serUser = user;
-//   let serNextContact = date;
-//   let _id = contactId;
-//   console.log(serNextContact);
-//   return dispatch => {
-//     const urlDate = SER_URL + '/' + serUser + '/one_contact/' + _id;
-//     fetch(urlDate, {
-//       method: 'PUT',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         _id,
-//         serUser,
-//         serNextContact
-//       })
-//     })
-//     .then(response => response.json())
-//     .then(response => {
-//       console.log(response);
-//       // dispatch(setOneContact(res.id,
-//       // res.serNextContact,
-//       // res.serFirst,
-//       // res.serLast,
-//       // res.serImportant,
-//       // res.serCompany,
-//       // res.serJobTitle,
-//       // res.serEmail,
-//       // res.serPhone,
-//       // res.serMeetDate,
-//       // res.serNote,
-//       // res.serPast))
-//     })
-//     .catch(ex => console.log(ex))
-//   }
-// };
-
 export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
   const serUser = user;
   let serImportant = isInputChecked;
@@ -341,7 +303,10 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
       })
     })
     .then(response => response.json())
-    .then(json => dispatch(updateContactPast(json)))
+    .then(json => {
+      console.log(json);
+      dispatch(updateContactPast(json))
+    })
   }
 }
 
@@ -349,6 +314,7 @@ export function fetchDeletePast(userOne, contactId, oneId) {
   let _id = contactId;
   const user = userOne;
   const pastId = oneId;
+  console.log(pastId);
   return dispatch => {
     const urlDel = SER_URL + '/' + user + '/one_contact/' + _id + '/' + pastId;
     fetch(urlDel, {
@@ -363,24 +329,11 @@ export function fetchDeletePast(userOne, contactId, oneId) {
       })
     })
     .then(response => response.json())
-    .then(res => {
-      console.log(res);
-      dispatch(
-        setOneContact(
-          res.id,
-          res.serNextContact,
-          res.serFirst,
-          res.serLast,
-          res.serImportant,
-          res.serCompany,
-          res.serJobTitle,
-          res.serEmail,
-          res.serPhone,
-          res.serMeetDate,
-          res.serNote,
-          res.serPast
-        )
-      )
+    .then(updated => {
+      console.log(updated);
+      dispatch(fetchWholeContact(_id, user))
+
+
     })
     .catch(ex => console.log(ex))
   }
