@@ -1,11 +1,11 @@
 /* global gapi */
 import { browserHistory } from 'react-router'
 
-// const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
-// const APP_URL = 'https://be-a-networker.herokuapp.com';
+const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
+const APP_URL = 'https://be-a-networker.herokuapp.com';
 
-const SER_URL = 'http://localhost:8080';
-const APP_URL = 'http://localhost:3000';
+// const SER_URL = 'http://localhost:8080';
+// const APP_URL = 'http://localhost:3000';
 
 
 export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
