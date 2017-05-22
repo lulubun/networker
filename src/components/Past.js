@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import * as actions from '../actions/contactActions';
 import {Link} from 'react-router';
+import Columns from 'react-columns';
+
 
 
 const style = {
@@ -14,19 +16,21 @@ const style = {
 
 class Past extends React.Component {
   render() {
-  let user = '';
-  let contactId = '';
-  let pastId = '';
-  let array = this.props.allPastList;
-  console.log(array);
-  let sortedArray;
-  if (array == undefined) {
-    sortedArray = []
-  } else {
-    sortedArray = array.sort(function(a, b) {return Date.parse(a.serDateContact) - Date.parse(b.serDateContact)});
-  }
-    return (
+    let user = '';
+    let contactId = '';
+    let pastId = '';
+    let array = this.props.allPastList;
+    let sortedArray;
+    if (array == undefined) {
+      sortedArray = []
+    } else {
+      sortedArray = array.sort(function(a, b) {return Date.parse(b.serDateContact) - Date.parse(a.serDateContact)});
+    }
+
+    if (sortedArray.length > 2) {
+      return (
         <div className="allPast">
+          <Columns>
           {sortedArray.map((onePast, index) => (
           <div className="onePast" key={index}>
             <Paper style={style} zDepth={1}>
@@ -41,7 +45,27 @@ class Past extends React.Component {
             />
           </Paper>
           </div>))}
+          </Columns>
         </div>
+      );
+    }
+    return (
+      <div className="allPast">
+        {sortedArray.map((onePast, index) => (
+        <div className="onePast" key={index}>
+          <Paper style={style} zDepth={1}>
+          <p>{onePast.serTypeContact} on {onePast.serDateContact}</p>
+          <Divider />
+          <p>{onePast.serNotesContact}</p>
+          <RaisedButton label="Delete"
+            backgroundColor="#5D576B" labelColor="#F1F1EF"
+            onTouchTap={(event) => {
+              this.props.delete(onePast.serUser, onePast.id, onePast.pastId)
+            }}
+          />
+        </Paper>
+        </div>))}
+      </div>
     );
   }
 }

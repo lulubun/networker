@@ -3,6 +3,8 @@ import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/userActions';
+import Paper from 'material-ui/Paper';
+
 
 let firstNameInput = '';
 let lastNameInput = '';
@@ -12,19 +14,28 @@ let confirmPassword = '';
 
 export class NewUser extends React.Component {
   render() {
+    const style = {
+      padding: 20,
+      margin: 20,
+      textAlign: 'center'
+    };
     return(
       <div className="new_user_form">
+        <Paper style={style} zDepth={5} rounded={false} className="onePaper">
+
         <form>
         <p className="form_header">Register to use Networker</p><br />
         <br />
         <TextField
           className="firstNameRegister"
           hintText="First Name"
+          fullWidth={true}
           onChange={(event, newValue) => {
           firstNameInput = newValue
         }}/><br />
         <TextField
           className="lastNameRegister"
+          fullWidth={true}
           hintText="Last Name"
           onChange={(event, newValue) => {
           lastNameInput = newValue
@@ -32,6 +43,7 @@ export class NewUser extends React.Component {
         <TextField
           className="userNameRegister"
           hintText="Username"
+          fullWidth={true}
           onChange={(event, newValue) => {
           usernameInput = newValue
         }}/><br />
@@ -39,6 +51,7 @@ export class NewUser extends React.Component {
           className="passwordRegister"
           hintText="Password"
           type={"password"}
+          fullWidth={true}
           onChange={(event, newValue) => {
           passwordInput = newValue
         }}/><br />
@@ -46,10 +59,11 @@ export class NewUser extends React.Component {
           className="confirmPasswordRegister"
           hintText="Confirm Password"
           type={"password"}
+          fullWidth={true}
           onChange={(event, newValue) => {
           confirmPassword = newValue
         }}/><br />
-        <RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF"
+        <RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF" 
         onTouchTap={(event) => {
           if (!(passwordInput === confirmPassword)) {
             alert('Password does not match')
@@ -58,6 +72,7 @@ export class NewUser extends React.Component {
           }
         }} />
       </form>
+    </Paper>
       </div>
     )
   }

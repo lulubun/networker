@@ -80,6 +80,7 @@ export class OneContact extends React.Component {
         <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
           label="Edit Contact Info" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       </Paper>
+      <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1} name="dateChanger">
         <p><Alarm className="conIcon"/>Follow up with this contact on {this.props.appointment}</p>
           <DatePicker hintText="Change" underlineStyle={{display: 'none'}} onChange={(event, date) => {
@@ -90,15 +91,15 @@ export class OneContact extends React.Component {
           <RaisedButton
             label="Add to Google Calendar" backgroundColor="#5D576B" labelColor="#F1F1EF"
             onTouchTap={(event) => {
-              // if (loginStat == false) {
+              // updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+              //  if (isSignedIn == false) {
               // alert("You must be signed in to Google to use this feature")
               // } else {
               this.props.runApiPush(pushEvent)
-              //}
+              // }
             }}
           />
       </Paper>
-      <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1}>
       <form>
         <p>Record New Follow Up</p>

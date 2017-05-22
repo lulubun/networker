@@ -1,5 +1,6 @@
 /* global gapi */
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
+import { push } from 'react-router-redux'
 
 const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
 const APP_URL = 'https://be-a-networker.herokuapp.com';
@@ -99,7 +100,6 @@ export function fetchWholeContact(id, user) {
       let newMeetDate = data.serMeetDate;
       let newMeetNotes = data.serNote;
       let newPastArray = data.serPast;
-      console.log(newPastArray);
       dispatch(setOneContact(id,
         newDateNext,
         newFirstName,
@@ -155,20 +155,20 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
   }
 };
 
-export function fetchUpdate(editUser, editId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) {
+export function fetchUpdate(editUser, editId, firstInput, lastInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) {
   return dispatch => {
     const user = editUser;
     let _id = editId;
     const url = SER_URL + '/' + user + '/edit_contact/' + _id;
     let serFirst = firstInput;
     let serLast = lastInput;
-    let serImportant = importantInput;
     let serCompany = companyInput;
     let serJobTitle = jobTitleInput;
     let serPhone = phoneInput;
     let serEmail = emailInput;
     let serMeetDate = meetDateInput;
     let serNote = notesInput;
+    console.log(serMeetDate);
     fetch(url, {
       method: 'PUT',
       headers: {
@@ -178,7 +178,6 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
         _id,
         serFirst,
         serLast,
-        serImportant,
         serCompany,
         serJobTitle,
         serPhone,
@@ -187,8 +186,12 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, importantIn
         serNote
       })
     })
-    .then(response => console.log(response.json()))
-    .then(browserHistory.push('/' + user + '/one_contact/' + _id))
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      dispatch(setOneContact(data))
+    })
+    .then(location.assign('/' + user + '/one_contact/' + _id))
     .catch(ex => console.log(ex))
   }
 };
@@ -378,7 +381,7 @@ export function fetchLogOut() {
   return dispatch => {
     const logOut = SER_URL + '/logout';
     fetch(logOut)
-    .then(browserHistory.push('/'))
+    .then(location.assign('/'))
     .catch(ex => console.log(ex))
   }
 }

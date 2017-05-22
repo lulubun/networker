@@ -10,7 +10,7 @@ class LoginImg extends React.Component {
       paddingBottom: '30px',
       fontSize: '110px',
       fontStyle: 'oblique',
-      letterSpacing: '40px',
+      letterSpacing: '15px',
       color: 'white',
       WebkitTextStroke: '1px #5D576B'
     };

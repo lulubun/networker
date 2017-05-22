@@ -44,8 +44,25 @@ class Contacts extends React.Component {
       paddingRight: '15px'
     }
 
+    const noneStyle = {
+      textAlign: 'center',
+      color: '#cbc8d2',
+      marginTop: 60
+    }
+
     const responseGoogle = (response) => {
       console.log(response);
+    }
+
+    if (this.props.contactList.length == 0) {
+      return(
+        <div>
+          <div className="New_Button">
+            <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+          </div>
+          <h3 style={noneStyle}>Press the button above to add a new contact</h3>
+        </div>
+      )
     }
 
     return (
@@ -73,9 +90,9 @@ class Contacts extends React.Component {
             </div>
           ))}
         </div>
-        {/* <RaisedButton
+        <RaisedButton
           onTouchTap={(event) => {this.props.logOutNow()}}
-          className="DoneButton" label="Log Out" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/> */}
+          className="DoneButton" label="Log Out" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/>
       </div>
     );
   }
