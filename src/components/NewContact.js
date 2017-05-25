@@ -10,6 +10,7 @@ import * as actions from '../actions/contactActions';
 import moment from 'moment';
 import Formsy from 'formsy-react';
 import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup, FormsySelect, FormsyText, FormsyTime, FormsyToggle, FormsyAutoComplete } from 'formsy-material-ui/lib';
+import Paper from 'material-ui/Paper';
 
 let startId = 0;
 let firstInput = '';
@@ -33,8 +34,16 @@ export class NewContact extends React.Component {
   render() {
     const user = this.props.params.user;
 
+    const style = {
+      padding: 20,
+      margin: 20,
+    
+    };
+
     return(
       <div className="new_contact">
+        <Paper style={style} zDepth={5} rounded={false} className="onePaper">
+
         <Formsy.Form>
           <p>New Contact</p>
           <FormsyText
@@ -77,7 +86,7 @@ export class NewContact extends React.Component {
           }}/><br />
           <FormsyText
             name="emailInput"
-            hintText="Email"
+            hintText="Email (ex john@gmail.com)"
             validations="isEmail"
             validationError="please enter a valid email address"
             onChange={(event, newValue) => {
@@ -85,7 +94,7 @@ export class NewContact extends React.Component {
           }}/><br />
           <FormsyText
             name="phoneInput"
-            hintText="Phone Number"
+            hintText="Phone Number (ex 5555555555)"
             validations="isNumeric"
             validationError="please enter a valid phone number"
             onChange={(event, newValue) => {
@@ -124,6 +133,7 @@ export class NewContact extends React.Component {
             }}
           />
         </Formsy.Form>
+      </Paper>
       </div>
     )
   }
