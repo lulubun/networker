@@ -47,8 +47,9 @@ export class OneContact extends React.Component {
   const contactId = this.props.params.id;
   const user = this.props.params.user;
   let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
+  let overdue = "";
   if (dayNext < moment().format("YYYY-MM-DD")) {
-    alert('Following up with this contact is overdue!')
+    overdue = 'Following up with this contact is overdue!'
   }
   var pushEvent = {
     'summary': 'Follw up with ' + this.props.first + ' ' + this.props.last,
@@ -58,7 +59,14 @@ export class OneContact extends React.Component {
     'end': {
     'date': dayNext
   }
+
 };
+
+var overdueStyle = {
+  color: 'red',
+  fontWeight: 'bold'
+};
+
   return(
     <div>
       <Paper style={style} zDepth={1}>
@@ -82,6 +90,7 @@ export class OneContact extends React.Component {
       </Paper>
       <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1} name="dateChanger">
+        <p style={overdueStyle}>{overdue}</p>
         <p><Alarm className="conIcon"/>Follow up with this contact on {this.props.appointment}</p>
           <DatePicker hintText="Change" underlineStyle={{display: 'none'}} onChange={(event, date) => {
             let sendDate = moment(date).format("MMM DD YYYY");

@@ -54,6 +54,7 @@ class Contacts extends React.Component {
       console.log(response);
     }
 
+
     if (this.props.contactList.length == 0) {
       return(
         <div>
