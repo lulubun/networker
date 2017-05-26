@@ -191,7 +191,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, companyInpu
       console.log(data);
       dispatch(setOneContact(data))
     })
-    .then(location.assign('/' + user + '/one_contact/' + _id))
+    .then(browserHistory.push('/' + user + '/one_contact/' + _id))
     .catch(ex => console.log(ex))
   }
 };
