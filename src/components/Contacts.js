@@ -75,7 +75,7 @@ class Contacts extends React.Component {
           {this.props.contactList.map((contact, index) =>
             (<div className="oneLink" key={index}>
               <Paper style={style} zDepth={5} rounded={false} className="onePaper">
-              <p>Appointment for Next Contact: {contact.serNextContact}</p>
+              <p style={{marginBottom: 40}}>Appointment for Next Contact: {contact.serNextContact}</p>
               <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
               <Checkbox
                checked={contact.serImportant}
