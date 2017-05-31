@@ -16,6 +16,8 @@ import moment from 'moment';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 import '../index.css';
+import AddToCalendar from 'react-add-to-calendar';
+
 
 const style = {
   padding: 20,
@@ -51,21 +53,20 @@ export class OneContact extends React.Component {
   if (dayNext < moment().format("YYYY-MM-DD")) {
     overdue = 'Following up with this contact is overdue!'
   }
-  var pushEvent = {
-    'summary': 'Follw up with ' + this.props.first + ' ' + this.props.last,
-    'start': {
-      'date': dayNext
-    },
-    'end': {
-    'date': dayNext
+
+  let pushEvent = {
+    title: 'Follw up with ' + this.props.first + ' ' + this.props.last,
+    startTime: dayNext,
+    endTime: dayNext
   }
 
-};
+  const overdueStyle = {
+    color: 'red',
+    fontWeight: 'bold'
+  };
 
-var overdueStyle = {
-  color: 'red',
-  fontWeight: 'bold'
-};
+  let icon = { textOnly: 'none' };
+
 
   return(
     <div>
@@ -97,17 +98,12 @@ var overdueStyle = {
             let heart = this.props.important;
             this.props.changeHeartDate(user, contactId, heart, sendDate)
           }}/>
-          <RaisedButton
-            label="Add to Google Calendar" backgroundColor="#5D576B" labelColor="#F1F1EF"
-            onTouchTap={(event) => {
-              // updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-              //  if (isSignedIn == false) {
-              // alert("You must be signed in to Google to use this feature")
-              // } else {
-              this.props.runApiPush(pushEvent)
-              // }
-            }}
-          />
+          <AddToCalendar
+            event={pushEvent}
+            buttonLabel="ADD TO YOUR CALENDAR"
+            buttonTemplate={icon}
+           />
+
       </Paper>
       <Paper style={style} zDepth={1}>
       <form>
