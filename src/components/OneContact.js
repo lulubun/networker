@@ -102,6 +102,7 @@ export class OneContact extends React.Component {
             event={pushEvent}
             buttonLabel="ADD TO YOUR CALENDAR"
             buttonTemplate={icon}
+            displayItemIcons={false}
            />
 
       </Paper>
