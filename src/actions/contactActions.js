@@ -365,18 +365,6 @@ export function pushToGoogle(pushEvent) {
   }
 }
 
-export function removeCssHide() {
-  return dispatch => {
-    document.getElementById("google_stuff").classList.remove("hideMe");
-  }
-}
-
-export function cssHide() {
-  return dispatch => {
-    document.getElementById("google_stuff").classList.add("hideMe");
-  }
-}
-
 export function fetchLogOut() {
   return dispatch => {
     const logOut = SER_URL + '/logout';

@@ -39,7 +39,6 @@ export class OneContact extends React.Component {
   }
   componentDidMount() {
     this.props.getOneContact(this.props.params.id);
-    this.props.removeHide();
   }
   componentWillUnmount() {
     this.props.hide()
@@ -102,7 +101,7 @@ export class OneContact extends React.Component {
             event={pushEvent}
             buttonLabel="ADD TO YOUR CALENDAR"
             buttonTemplate={icon}
-            displayItemIcons={false}
+            displayItemIcons={true}
            />
 
       </Paper>
@@ -186,7 +185,6 @@ const mapDispatchToProps = (dispatch) => ({
   changeHeartDate: (user, contactId, isInputChecked, appDate) => dispatch(actions.fetchHeartDateUpdate(user, contactId, isInputChecked, appDate)),
   addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput)),
   runApiPush: (pushEvent) => dispatch(actions.pushToGoogle(pushEvent)),
-  removeHide: () => dispatch(actions.removeCssHide()),
   hide: () => dispatch(actions.cssHide())
 })
 

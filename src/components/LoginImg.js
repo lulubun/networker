@@ -12,7 +12,7 @@ class LoginImg extends React.Component {
       fontStyle: 'oblique',
       letterSpacing: '15px',
       color: 'white',
-      WebkitTextStroke: '1px #5D576B'
+      'WebkitTextStroke': '1px #5D576B'
     };
 
     const smTitleStyle = {
@@ -22,7 +22,7 @@ class LoginImg extends React.Component {
       fontStyle: 'oblique',
       letterSpacing: '3px',
       color: 'white',
-      webkitTextStroke: '1px #5D576B',
+      'WebkitTextStroke': '1px #5D576B',
     };
 
     return (
