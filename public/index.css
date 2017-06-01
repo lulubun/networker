@@ -1,5 +1,8 @@
 @media (max-width: 350px) {
-  .loginIm
+  .loginImg {
+    max-width: 350px !important;
+    background-size: cover;
+  }
 }
 
 .hideMe {
@@ -22,17 +25,16 @@
   padding-top: 20px;
 }
 
-.Login {
-  float: left;
+/*.Login {
+  display: block;
+  margin: auto;
   width: 100%;
   text-align: center;
-}
+}*/
 
 .star {
   position: relative;
   top: 6px;
-  left: 20px;
-  padding-right: 20px;
   font-size: 30px;
 }
 

@@ -18,12 +18,11 @@ class LoginImg extends React.Component {
     const smTitleStyle = {
       textAlign: 'center',
       paddingBottom: '30px',
-      fontSize: '50px',
+      fontSize: '30px',
       fontStyle: 'oblique',
-      letterSpacing: '5px',
+      letterSpacing: '3px',
       color: 'white',
       webkitTextStroke: '1px #5D576B',
-      paddingRight: '20px',
     };
 
     return (

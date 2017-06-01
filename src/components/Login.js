@@ -14,14 +14,14 @@ export class Login extends React.Component {
     const style={
       width: '100%',
       'marginBottom': '100px',
-      'marginTop': '20px'
+      'marginTop': '20px',
+      'paddingLeft': '65px'
     };
     const buttonStyle={
       'width': '100px'
     }
     return(
       <div style={style} className="Login">
-        <div className="loginBox">
         <p className="form_header">Log In to Networker</p><br />
         <br />
         <TextField
@@ -58,7 +58,6 @@ export class Login extends React.Component {
           this.props.login('User', 'password')
         }
         }/>
-        </div>
       </div>
     )
   }
