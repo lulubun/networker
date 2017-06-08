@@ -15,14 +15,15 @@ export class Login extends React.Component {
       width: '100%',
       'marginBottom': '100px',
       'marginTop': '20px',
-      'paddingLeft': '65px'
+      textAlign: 'center',
+      paddingLeft: '55px'
     };
     const buttonStyle={
       'width': '100px'
     }
     return(
       <div style={style} className="Login">
-        <p className="form_header">Log In to Networker</p><br />
+        <p className="form_header">Log In</p><br />
         <br />
         <TextField
           className="usernameIP"

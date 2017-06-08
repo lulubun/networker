@@ -7,7 +7,8 @@ import '../../public/index.css'
 class Landing extends React.Component {
   render() {
     const style={
-      // 'paddingLeft': '20px'
+      float: 'right',
+      position: 'relative'
     }
 
     const starStyle={
