@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Star from 'material-ui/svg-icons/action/stars';
 import MediaQuery from 'react-responsive';
 import '../../public/index.css'

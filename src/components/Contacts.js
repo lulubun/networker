@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router';
-import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import ActionFavorite from 'material-ui/svg-icons/toggle/star';
+import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
 import Checkbox from 'material-ui/Checkbox';
 import {connect} from 'react-redux';
 import Paper from 'material-ui/Paper';
@@ -27,20 +28,19 @@ class Contacts extends React.Component {
     const user = this.props.params.user;
 
     const style = {
-      height: 200,
+      height: 175,
       marginTop: 20,
       marginBottom: 20,
-      marginLeft: '25%',
+      marginLeft: '10%',
       marginRight: 'auto',
-      padding: 20,
-      width: '50%',
+      paddingTop: 30,
+      paddingLeft: 60,
+      width: '80%',
       display: 'inline-block',
-      backgroundColor: '#B5B4A7',
-      color: '#F1F1EF',
     };
 
     const styleMin = {
-      height: 250,
+      height: 175,
       marginTop: 20,
       marginBottom: 20,
       marginLeft: 'auto',
@@ -48,8 +48,6 @@ class Contacts extends React.Component {
       padding: 20,
       width: '75%',
       display: 'block',
-      backgroundColor: '#B5B4A7',
-      color: '#F1F1EF',
     };
 
     const iconStyle = {
@@ -83,25 +81,25 @@ class Contacts extends React.Component {
     return (
       <div className="Contacts">
         <div className="New_Button">
-          <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+          <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"  style={{zIndex: 2}}/></Link>
         </div>
         <div className="Contacts-List">
         <MediaQuery query='(min-device-width: 1000px)'>
           {this.props.contactList.map((contact, index) =>
             (<div className="oneLink" key={index}>
-              <Paper style={style} zDepth={5} rounded={false} className="onePaper">
-              <p style={{marginBottom: 40}}>Appointment for Next Contact: {contact.serNextContact}</p>
-              <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
-              <Checkbox
-               checked={contact.serImportant}
-               checkedIcon={<ActionFavorite />}
-               uncheckedIcon={<ActionFavoriteBorder />}
-               style={{paddingBottom: 15, margin: '0 auto'}}
-               label={contact.serFirst + ' ' + contact.serLast}
-               labelStyle={{color: '#F1F1EF'}}
-               />
-               </Link>
-               <p><Work style={iconStyle} color={"#5D576B"}/>{contact.serCompany}</p>
+              <Paper style={style} zDepth={1} rounded={false} className="onePaper">
+                  <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
+                    <Checkbox
+                      checked={contact.serImportant}
+                      checkedIcon={<ActionFavorite />}
+                      uncheckedIcon={<ActionFavoriteBorder />}
+                      style={{paddingBottom: 15, margin: '0 auto'}}
+                      label={contact.serFirst + ' ' + contact.serLast}
+                      labelStyle={{fontSize: '1.75em'}}
+                    />
+                  </Link>
+                  <p>at {contact.serCompany}</p>
+                  <p style={{marginBottom: 40}}>Next Follow-Up: {contact.serNextContact}</p>
              </Paper>
             </div>
           ))}
@@ -109,8 +107,7 @@ class Contacts extends React.Component {
         <MediaQuery query='(max-device-width: 999px)'>
           {this.props.contactList.map((contact, index) =>
             (<div className="oneLink" key={index}>
-              <Paper style={styleMin} zDepth={5} rounded={false} className="onePaper">
-              <p style={{marginBottom: 40}}>Appointment for Next Contact: {contact.serNextContact}</p>
+              <Paper style={styleMin} zDepth={1} rounded={false} className="onePaper">
               <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
               <Checkbox
                checked={contact.serImportant}
@@ -118,10 +115,11 @@ class Contacts extends React.Component {
                uncheckedIcon={<ActionFavoriteBorder />}
                style={{paddingBottom: 15, margin: '0 auto'}}
                label={contact.serFirst + ' ' + contact.serLast}
-               labelStyle={{color: '#F1F1EF'}}
+               labelStyle={{fontSize: '1.75em'}}
                />
                </Link>
-               <p><Work style={iconStyle} color={"#5D576B"}/>{contact.serCompany}</p>
+               <p style={{marginRight: '10px'}}>at {contact.serCompany}</p>
+               <p style={{marginBottom: 40}}>Next Follow-Up: {contact.serNextContact}</p>
              </Paper>
             </div>
           ))}

@@ -90,11 +90,9 @@ body {
 }
 
 .Link:hover {
-  color: #FFFF00;
 }
 
 .Link:visited {
-  color: white;
   text-decoration-style: solid;
 }
 

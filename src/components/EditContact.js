@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
-import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import ActionFavorite from 'material-ui/svg-icons/toggle/star';
+import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
 import DatePicker from 'material-ui/DatePicker';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -34,18 +35,10 @@ export class EditContact extends React.Component {
     };
 
     const styleLeft = {
-      width: '46%',
+      width: '90%',
       padding: 20,
-      margin: 20,
+      margin: 'auto',
       minHeight: 500
-    };
-
-    const styleRight = {
-      width: '46%',
-      padding: 20,
-      margin: 20,
-      minHeight: 500
-
     };
 
     const styleBoth = {
@@ -54,7 +47,7 @@ export class EditContact extends React.Component {
     }
 
     const titleStyle = {
-      marginLeft: 40,
+      marginLeft: 80,
       color: "#5D576B"
 
     }
@@ -65,11 +58,11 @@ export class EditContact extends React.Component {
     }
 
     const push = {
-      marginTop: 26
-    }
+      marginLeft: 10,
+      marginRight: 10    }
 
     const color = {
-      color: "#5D576B"
+      color: '#9892a6'
     }
 
     return(
@@ -78,7 +71,7 @@ export class EditContact extends React.Component {
           <MediaQuery query='(min-device-width: 1000px)'>
           <form>
             <div className="papers">
-            <Paper style={styleLeft} zDepth={5} rounded={false} className="onePaper">
+            <Paper style={styleLeft} zDepth={1} rounded={false} className="onePaper">
                   <p style={color}>First Name:</p>
                   <TextField
                     name="firstNameInput"
@@ -88,12 +81,34 @@ export class EditContact extends React.Component {
                   }}
                     defaultValue={this.props.first}
                   />
+                  <p style={color}>Last Name:</p>
+                  <TextField
+                    name="lastNameInput"
+                    fullWidth= {true}
+                    defaultValue={this.props.last}
+                    onChange={(event, newValue) => {
+                    lastInput = newValue
+                  }}/>
                   <p style={color}>Company:</p>
                   <TextField
                   name="companyInput"
                   fullWidth= {true}
                   defaultValue={this.props.company} onChange={(event, newValue) => {
                     companyInput = newValue
+                  }}/>
+                  <p style={color}>Job Title:</p>
+                  <TextField
+                  name="jobTitleInput"
+                  fullWidth= {true}
+                  defaultValue={this.props.jobTitle} onChange={(event, newValue) => {
+                  jobTitleInput = newValue
+                  }}/>
+                  <p style={color}>Phone:</p>
+                  <TextField
+                    name="phoneInput"
+                    fullWidth= {true}
+                    defaultValue={this.props.phone} onChange={(event, newValue) => {
+                    phoneInput = newValue
                   }}/>
                   <p style={color}>Email:</p>
                   <TextField
@@ -112,36 +127,6 @@ export class EditContact extends React.Component {
                       console.log(meetDateInput);
                     }}
                   />
-                  <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
-                    onTouchTap={(event) => {
-                        console.log(meetDateInput);
-                        this.props.editContact(editUser, editId, firstInput, lastInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
-                    }}
-                  />
-                </Paper>
-                <Paper style={styleRight} zDepth={5} rounded={false} className="onePaper">
-                  <p style={color}>Last Name:</p>
-                  <TextField
-                    name="lastNameInput"
-                    fullWidth= {true}
-                    defaultValue={this.props.last}
-                    onChange={(event, newValue) => {
-                    lastInput = newValue
-                  }}/>
-                  <p style={color}>Job Title:</p>
-                  <TextField
-                  name="jobTitleInput"
-                  fullWidth= {true}
-                  defaultValue={this.props.jobTitle} onChange={(event, newValue) => {
-                  jobTitleInput = newValue
-                  }}/>
-                  <p style={color}>Phone:</p>
-                  <TextField
-                    name="phoneInput"
-                    fullWidth= {true}
-                    defaultValue={this.props.phone} onChange={(event, newValue) => {
-                    phoneInput = newValue
-                  }}/>
                   <p style={color}>Notes:</p>
                   <TextField
                     name="meetingNotes"
@@ -151,21 +136,27 @@ export class EditContact extends React.Component {
                     onChange={(event, newValue) => {
                       notesInput = newValue
                     }}/>
-                    <RaisedButton label="Delete Contact" backgroundColor="#5D576B" labelColor="#F1F1EF"
-                      onTouchTap={(event) => {
-                        const doubleCheck = confirm("Are you sure?");
-                        if (doubleCheck == true) {
-                          this.props.delete(editId, editUser);
-                        }
-                      }}
-                    />
+                  <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
+                    onTouchTap={(event) => {
+                        console.log(meetDateInput);
+                        this.props.editContact(editUser, editId, firstInput, lastInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
+                    }}
+                  />
+                  <RaisedButton label="Delete Contact" backgroundColor="#5D576B" labelColor="#F1F1EF"
+                    onTouchTap={(event) => {
+                      const doubleCheck = confirm("Are you sure?");
+                      if (doubleCheck == true) {
+                        this.props.delete(editId, editUser);
+                      }
+                    }}
+                  />
                 </Paper>
               </div>
         </form>
       </MediaQuery>
       <MediaQuery query='(max-device-width: 999px)'>
       <form>
-        <Paper style={styleBoth} zDepth={5} rounded={false} className="onePaper">
+        <Paper style={styleBoth} zDepth={1} rounded={false} className="onePaper">
               <p>First Name:</p>
               <TextField
                 name="firstNameInput"

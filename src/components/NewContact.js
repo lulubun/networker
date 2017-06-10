@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
-import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import ActionFavorite from 'material-ui/svg-icons/toggle/star';
+import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
 import DatePicker from 'material-ui/DatePicker';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -11,6 +12,7 @@ import moment from 'moment';
 import Formsy from 'formsy-react';
 import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup, FormsySelect, FormsyText, FormsyTime, FormsyToggle, FormsyAutoComplete } from 'formsy-material-ui/lib';
 import Paper from 'material-ui/Paper';
+import {Link} from 'react-router';
 
 let startId = 0;
 let firstInput = '';
@@ -37,7 +39,7 @@ export class NewContact extends React.Component {
     const style = {
       padding: 20,
       margin: 20,
-    
+
     };
 
     return(
@@ -45,7 +47,7 @@ export class NewContact extends React.Component {
         <Paper style={style} zDepth={5} rounded={false} className="onePaper">
 
         <Formsy.Form>
-          <p>New Contact</p>
+          <h2>New Contact</h2>
           <FormsyText
             name="firstNameInput"
             hintText="First Name"
@@ -62,16 +64,6 @@ export class NewContact extends React.Component {
             onChange={(event, newValue) => {
             lastInput = newValue
           }}/><br />
-          <FormsyCheckbox
-          name="importantInput"
-          checkedIcon={<ActionFavorite />}
-          uncheckedIcon={<ActionFavoriteBorder />}
-          label="Select if this is an important contact"
-          onChange={(event, isInputChecked) => {
-            console.log(isInputChecked);
-            importantInput = isInputChecked
-          }}
-          />
           <FormsyText
             name="companyInput"
             hintText="Company"
@@ -119,6 +111,17 @@ export class NewContact extends React.Component {
             onChange={(event, date) => {dateNextInput = moment(date).format("MMM DD YYYY")}}
           />
           <br />
+          <FormsyCheckbox
+          name="importantInput"
+          checkedIcon={<ActionFavorite />}
+          uncheckedIcon={<ActionFavoriteBorder />}
+          label="Select if this is an important contact"
+          onChange={(event, isInputChecked) => {
+            console.log(isInputChecked);
+            importantInput = isInputChecked
+          }}
+          />
+          <br />
           <RaisedButton label="Save Contact" backgroundColor="#5D576B" labelColor="#F1F1EF"
             type="submit"
             onTouchTap={(event) => {
@@ -132,6 +135,8 @@ export class NewContact extends React.Component {
               }
             }}
           />
+          <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Cancel" backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginLeft: 10}}
+          /></Link>
         </Formsy.Form>
       </Paper>
       </div>

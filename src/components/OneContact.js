@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DatePicker from 'material-ui/DatePicker';
-import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import ActionFavorite from 'material-ui/svg-icons/toggle/star';
+import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import {Link} from 'react-router';
@@ -66,7 +67,6 @@ export class OneContact extends React.Component {
 
   let icon = { textOnly: 'none' };
 
-
   return(
     <div>
       <Paper style={style} zDepth={1}>
@@ -98,12 +98,9 @@ export class OneContact extends React.Component {
             this.props.changeHeartDate(user, contactId, heart, sendDate)
           }}/>
           <AddToCalendar
+            style={{color: "#F1F1EF", paddingLeft: 10, paddingRight: 10}}
             event={pushEvent}
-            buttonLabel="ADD TO YOUR CALENDAR"
-            buttonTemplate={icon}
-            displayItemIcons={true}
-           />
-
+          />
       </Paper>
       <Paper style={style} zDepth={1}>
       <form>

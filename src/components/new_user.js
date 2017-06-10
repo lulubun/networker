@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -63,7 +64,7 @@ export class NewUser extends React.Component {
           onChange={(event, newValue) => {
           confirmPassword = newValue
         }}/><br />
-        <RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF" 
+        <RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF"
         onTouchTap={(event) => {
           if (!(passwordInput === confirmPassword)) {
             alert('Password does not match')
