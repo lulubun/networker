@@ -20,6 +20,7 @@ import '../index.css';
 import AddToCalendar from 'react-add-to-calendar';
 
 
+
 const style = {
   padding: 20,
   margin: 20,
@@ -51,7 +52,7 @@ export class OneContact extends React.Component {
   let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
   let overdue = "";
   if (dayNext < moment().format("YYYY-MM-DD")) {
-    overdue = 'Following up with this contact is overdue!'
+    overdue = 'Overdue:'
   }
 
   let pushEvent = {
@@ -60,47 +61,79 @@ export class OneContact extends React.Component {
     endTime: dayNext
   }
 
-  const overdueStyle = {
-    color: 'red',
-    fontWeight: 'bold'
-  };
+  let overdueStyle = {
+    fontWeight: 'bold',
+  }
+
+  const calendarStyle = {
+    // color: "#F1F1EF",
+    // paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingTop: 15
+  }
+
+  if (dayNext < moment().format("YYYY-MM-DD")) {
+    overdueStyle = {
+      color: 'red',
+      fontWeight: 'bold'
+    }
+  }
+
+  const nameStyle = {
+    display: 'inline',
+    position: 'relative'
+  }
+
+  let sentence = this.props.first + ' ' + this.props.last
 
   let icon = { textOnly: 'none' };
 
   return(
     <div>
-      <Paper style={style} zDepth={1}>
-        <p className="contactName">{this.props.first} {this.props.last}</p>
-        <Checkbox
-        label="Important"
-        checked={this.props.important}
-        checkedIcon={<ActionFavorite />}
-        uncheckedIcon={<ActionFavoriteBorder />}
-        onCheck={(event, isInputChecked) => {
-          const dateSend = this.props.appointment;
-          this.props.changeHeartDate(user, contactId, isInputChecked, dateSend)
-        }} />
-        <p>{this.props.job} at {this.props.co}</p>
-        <p className="phoneText"><Phone className="conIcon"/> {this.props.phone}</p>
-        <p className="emailText"><Email className="conIcon"/> {this.props.email}</p>
-        <p>Met this contact on: {this.props.firstMeet}</p>
-        <p>Notes: {this.props.meetInfo}</p>
-        <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
-          label="Edit Contact Info" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
-      </Paper>
       <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
-      <Paper style={style} zDepth={1} name="dateChanger">
-        <p style={overdueStyle}>{overdue}</p>
-        <p><Alarm className="conIcon"/>Follow up with this contact on {this.props.appointment}</p>
-          <DatePicker hintText="Change" underlineStyle={{display: 'none'}} onChange={(event, date) => {
-            let sendDate = moment(date).format("MMM DD YYYY");
-            let heart = this.props.important;
-            this.props.changeHeartDate(user, contactId, heart, sendDate)
-          }}/>
-          <AddToCalendar
-            style={{color: "#F1F1EF", paddingLeft: 10, paddingRight: 10}}
-            event={pushEvent}
-          />
+      <Paper style={style} zDepth={1}>
+        <p className="contactName" style={nameStyle}>
+          <Checkbox
+          label={sentence}
+          lablePosition='left'
+          checked={this.props.important}
+          checkedIcon={<ActionFavorite />}
+          uncheckedIcon={<ActionFavoriteBorder />}
+          style={{float: 'right', paddingBottom: 30}}
+          onCheck={(event, isInputChecked) => {
+            const dateSend = this.props.appointment;
+            this.props.changeHeartDate(user, contactId, isInputChecked, dateSend)
+          }} />
+        </p>
+        <p>Job Title:   {this.props.job}</p>
+        <p>Company:   {this.props.co}</p>
+        <p className="phoneText">Phone Number:   {this.props.phone}</p>
+        <p className="emailText">Email Address:   {this.props.email}</p>
+        <p>Met this contact on:   {this.props.firstMeet}</p>
+        <p>Notes:   {this.props.meetInfo}</p>
+        <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
+          label="Edit" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+        <div>
+          <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
+          <p style={{position: 'relative', textAlign: 'right'}}>
+            <div style={{float: 'right'}}>
+              <DatePicker hintText="|&nbsp; Edit Date" hintStyle={{color: 'black'}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
+                let sendDate = moment(date).format("MMM DD YYYY");
+                let heart = this.props.important;
+                this.props.changeHeartDate(user, contactId, heart, sendDate)
+              }}/>
+            </div>
+            <div style={calendarStyle}>
+              <AddToCalendar
+                event={pushEvent}
+                displayItemIcons={false}
+                buttonTemplate={icon}
+                buttonLabel="Add to Calendar &nbsp;"
+              />
+            </div>
+          </p>
+        </div>
       </Paper>
       <Paper style={style} zDepth={1}>
       <form>
