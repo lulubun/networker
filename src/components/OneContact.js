@@ -18,6 +18,8 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 import '../index.css';
 import AddToCalendar from 'react-add-to-calendar';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+
 
 
 
@@ -65,14 +67,6 @@ export class OneContact extends React.Component {
     fontWeight: 'bold',
   }
 
-  const calendarStyle = {
-    // color: "#F1F1EF",
-    // paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingTop: 15
-  }
-
   if (dayNext < moment().format("YYYY-MM-DD")) {
     overdueStyle = {
       color: 'red',
@@ -115,24 +109,27 @@ export class OneContact extends React.Component {
         <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
           label="Edit" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
         <div>
-          <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
-          <p style={{position: 'relative', textAlign: 'right'}}>
-            <div style={{float: 'right'}}>
-              <DatePicker hintText="|&nbsp; Edit Date" hintStyle={{color: 'black'}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
-                let sendDate = moment(date).format("MMM DD YYYY");
-                let heart = this.props.important;
-                this.props.changeHeartDate(user, contactId, heart, sendDate)
-              }}/>
-            </div>
-            <div style={calendarStyle}>
+          <Toolbar style={{marginTop: 10}}>
+            <ToolbarGroup firstChild={true} style={{paddingBottom: 10, paddingLeft: 15}}>
+              <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
+            </ToolbarGroup>
+            <ToolbarGroup>
               <AddToCalendar
                 event={pushEvent}
                 displayItemIcons={false}
                 buttonTemplate={icon}
-                buttonLabel="Add to Calendar &nbsp;"
+                buttonLabel="Add to Calendar"
+                buttonLabelStyle={{color: 'blue'}}
               />
-            </div>
-          </p>
+              <ToolbarSeparator />
+              <DatePicker hintText="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit Date" hintStyle={{color: 'black'}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
+                let sendDate = moment(date).format("MMM DD YYYY");
+                let heart = this.props.important;
+                this.props.changeHeartDate(user, contactId, heart, sendDate)
+              }}/>
+
+            </ToolbarGroup>
+          </Toolbar>
         </div>
       </Paper>
       <Paper style={style} zDepth={1}>
