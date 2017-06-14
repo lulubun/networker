@@ -19,6 +19,7 @@ import TextField from 'material-ui/TextField';
 import '../index.css';
 import AddToCalendar from 'react-add-to-calendar';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import '../../node_modules/react-add-to-calendar/dist/react-add-to-calendar.min.css';
 
 
 
@@ -116,10 +117,9 @@ export class OneContact extends React.Component {
             <ToolbarGroup>
               <AddToCalendar
                 event={pushEvent}
-                displayItemIcons={false}
-                buttonTemplate={icon}
                 buttonLabel="Add to Calendar"
-                buttonLabelStyle={{color: 'blue'}}
+                buttonTemplate={{ 'caret': 'left' }}
+                displayItemIcons={false}
               />
               <ToolbarSeparator />
               <DatePicker hintText="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit Date" hintStyle={{color: 'black'}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
