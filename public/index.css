@@ -5,6 +5,10 @@
   }
 }
 
+.LoginImg {
+  top: -10 !important;
+}
+
 .hideMe {
   display: none;
 }
@@ -74,7 +78,7 @@
 }
 
 body {
-  margin: 0;
+  margin: 0 !important;
   padding: 0;
   font-family: sans-serif;
   background-color: #F1F1EF;

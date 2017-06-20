@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Star from 'material-ui/svg-icons/action/stars';
 import MediaQuery from 'react-responsive';
-import Landing from './Landing';
+// import Landing from './Landing';
 import Background from '../../public/n_Fotor.jpg';
 import Columns from 'react-columns';
 import '../../public/index.css';
@@ -51,7 +51,8 @@ class LoginImg extends React.Component {
 
     const landingStyle = {
       color: 'white',
-      minWidth: '700px'
+      minWidth: '700px',
+      paddingLeft: '10xp'
     }
 
     const textStyle ={
@@ -60,7 +61,7 @@ class LoginImg extends React.Component {
 
     return (
       <div style={backgroundStyle}>
-        <MediaQuery query='(min-device-width: 1000px)'>
+        <MediaQuery query='(min-device-width: 1200px)'>
           <div style={textStyle}>
             <Columns>
             <h1 style={titleStyle}>Networker</h1>
@@ -72,7 +73,7 @@ class LoginImg extends React.Component {
           </Columns>
           </div>
         </MediaQuery>
-        <MediaQuery query='(max-device-width: 1000px)'>
+        <MediaQuery query='(max-device-width: 1199px)'>
           <div style={textStyle}>
             <h1 style={smTitleStyle}>Networker</h1>
           </div>

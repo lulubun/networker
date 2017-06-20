@@ -20,9 +20,7 @@ import '../index.css';
 import AddToCalendar from 'react-add-to-calendar';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import '../../node_modules/react-add-to-calendar/dist/react-add-to-calendar.min.css';
-
-
-
+import MediaQuery from 'react-responsive';
 
 const style = {
   padding: 20,
@@ -110,26 +108,31 @@ export class OneContact extends React.Component {
         <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
           label="Edit" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
         <div>
-          <Toolbar style={{marginTop: 10}}>
-            <ToolbarGroup firstChild={true} style={{paddingBottom: 10, paddingLeft: 15}}>
-              <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
-            </ToolbarGroup>
-            <ToolbarGroup>
-              <AddToCalendar
-                event={pushEvent}
-                buttonLabel="Add to Calendar"
-                buttonTemplate={{ 'caret': 'left' }}
-                displayItemIcons={false}
-              />
-              <ToolbarSeparator />
-              <DatePicker hintText="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit Date" hintStyle={{color: 'black'}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
-                let sendDate = moment(date).format("MMM DD YYYY");
-                let heart = this.props.important;
-                this.props.changeHeartDate(user, contactId, heart, sendDate)
-              }}/>
+          <MediaQuery query='(min-device-width: 800px)'>
+            <Toolbar style={{marginTop: 10}}>
+              <ToolbarGroup firstChild={true} style={{paddingBottom: 10, paddingLeft: 15}}>
+                <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
+              </ToolbarGroup>
+              <ToolbarGroup>
+                <AddToCalendar
+                  event={pushEvent}
+                  buttonLabel="Add to Calendar"
+                  buttonTemplate={{ 'caret': 'left' }}
+                  displayItemIcons={false}
+                />
+                <ToolbarSeparator />
+                <DatePicker hintText="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit Date" hintStyle={{color: 'black'}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
+                  let sendDate = moment(date).format("MMM DD YYYY");
+                  let heart = this.props.important;
+                  this.props.changeHeartDate(user, contactId, heart, sendDate)
+                }}/>
 
-            </ToolbarGroup>
-          </Toolbar>
+              </ToolbarGroup>
+            </Toolbar>
+          </MediaQuery>
+          <MediaQuery query='(max-device-width: 799px)'>
+            <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
+          </MediaQuery>
         </div>
       </Paper>
       <Paper style={style} zDepth={1}>
@@ -212,7 +215,6 @@ const mapDispatchToProps = (dispatch) => ({
   changeHeartDate: (user, contactId, isInputChecked, appDate) => dispatch(actions.fetchHeartDateUpdate(user, contactId, isInputChecked, appDate)),
   addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput)),
   runApiPush: (pushEvent) => dispatch(actions.pushToGoogle(pushEvent)),
-  hide: () => dispatch(actions.cssHide())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OneContact);

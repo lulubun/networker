@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/userActions';
 import Paper from 'material-ui/Paper';
+import {Link} from 'react-router';
+
 
 
 let firstNameInput = '';
@@ -64,7 +66,7 @@ export class NewUser extends React.Component {
           onChange={(event, newValue) => {
           confirmPassword = newValue
         }}/><br />
-        <RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF"
+        <RaisedButton label="Register" backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginRight: '10px'}}
         onTouchTap={(event) => {
           if (!(passwordInput === confirmPassword)) {
             alert('Password does not match')
@@ -72,6 +74,7 @@ export class NewUser extends React.Component {
             this.props.saveUser(usernameInput, passwordInput, firstNameInput, lastNameInput)
           }
         }} />
+        <Link to={'/'} className="Link"><RaisedButton label="Cancel" backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
       </form>
     </Paper>
       </div>

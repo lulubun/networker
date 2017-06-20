@@ -9,7 +9,7 @@ class Landing extends React.Component {
   render() {
     const style={
       float: 'right',
-      position: 'relative'
+      position: 'relative',
     }
 
     const starStyle={
@@ -24,10 +24,6 @@ class Landing extends React.Component {
       paddingRight: '35px'
     }
 
-    const starStyleMin={
-      display: 'none'
-    }
-
     return (
       <div>
       <MediaQuery query='(min-device-width: 1224px)'>
@@ -37,11 +33,11 @@ class Landing extends React.Component {
           <p><Star style={starStyle} className="star" color={"#5D576B"} />    &nbsp; Record all of your interactions with contacts and take important notes<Star style={starStyle} className="star" color={"#5D576B"} /></p>
         </div>
       </MediaQuery>
-      <MediaQuery query='(max-device-width: 1224px)'>
+      <MediaQuery query='(max-device-width: 1223px)'>
         <div style={styleMin} className="Landing">
-          <p><Star style={starStyleMin} className="star" color={"#5D576B"} />Keep track of your network<Star style={starStyleMin} className="star" color={"#5D576B"} /></p>
-          <p><Star style={starStyleMin} className="star" color={"#5D576B"} />Add follow up reminders to your Google Calendar<Star style={starStyleMin} className="star" color={"#5D576B"} /></p>
-          <p><Star style={starStyleMin} className="star" color={"#5D576B"} />Record all of your interactions with contacts and take important notes<Star style={starStyleMin} className="star" color={"#5D576B"} /></p>
+          <p>Keep track of your network</p>
+          <p>Add follow up reminders to your Google Calendar</p>
+          <p>Record all of your interactions with contacts and take important notes</p>
         </div>
       </MediaQuery>
       </div>
