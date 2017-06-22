@@ -43,9 +43,9 @@ export class OneContact extends React.Component {
   componentDidMount() {
     this.props.getOneContact(this.props.params.id);
   }
-  componentWillUnmount() {
-    this.props.hide()
-  }
+  // componentWillUnmount() {
+  //   this.props.hide()
+  // }
  render() {
   let loginStat = this.props.googleLogin;
   const contactId = this.props.params.id;
