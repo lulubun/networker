@@ -28,7 +28,7 @@ class Contacts extends React.Component {
       marginRight: 'auto',
       paddingTop: 30,
       paddingLeft: 60,
-      width: '40%',
+      width: '80%',
       display: 'inline-block',
     };
 
@@ -39,7 +39,7 @@ class Contacts extends React.Component {
       marginLeft: 'auto',
       marginRight: 'auto',
       padding: 20,
-      width: '35%',
+      width: '70%',
       display: 'block',
     };
 
@@ -114,9 +114,8 @@ class Contacts extends React.Component {
           ))}
         </MediaQuery>
         </div>
-        <RaisedButton
-          onTouchTap={(event) => {this.props.logOutNow()}}
-          className="DoneButton" label="Log Out" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/>
+        <Link to={'/' + user + '/network'} className="Link"><RaisedButton
+          className="DoneButton" label="Back to Options" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       </div>
     );
   }
@@ -130,7 +129,6 @@ const mapDispatchToProps = (dispatch) => ({
   getAllContacts: (user) => dispatch(actions.fetchAllContacts(user)),
   handleClick: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
   startGoogle: () => dispatch(actions.initClient()),
-  logOutNow: () => dispatch(actions.fetchLogOut())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

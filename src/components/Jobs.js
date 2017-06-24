@@ -6,7 +6,7 @@ import Checkbox from 'material-ui/Checkbox';
 import {connect} from 'react-redux';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as actions from '../actions/contactActions';
+import * as actions from '../actions/JobActions';
 import '../index.css';
 import GoogleLogin from 'react-google-login';
 import MediaQuery from 'react-responsive';
@@ -14,7 +14,7 @@ import MediaQuery from 'react-responsive';
 class Jobs extends React.Component {
   componentDidMount() {
     // const user = this.props.params.user;
-    // this.props.getAllContacts(user);
+    // this.props.getAllJobs(user);
   };
 
   render() {
@@ -56,61 +56,59 @@ class Jobs extends React.Component {
     }
 
 
-    // if (this.props.contactList.length == 0) {
+    // if (this.props.JobList.length == 0) {
     //   return(
     //     <div>
     //       <div className="New_Button">
-    //         <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+    //         <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
     //       </div>
-    //       <h3 style={noneStyle}>Press the button above to add a new contact</h3>
+    //       <h3 style={noneStyle}>Press the button above to add a new Job</h3>
     //     </div>
     //   )
     // }
 
     return (
-
-      <div><p>Hi</p></div>
-      // <div className="Contacts">
+      // <div className="Jobs">
       //   <div className="New_Button">
-      //     <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"  style={{zIndex: 2}}/></Link>
+      //     <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"  style={{zIndex: 2}}/></Link>
       //   </div>
-      //   <div className="Contacts-List">
+      //   <div className="Jobs-List">
       //   <MediaQuery query='(min-device-width: 1000px)'>
-      //     {this.props.contactList.map((contact, index) =>
+      //     {this.props.JobList.map((Job, index) =>
       //       (<div className="oneLink" key={index}>
       //         <Paper style={style} zDepth={1} rounded={false} className="onePaper">
-      //             <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
+      //             <Link to={'/' + user + '/one_Job/' + Job._id} className="Link">
       //               <Checkbox
-      //                 checked={contact.serImportant}
+      //                 checked={Job.serImportant}
       //                 checkedIcon={<ActionFavorite />}
       //                 uncheckedIcon={<ActionFavoriteBorder />}
       //                 style={{paddingBottom: 15, margin: '0 auto'}}
-      //                 label={contact.serFirst + ' ' + contact.serLast}
+      //                 label={Job.serFirst + ' ' + Job.serLast}
       //                 labelStyle={{fontSize: '1.75em'}}
       //               />
       //             </Link>
-      //             <p>at {contact.serCompany}</p>
-      //             <p style={{marginBottom: 40}}>Next Follow-Up: {contact.serNextContact}</p>
+      //             <p>at {Job.serCompany}</p>
+      //             <p style={{marginBottom: 40}}>Next Follow-Up: {Job.serNextJob}</p>
       //        </Paper>
       //       </div>
       //     ))}
       //   </MediaQuery>
       //   <MediaQuery query='(max-device-width: 999px)'>
-      //     {this.props.contactList.map((contact, index) =>
+      //     {this.props.JobList.map((Job, index) =>
       //       (<div className="oneLink" key={index}>
       //         <Paper style={styleMin} zDepth={1} rounded={false} className="onePaper">
-      //         <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
+      //         <Link to={'/' + user + '/one_Job/' + Job._id} className="Link">
       //         <Checkbox
-      //          checked={contact.serImportant}
+      //          checked={Job.serImportant}
       //          checkedIcon={<ActionFavorite />}
       //          uncheckedIcon={<ActionFavoriteBorder />}
       //          style={{paddingBottom: 15, margin: '0 auto'}}
-      //          label={contact.serFirst + ' ' + contact.serLast}
+      //          label={Job.serFirst + ' ' + Job.serLast}
       //          labelStyle={{fontSize: '1.75em'}}
       //          />
       //          </Link>
-      //          <p style={{marginRight: '10px'}}>at {contact.serCompany}</p>
-      //          <p style={{marginBottom: 40}}>Next Follow-Up: {contact.serNextContact}</p>
+      //          <p style={{marginRight: '10px'}}>at {Job.serCompany}</p>
+      //          <p style={{marginBottom: 40}}>Next Follow-Up: {Job.serNextJob}</p>
       //        </Paper>
       //       </div>
       //     ))}
@@ -125,12 +123,12 @@ class Jobs extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  contactList: state.AllContactsState.allContacts,
+  jobList: state.AllJobsState.allJobs,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllContacts: (user) => dispatch(actions.fetchAllContacts(user)),
-  handleClick: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
+  getAllJobs: (user) => dispatch(actions.fetchAllJobs(user)),
+  handleClick: (linkId) => dispatch(actions.fetchWholeJob(linkId)),
   startGoogle: () => dispatch(actions.initClient()),
   logOutNow: () => dispatch(actions.fetchLogOut())
 })

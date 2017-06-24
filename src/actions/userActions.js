@@ -67,7 +67,7 @@ export function fetchOneUser(usernameInput, passwordInput) {
     .then(data => {
       const endpoint = data.user.username;
       console.log(endpoint);
-      browserHistory.push('/' + endpoint + '/contacts')})
+      browserHistory.push('/' + endpoint + '/network')})
     .catch(ex => console.log(ex))
   }
 }
