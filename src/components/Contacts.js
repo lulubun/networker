@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router';
 import ActionFavorite from 'material-ui/svg-icons/toggle/star';
 import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
@@ -9,14 +8,8 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
 import '../index.css';
-import Work from 'material-ui/svg-icons/action/work';
-import GoogleLogin from 'react-google-login';
 import MediaQuery from 'react-responsive';
 
-const responseGoogle = (response) => {
-  console.log(response);
-  response.grant({scope: 'https://www.googleapis.com/auth/calendar'})
-}
 
 class Contacts extends React.Component {
   componentDidMount() {
@@ -35,7 +28,7 @@ class Contacts extends React.Component {
       marginRight: 'auto',
       paddingTop: 30,
       paddingLeft: 60,
-      width: '80%',
+      width: '40%',
       display: 'inline-block',
     };
 
@@ -46,24 +39,20 @@ class Contacts extends React.Component {
       marginLeft: 'auto',
       marginRight: 'auto',
       padding: 20,
-      width: '75%',
+      width: '35%',
       display: 'block',
     };
 
-    const iconStyle = {
-      position: 'relative',
-      top: '6px',
-      paddingRight: '15px'
-    }
+    // const iconStyle = {
+    //   position: 'relative',
+    //   top: '6px',
+    //   paddingRight: '15px'
+    // }
 
     const noneStyle = {
       textAlign: 'center',
       color: '#cbc8d2',
       marginTop: 60
-    }
-
-    const responseGoogle = (response) => {
-      console.log(response);
     }
 
 

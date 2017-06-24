@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import DatePicker from 'material-ui/DatePicker';
 import ActionFavorite from 'material-ui/svg-icons/toggle/star';
 import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
@@ -10,15 +9,13 @@ import {connect} from 'react-redux';
 import Past from './Past';
 import * as actions from '../actions/contactActions';
 import Paper from 'material-ui/Paper';
-import Email from 'material-ui/svg-icons/communication/mail-outline';
-import Phone from 'material-ui/svg-icons/communication/phone';
 import Alarm from 'material-ui/svg-icons/action/alarm';
 import moment from 'moment';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 import '../index.css';
 import AddToCalendar from 'react-add-to-calendar';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
 import '../../node_modules/react-add-to-calendar/dist/react-add-to-calendar.min.css';
 import MediaQuery from 'react-responsive';
 
@@ -27,9 +24,6 @@ const style = {
   margin: 20,
 };
 
-let typeInput = '';
-let dateInput = moment().format("MMM DD YYYY");
-let contactNotesInput = '';
 let pastId = 0;
 let prettyDate = '';
 
@@ -43,11 +37,8 @@ export class OneContact extends React.Component {
   componentDidMount() {
     this.props.getOneContact(this.props.params.id);
   }
-  // componentWillUnmount() {
-  //   this.props.hide()
-  // }
+
  render() {
-  let loginStat = this.props.googleLogin;
   const contactId = this.props.params.id;
   const user = this.props.params.user;
   let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
@@ -79,8 +70,6 @@ export class OneContact extends React.Component {
   }
 
   let sentence = this.props.first + ' ' + this.props.last
-
-  let icon = { textOnly: 'none' };
 
   return(
     <div>

@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import * as actions from '../actions/contactActions';
-import {Link} from 'react-router';
 import Columns from 'react-columns';
 
 
@@ -17,9 +15,6 @@ const style = {
 
 class Past extends React.Component {
   render() {
-    let user = '';
-    let contactId = '';
-    let pastId = '';
     let array = this.props.allPastList;
     let sortedArray;
     if (array == undefined) {

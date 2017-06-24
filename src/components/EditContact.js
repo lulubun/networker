@@ -1,11 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
-import ActionFavorite from 'material-ui/svg-icons/toggle/star';
-import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
 import DatePicker from 'material-ui/DatePicker';
-import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
 import Paper from 'material-ui/Paper';
@@ -21,7 +17,6 @@ export class EditContact extends React.Component {
     let editId = this.props.params.id
     let firstInput = this.props.first;
     let lastInput = this.props.last;
-    let importantInput = this.props.important;
     let companyInput = this.props.company;
     let jobTitleInput = this.props.jobTitle;
     let emailInput = this.props.email;
@@ -75,66 +70,66 @@ export class EditContact extends React.Component {
                   <p style={color}>First Name:</p>
                   <TextField
                     name="firstNameInput"
-                    fullWidth= {true}
+                    fullWidth={true}
                     onChange={(event, newValue) => {
-                    firstInput = newValue
+                    firstInput=newValue
                   }}
                     defaultValue={this.props.first}
                   />
                   <p style={color}>Last Name:</p>
                   <TextField
                     name="lastNameInput"
-                    fullWidth= {true}
+                    fullWidth={true}
                     defaultValue={this.props.last}
                     onChange={(event, newValue) => {
-                    lastInput = newValue
+                    lastInput=newValue
                   }}/>
                   <p style={color}>Company:</p>
                   <TextField
                   name="companyInput"
                   fullWidth= {true}
                   defaultValue={this.props.company} onChange={(event, newValue) => {
-                    companyInput = newValue
+                    companyInput=newValue
                   }}/>
                   <p style={color}>Job Title:</p>
                   <TextField
                   name="jobTitleInput"
-                  fullWidth= {true}
+                  fullWidth={true}
                   defaultValue={this.props.jobTitle} onChange={(event, newValue) => {
-                  jobTitleInput = newValue
+                  jobTitleInput=newValue
                   }}/>
                   <p style={color}>Phone:</p>
                   <TextField
                     name="phoneInput"
-                    fullWidth= {true}
+                    fullWidth={true}
                     defaultValue={this.props.phone} onChange={(event, newValue) => {
-                    phoneInput = newValue
+                    phoneInput=newValue
                   }}/>
                   <p style={color}>Email:</p>
                   <TextField
                     name="emailInput"
-                    fullWidth= {true}
+                    fullWidth={true}
                     defaultValue={this.props.email} onChange={(event, newValue) => {
-                    emailInput = newValue
+                    emailInput=newValue
                   }}/>
                   <DatePicker
                     floatingLabelText={"Date of meeting this contact " + meetDateInput}
                     style={dateStyle}
-                    fullWidth= {true}
+                    fullWidth={true}
                     defaultDate={this.props.meetDateInput}
                     onChange={(event, date) => {
-                      meetDateInput = moment(date).format("MMM DD YYYY");
+                      meetDateInput=moment(date).format("MMM DD YYYY");
                       console.log(meetDateInput);
                     }}
                   />
                   <p style={color}>Notes:</p>
                   <TextField
                     name="meetingNotes"
-                    fullWidth= {true}
+                    fullWidth={true}
                     defaultValue={this.props.meetNotes}
                     multiLine={true}
                     onChange={(event, newValue) => {
-                      notesInput = newValue
+                      notesInput=newValue
                     }}/>
                   <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
                     onTouchTap={(event) => {
@@ -160,67 +155,67 @@ export class EditContact extends React.Component {
               <p>First Name:</p>
               <TextField
                 name="firstNameInput"
-                fullWidth= {true}
+                fullWidth={true}
                 onChange={(event, newValue) => {
-                firstInput = newValue
+                firstInput=newValue
               }}
                 defaultValue={this.props.first}
               />
               <p>Last Name:</p>
               <TextField
                 name="lastNameInput"
-                fullWidth= {true}
+                fullWidth={true}
                 defaultValue={this.props.last}
                 onChange={(event, newValue) => {
-                lastInput = newValue
+                lastInput=newValue
               }}/>
               <p>Company:</p>
               <TextField
               name="companyInput"
-              fullWidth= {true}
+              fullWidth={true}
               defaultValue={this.props.company} onChange={(event, newValue) => {
-                companyInput = newValue
+                companyInput=newValue
               }}/>
 
               <p>Job Title:</p>
               <TextField
               name="jobTitleInput"
-              fullWidth= {true}
+              fullWidth={true}
               defaultValue={this.props.jobTitle} onChange={(event, newValue) => {
-              jobTitleInput = newValue
+              jobTitleInput=newValue
               }}/>
               <p>Email:</p>
               <TextField
                 name="emailInput"
-                fullWidth= {true}
+                fullWidth={true}
                 defaultValue={this.props.email} onChange={(event, newValue) => {
-                emailInput = newValue
+                emailInput=newValue
               }}/>
               <p>Phone:</p>
               <TextField
                 name="phoneInput"
-                fullWidth= {true}
+                fullWidth={true}
                 defaultValue={this.props.phone} onChange={(event, newValue) => {
-                phoneInput = newValue
+                phoneInput=newValue
               }}/>
               <DatePicker
                 floatingLabelText={"Date of meeting this contact " + meetDateInput}
                 style={dateStyle}
-                fullWidth= {true}
+                fullWidth={true}
                 defaultDate={this.props.meetDateInput}
                 onChange={(event, date) => {
-                  meetDateInput = moment(date).format("MMM DD YYYY");
+                  meetDateInput=moment(date).format("MMM DD YYYY");
                   console.log(meetDateInput);
                 }}
               />
               <p>Notes:</p>
               <TextField
                 name="meetingNotes"
-                fullWidth= {true}
+                fullWidth={true}
                 defaultValue={this.props.meetNotes}
                 multiLine={true}
                 onChange={(event, newValue) => {
-                  notesInput = newValue
+                  notesInput=newValue
                 }}/>
               <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={pad}
                 onTouchTap={(event) => {

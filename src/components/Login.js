@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router';
 import * as actions from '../actions/userActions';
 import '../index.css';
-import moment from 'moment';
 
 export class Login extends React.Component {
   render() {
