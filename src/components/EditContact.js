@@ -49,7 +49,8 @@ export class EditContact extends React.Component {
 
     const pad = {
       marginLeft: 10,
-      marginRight: 10
+      marginRight: 10,
+      marginBottom: 10
     }
 
     const push = {
@@ -116,10 +117,9 @@ export class EditContact extends React.Component {
                     floatingLabelText={"Date of meeting this contact " + meetDateInput}
                     style={dateStyle}
                     fullWidth={true}
-                    defaultDate={this.props.meetDateInput}
+                    defaultDate={this.props.meetDate}
                     onChange={(event, date) => {
                       meetDateInput=moment(date).format("MMM DD YYYY");
-                      console.log(meetDateInput);
                     }}
                   />
                   <p style={color}>Notes:</p>
@@ -133,7 +133,6 @@ export class EditContact extends React.Component {
                     }}/>
                   <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
                     onTouchTap={(event) => {
-                        console.log(meetDateInput);
                         this.props.editContact(editUser, editId, firstInput, lastInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
                     }}
                   />
@@ -198,14 +197,14 @@ export class EditContact extends React.Component {
                 defaultValue={this.props.phone} onChange={(event, newValue) => {
                 phoneInput=newValue
               }}/>
+              <p>Date of meeting this contact:</p>
               <DatePicker
-                floatingLabelText={"Date of meeting this contact " + meetDateInput}
+                floatingLabelText={meetDateInput}
                 style={dateStyle}
                 fullWidth={true}
-                defaultDate={this.props.meetDateInput}
+                defaultDate={this.props.meetDate}
                 onChange={(event, date) => {
                   meetDateInput=moment(date).format("MMM DD YYYY");
-                  console.log(meetDateInput);
                 }}
               />
               <p>Notes:</p>
@@ -219,7 +218,6 @@ export class EditContact extends React.Component {
                 }}/>
               <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={pad}
                 onTouchTap={(event) => {
-                    console.log(meetDateInput);
                     this.props.editContact(editUser, editId, firstInput, lastInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput);
                 }}
               />

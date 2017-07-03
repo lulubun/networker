@@ -1,32 +1,39 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import ActionFavorite from 'material-ui/svg-icons/toggle/star';
-import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
+import ActionFavorite from 'material-ui/svg-icons/alert/error';
+import ActionFavoriteBorder from 'material-ui/svg-icons/alert/error-outline';
 import RaisedButton from 'material-ui/RaisedButton';
-// import * as actions from '../actions/JobActions';
+import * as actions from '../actions/jobActions';
 import moment from 'moment';
 import Formsy from 'formsy-react';
 import { FormsyCheckbox, FormsyDate, FormsyRadioGroup, FormsyText } from 'formsy-material-ui/lib';
 import Paper from 'material-ui/Paper';
 import {Link} from 'react-router';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+
 
 let startId = 0;
-let firstInput = '';
-let lastInput = '';
-let importantInput = false;
 let companyInput = '';
 let jobTitleInput = '';
-let emailInput = '';
-let phoneInput = '';
-let meetDateInput = moment().format("MMM DD YYYY");
-let notesInput = '';
 let startDate = moment().add(14, 'days').calendar();
 let dateNextInput = moment(startDate).format("MMM DD YYYY");
+let importantInput = '';
+let contactNameInput = '';
+let researchInput = '';
+let jobNotesInput = '';
+let websiteInput = '';
+let postInput = '';
+let stageInput = '';
+let foundJobInput = moment().format("MMM DD YYYY");
 
 
 export class NewJob extends React.Component {
+
+  state = {
+    stage: ''
+  }
   componentDidMount() {
-    this.props.clear(startId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
+    this.props.clear(startId, companyInput, jobTitleInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput);
   };
 
   render() {
@@ -38,28 +45,14 @@ export class NewJob extends React.Component {
 
     };
 
+    let stageInput = this.state.stage;
+
     return(
       <div className="new_Job">
         <Paper style={style} zDepth={5} rounded={false} className="onePaper">
 
         <Formsy.Form>
           <h2>New Job</h2>
-          <FormsyText
-            name="firstNameInput"
-            hintText="First Name"
-            validations="isWords"
-            validationError="please use only letters"
-            onChange={(event, newValue) => {
-            firstInput = newValue
-          }}/><br />
-          <FormsyText
-            name="lastNameInput"
-            hintText="Last Name"
-            validations="isWords"
-            validationError="please use only letters"
-            onChange={(event, newValue) => {
-            lastInput = newValue
-          }}/><br />
           <FormsyText
             name="companyInput"
             hintText="Company"
@@ -68,52 +61,95 @@ export class NewJob extends React.Component {
           }}/><br />
           <FormsyText
             name="jobTitleInput"
-            hintText="Job Title"
+            hintText="Job Applied For"
             onChange={(event, newValue) => {
             jobTitleInput = newValue
           }}/><br />
           <FormsyText
-            name="emailInput"
-            hintText="Email (ex john@gmail.com)"
-            validations="isEmail"
-            validationError="please enter a valid email address"
+            name="websiteInput"
+            hintText="Company Website"
             onChange={(event, newValue) => {
-            emailInput = newValue
+            websiteInput = newValue
           }}/><br />
           <FormsyText
-            name="phoneInput"
-            hintText="Phone Number (ex 5555555555)"
-            validations="isNumeric"
-            validationError="please enter a valid phone number"
+            name="postInput"
+            hintText="Job Posting"
             onChange={(event, newValue) => {
-            phoneInput = newValue
+            postInput = newValue
           }}/><br />
           <FormsyDate
-            name="meetDateInput"
-            floatingLabelText="Date of meeting this Job"
-            onChange={(event, date) => {meetDateInput = moment(date).format("MMM DD YYYY")}}
+            name="foundJobInput"
+            floatingLabelText="Date you discovered this opportunity"
+            onChange={(event, date) => {foundJobInput = moment(date).format("MMM DD YYYY")}}
           />
           <br />
-          <FormsyText
-            name="notesInput"
-            hintText="Notes about this Job"
-            multiLine={true}
-            onChange={(event, newValue) => {
-              notesInput = newValue
-            }}/><br />
           <FormsyDate
             name="dateNextInput"
-            floatingLabelText="Date for next follow up"
+            floatingLabelText="Date to follow up with this job opportunity"
             onChange={(event, date) => {dateNextInput = moment(date).format("MMM DD YYYY")}}
           />
+          <br />
+          <RadioButtonGroup
+            name="Stage"
+            valueSelected={this.state.stage}
+            onChange={(event, value) => {
+              this.setState({stage: value})
+            }}
+            value={stageInput}
+          >
+            <RadioButton
+              value="Discovered"
+              label="Discovered"
+            />
+            <RadioButton
+              value="Applied"
+              label="Applied"
+            />
+            <RadioButton
+              value="Phone Screen"
+              label="Phone Screen"
+            />
+            <RadioButton
+              value="Interview"
+              label="Interview"
+            />
+            <RadioButton
+              value="Offer"
+              label="Offer"
+            />
+            <RadioButton
+              value="Inactive"
+              label="Inactive"
+            />
+          </RadioButtonGroup>
+          <FormsyText
+            name="contactNameInput"
+            hintText="Contact at this Company"
+            onChange={(event, newValue) => {
+            contactNameInput = newValue
+          }}/><br />
+          <FormsyText
+            name="researchInput"
+            hintText="Research about this company"
+            multiLine={true}
+            onChange={(event, newValue) => {
+              researchInput = newValue
+            }}/>
+          <br />
+          <FormsyText
+            name="jobNotesInput"
+            hintText="Other notes about this job opportunity"
+            multiLine={true}
+            onChange={(event, newValue) => {
+              jobNotesInput = newValue
+            }}/>
           <br />
           <FormsyCheckbox
           name="importantInput"
           checkedIcon={<ActionFavorite />}
           uncheckedIcon={<ActionFavoriteBorder />}
-          label="Select if this is an important Job"
+          label="Select if this is an important Job Opportunity"
           onChange={(event, isInputChecked) => {
-            console.log(isInputChecked);
             importantInput = isInputChecked
           }}
           />
@@ -121,14 +157,7 @@ export class NewJob extends React.Component {
           <RaisedButton label="Save Job" backgroundColor="#5D576B" labelColor="#F1F1EF"
             type="submit"
             onTouchTap={(event) => {
-              if (firstInput == '' && lastInput == '') {
-                alert("You must include a Job name")
-              } else if (emailInput == '' && phoneInput == '') {
-                alert("You must include one form of Job")
-              } else {
-                console.log(user);
-                this.props.saveJob(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
-              }
+              this.props.saveJob(user, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput)
             }}
           />
           <Link to={'/' + user + '/Jobs'} className="Link"><RaisedButton label="Cancel" backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginLeft: 10}}
@@ -141,8 +170,8 @@ export class NewJob extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  // saveJob: (user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.sendNewJob(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput)),
-  // clear: (startId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) => dispatch(actions.setOneJob(startId, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput))
+  saveJob: (user, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput) => dispatch(actions.sendNewJob(user, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput)),
+  clear: (startId, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput) => dispatch(actions.setOneJob(startId, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput))
 })
 
 export default connect(null, mapDispatchToProps)(NewJob);

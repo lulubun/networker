@@ -75,19 +75,18 @@ export class OneContact extends React.Component {
     <div>
       <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1}>
-        <p className="contactName" style={nameStyle}>
-          <Checkbox
-          label={sentence}
-          lablePosition='left'
-          checked={this.props.important}
-          checkedIcon={<ActionFavorite />}
-          uncheckedIcon={<ActionFavoriteBorder />}
-          style={{float: 'right', paddingBottom: 30}}
-          onCheck={(event, isInputChecked) => {
-            const dateSend = this.props.appointment;
-            this.props.changeHeartDate(user, contactId, isInputChecked, dateSend)
-          }} />
-        </p>
+        <Checkbox
+        label={sentence}
+        labelPosition='left'
+        iconStyle={{width: '3em', height: '3em'}}
+        checked={this.props.important}
+        checkedIcon={<ActionFavorite />}
+        uncheckedIcon={<ActionFavoriteBorder />}
+        labelStyle={{float: 'right', paddingBottom: 10, fontSize: '3em', lineHeight: '100%'}}
+        onCheck={(event, isInputChecked) => {
+          const dateSend = this.props.appointment;
+          this.props.changeHeartDate(user, contactId, isInputChecked, dateSend)
+        }} />
         <p>Job Title:   {this.props.job}</p>
         <p>Company:   {this.props.co}</p>
         <p className="phoneText">Phone Number:   {this.props.phone}</p>
@@ -97,7 +96,7 @@ export class OneContact extends React.Component {
         <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
           label="Edit" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
         <div>
-          <MediaQuery query='(min-device-width: 800px)'>
+          <MediaQuery query='(min-device-width: 1010px)'>
             <Toolbar style={{marginTop: 10}}>
               <ToolbarGroup firstChild={true} style={{paddingBottom: 10, paddingLeft: 15}}>
                 <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
@@ -119,8 +118,13 @@ export class OneContact extends React.Component {
               </ToolbarGroup>
             </Toolbar>
           </MediaQuery>
-          <MediaQuery query='(max-device-width: 799px)'>
+          <MediaQuery query='(max-device-width: 1009px)'>
             <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
+            <DatePicker hintText="Edit Follow Date" hintStyle={{color: 'black', fontSize: '0.5em', border: '0.5px solid black', paddingLeft: 10, paddingRight: 10}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
+              let sendDate = moment(date).format("MMM DD YYYY");
+              let heart = this.props.important;
+              this.props.changeHeartDate(user, contactId, heart, sendDate)
+            }}/>
           </MediaQuery>
         </div>
       </Paper>
@@ -135,8 +139,9 @@ export class OneContact extends React.Component {
           valueSelected={this.state.type}
           onChange={(event, value) => {
             this.setState({type: value})
-        }}
-        value={this.state.type}>
+          }}
+          value={this.state.type}
+        >
           <RadioButton
             value="Call"
             label="Call"

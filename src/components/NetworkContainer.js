@@ -32,8 +32,8 @@ class NetworkContainer extends React.Component {
     return (
       <div>
         <div className="networkContainer" style={style}>
-          <Link to={'/' + this.props.params.user + '/jobs'} className="Link"><RaisedButton label="Follow up on Jobs" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
-          <Link to={'/' + this.props.params.user + '/contacts'} className="Link"><RaisedButton label="Follow up on Contacts" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
+          <Link to={'/' + this.props.params.user + '/jobs'} className="Link"><RaisedButton label="All Jobs" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
+          <Link to={'/' + this.props.params.user + '/contacts'} className="Link"><RaisedButton label="All Contacts" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
           <RaisedButton
             label="Log Out" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF"
             onTouchTap={(event) => {this.props.logOutNow()}}

@@ -20,6 +20,8 @@ import NewJob from './components/NewJob';
 import ContactState from './reducers/ContactState';
 import UsersState from './reducers/UsersState';
 import AllContactsState from './reducers/AllContactsState';
+import AllJobsState from './reducers/AllJobsState';
+import JobState from './reducers/JobState';
 import NewUser from './components/new_user';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -30,6 +32,8 @@ const reducer = combineReducers({
   ContactState,
   AllContactsState,
   UsersState,
+  JobState,
+  AllJobsState,
   routing: routerReducer
 })
 

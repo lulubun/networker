@@ -22,19 +22,19 @@ class Contacts extends React.Component {
 
     const style = {
       height: 175,
-      marginTop: 20,
+      marginTop: 70,
       marginBottom: 20,
-      marginLeft: '10%',
+      marginLeft: 'auto',
       marginRight: 'auto',
       paddingTop: 30,
       paddingLeft: 60,
       width: '80%',
-      display: 'inline-block',
+      display: 'block',
     };
 
     const styleMin = {
       height: 175,
-      marginTop: 20,
+      marginTop: 50,
       marginBottom: 20,
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -43,11 +43,11 @@ class Contacts extends React.Component {
       display: 'block',
     };
 
-    // const iconStyle = {
-    //   position: 'relative',
-    //   top: '6px',
-    //   paddingRight: '15px'
-    // }
+    const iconStyle = {
+      position: 'relative',
+      top: '6px',
+      paddingRight: '15px'
+    }
 
     const noneStyle = {
       textAlign: 'center',

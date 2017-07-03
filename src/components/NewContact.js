@@ -113,7 +113,6 @@ export class NewContact extends React.Component {
           uncheckedIcon={<ActionFavoriteBorder />}
           label="Select if this is an important contact"
           onChange={(event, isInputChecked) => {
-            console.log(isInputChecked);
             importantInput = isInputChecked
           }}
           />
@@ -126,7 +125,6 @@ export class NewContact extends React.Component {
               } else if (emailInput == '' && phoneInput == '') {
                 alert("You must include one form of contact")
               } else {
-                console.log(user);
                 this.props.saveContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
               }
             }}
