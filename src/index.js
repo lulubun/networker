@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {Provider} from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-import { Route, Router, IndexRoute, browserHistory } from 'react-router';
+import { Route, Router, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 import Control from './components/Control';

@@ -117,7 +117,7 @@ export class EditContact extends React.Component {
                     floatingLabelText={"Date of meeting this contact " + meetDateInput}
                     style={dateStyle}
                     fullWidth={true}
-                    defaultDate={this.props.meetDate}
+                    // defaultDate={this.props.meetDate}
                     onChange={(event, date) => {
                       meetDateInput=moment(date).format("MMM DD YYYY");
                     }}
