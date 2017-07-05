@@ -29,7 +29,6 @@ export const checkUser = (userName, password) => ({
 export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNameInput) {
   return dispatch => {
     const userUrl = SER_URL + '/create';
-    console.log(userUrl);
     fetch(userUrl, {
       method: 'POST',
       headers: {
@@ -44,7 +43,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
       })
     })
     .then(response => response.json())
-    .then(data => {console.log('hi there', data)})
+    .then(data => {console.log(data)})
     .then(browserHistory.push('/' + usernameInput + '/contacts'))
     .catch(ex => console.log(ex))
   }
@@ -66,8 +65,7 @@ export function fetchOneUser(usernameInput, passwordInput) {
     .then(response => response.json())
     .then(data => {
       const endpoint = data.user.username;
-      console.log(endpoint);
-      browserHistory.push('/' + endpoint + '/contacts')})
+      browserHistory.push('/' + endpoint + '/network')})
     .catch(ex => console.log(ex))
   }
 }

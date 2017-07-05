@@ -1,19 +1,10 @@
-/* global gapi */
 import { browserHistory } from 'react-router';
-import { push } from 'react-router-redux'
 
 const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
 const APP_URL = 'https://be-a-networker.herokuapp.com';
 
 // const SER_URL = 'http://localhost:8080';
 // const APP_URL = 'http://localhost:3000';
-
-
-export const SET_GOOGLE_LOGIN = 'SET_GOOGLE_LOGIN';
-export const setGoogleLogin = (boolean) => ({
-  type: SET_GOOGLE_LOGIN,
-  boolean
-})
 
 //open a contact just created
 export const SET_NEW_CONTACT = 'SET_NEW_CONTACT';
@@ -119,7 +110,6 @@ export function fetchWholeContact(id, user) {
 export function sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
   return dispatch => {
     const serUser = user;
-    console.log(serUser);
     const url = SER_URL + '/' + serUser + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
@@ -168,7 +158,6 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, companyInpu
     let serEmail = emailInput;
     let serMeetDate = meetDateInput;
     let serNote = notesInput;
-    console.log(serMeetDate);
     fetch(url, {
       method: 'PUT',
       headers: {
@@ -188,7 +177,6 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, companyInpu
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       dispatch(setOneContact(data))
     })
     .then(browserHistory.push('/' + user + '/one_contact/' + _id))
@@ -244,7 +232,6 @@ export function fetchDeleteContact(editId, editUser) {
 export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
   const serUser = user;
   let serImportant = isInputChecked;
-  console.log(serImportant);
   let _id = contactId;
   const serNextContact = appDate;
   return dispatch => {
@@ -263,7 +250,6 @@ export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
     })
     .then(response => response.json())
     .then(res => {
-      console.log(res);
       dispatch(setOneContact(
       res.id,
       res.serNextContact,
@@ -286,7 +272,6 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
   return dispatch => {
     let serUser = user;
     let id = contactId;
-    console.log(user, id);
     let pastId = pastid;
     const pastUrl = SER_URL + '/' + user + '/newPast/' + id;
     let serDateContact = dateInput;
@@ -308,7 +293,6 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
     })
     .then(response => response.json())
     .then(json => {
-      console.log(json);
       dispatch(updateContactPast(json))
     })
   }
@@ -318,7 +302,6 @@ export function fetchDeletePast(userOne, contactId, oneId) {
   let _id = contactId;
   const user = userOne;
   const pastId = oneId;
-  console.log(pastId);
   return dispatch => {
     const urlDel = SER_URL + '/' + user + '/one_contact/' + _id + '/' + pastId;
     fetch(urlDel, {
@@ -334,36 +317,11 @@ export function fetchDeletePast(userOne, contactId, oneId) {
     })
     .then(response => response.json())
     .then(updated => {
-      console.log(updated);
       dispatch(fetchWholeContact(_id, user))
-
-
     })
     .catch(ex => console.log(ex))
   }
 };
-
-export function appendPre(message) {
-  return dispatch => {
-    var pre = document.getElementById('content');
-    var textContent = document.createTextNode(message + '\n');
-    pre.appendChild(textContent);
-  }
-}
-
-
-export function pushToGoogle(pushEvent) {
-  return dispatch => {
-    let request = gapi.client.calendar.events.insert({
-      'calendarId': 'primary',
-      'resource': pushEvent
-    });
-    request.execute(function(pushEvent) {
-      console.log(pushEvent);
-      alert('Follow up added to your Google Calendar');
-    });
-  }
-}
 
 export function fetchLogOut() {
   return dispatch => {

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-import * as actions from '../actions/contactActions';
+import * as actions from '../actions/jobActions';
 import Columns from 'react-columns';
 
 
@@ -20,7 +20,7 @@ class Past extends React.Component {
     if (array == undefined) {
       sortedArray = []
     } else {
-      sortedArray = array.sort(function(a, b) {return Date.parse(b.serDateContact) - Date.parse(a.serDateContact)});
+      sortedArray = array.sort(function(a, b) {return Date.parse(b.serDateNext) - Date.parse(a.serDateNext)});
     }
 
     if (sortedArray.length > 2) {
@@ -30,9 +30,9 @@ class Past extends React.Component {
           {sortedArray.map((onePast, index) => (
           <div className="onePast" key={index}>
             <Paper style={style} zDepth={1}>
-            <p>{onePast.serTypeContact} on {onePast.serDateContact}</p>
+            <p>{onePast.serTypeJob} on {onePast.serDateNext}</p>
             <Divider />
-            <p>{onePast.serNotesContact}</p>
+            <p>{onePast.serNotesJob}</p>
             <RaisedButton label="Delete"
               backgroundColor="#5D576B" labelColor="#F1F1EF"
               onTouchTap={(event) => {
@@ -50,9 +50,9 @@ class Past extends React.Component {
         {sortedArray.map((onePast, index) => (
         <div className="onePast" key={index}>
           <Paper style={style} zDepth={1}>
-          <p>{onePast.serTypeContact} on {onePast.serDateContact}</p>
+          <p>{onePast.serTypeJob} on {onePast.serDateNext}</p>
           <Divider />
-          <p>{onePast.serNotesContact}</p>
+          <p>{onePast.serNotesJob}</p>
           <RaisedButton label="Delete"
             backgroundColor="#5D576B" labelColor="#F1F1EF"
             onTouchTap={(event) => {
@@ -67,11 +67,11 @@ class Past extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  allPastList: state.ContactState.allPast
+  allPastList: state.JobState.allPastState
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  delete: (userOne, contactId, oneId) => dispatch(actions.fetchDeletePast(userOne, contactId, oneId))
+  delete: (userOne, jobId, oneId) => dispatch(actions.fetchDeletePast(userOne, jobId, oneId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Past);

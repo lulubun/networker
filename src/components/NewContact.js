@@ -1,16 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import TextField from 'material-ui/TextField';
 import ActionFavorite from 'material-ui/svg-icons/toggle/star';
 import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
-import DatePicker from 'material-ui/DatePicker';
-import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/contactActions';
 import moment from 'moment';
 import Formsy from 'formsy-react';
-import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup, FormsySelect, FormsyText, FormsyTime, FormsyToggle, FormsyAutoComplete } from 'formsy-material-ui/lib';
+import { FormsyCheckbox, FormsyDate, FormsyRadioGroup, FormsyText } from 'formsy-material-ui/lib';
 import Paper from 'material-ui/Paper';
 import {Link} from 'react-router';
 
@@ -117,7 +113,6 @@ export class NewContact extends React.Component {
           uncheckedIcon={<ActionFavoriteBorder />}
           label="Select if this is an important contact"
           onChange={(event, isInputChecked) => {
-            console.log(isInputChecked);
             importantInput = isInputChecked
           }}
           />
@@ -130,7 +125,6 @@ export class NewContact extends React.Component {
               } else if (emailInput == '' && phoneInput == '') {
                 alert("You must include one form of contact")
               } else {
-                console.log(user);
                 this.props.saveContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput);
               }
             }}

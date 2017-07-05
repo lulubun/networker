@@ -1,13 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actions from '../actions/userActions';
 import Paper from 'material-ui/Paper';
 import {Link} from 'react-router';
-
-
 
 let firstNameInput = '';
 let lastNameInput = '';

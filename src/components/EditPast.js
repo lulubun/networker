@@ -54,7 +54,6 @@ export class EditPast extends React.Component {
             if (typeInput == '') {
               alert("Please include the type of contact made")
             } else {
-              console.log(contactId, user, pastId);
               this.props.addPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput);
             //  this.notesText.setState({ value: "" })
             }

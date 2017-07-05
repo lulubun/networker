@@ -1,13 +1,13 @@
 import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
-import ActionFavorite from 'material-ui/svg-icons/toggle/star';
-import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
+import ActionFavorite from 'material-ui/svg-icons/alert/error';
+import ActionFavoriteBorder from 'material-ui/svg-icons/alert/error-outline';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import Past from './Past';
-import * as actions from '../actions/contactActions';
+import PastJobs from './PastJobs';
+import * as actions from '../actions/jobActions';
 import Paper from 'material-ui/Paper';
 import Alarm from 'material-ui/svg-icons/action/alarm';
 import moment from 'moment';
@@ -27,28 +27,28 @@ const style = {
 let pastId = 0;
 let prettyDate = '';
 
-export class OneContact extends React.Component {
+export class OneJob extends React.Component {
 
   state = {
     notes: '',
     type: '',
-    date: {}
+    date: moment().format("YYYY-MM-DD")
   }
   componentDidMount() {
-    this.props.getOneContact(this.props.params.id);
+    this.props.getOneJob(this.props.params.id);
   }
 
  render() {
-  const contactId = this.props.params.id;
+  const jobId = this.props.params.id;
   const user = this.props.params.user;
-  let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
+  let dayNext = moment(this.props.dateNext).format("YYYY-MM-DD");
   let overdue = "";
   if (dayNext < moment().format("YYYY-MM-DD")) {
     overdue = 'Overdue:'
   }
 
   let pushEvent = {
-    title: 'Follw up with ' + this.props.first + ' ' + this.props.last,
+    title: 'Follw up with ' + this.props.co,
     startTime: dayNext,
     endTime: dayNext
   }
@@ -69,37 +69,42 @@ export class OneContact extends React.Component {
     position: 'relative'
   }
 
-  let sentence = this.props.first + ' ' + this.props.last
-
   return(
     <div>
-      <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+      <Link to={'/' + user + '/Jobs'} className="Link"><RaisedButton label="Return to All Jobs" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1}>
-        <Checkbox
-        label={sentence}
-        labelPosition='left'
-        iconStyle={{width: '3em', height: '3em'}}
-        checked={this.props.important}
-        checkedIcon={<ActionFavorite />}
-        uncheckedIcon={<ActionFavoriteBorder />}
-        labelStyle={{float: 'right', paddingBottom: 10, fontSize: '3em', lineHeight: '100%'}}
-        onCheck={(event, isInputChecked) => {
-          const dateSend = this.props.appointment;
-          this.props.changeHeartDate(user, contactId, isInputChecked, dateSend)
-        }} />
+        <div className="JobName" style={nameStyle}>
+          <Checkbox
+          label={this.props.co}
+          labelPosition='left'
+          checked={this.props.important}
+          iconStyle={{width: '3em', height: '3em'}}
+          checkedIcon={<ActionFavorite />}
+          uncheckedIcon={<ActionFavoriteBorder />}
+          labelStyle={{float: 'right', paddingBottom: 10, fontSize: '3em', lineHeight: '100%'}}
+          onCheck={(event, isInputChecked) => {
+            const dateSend = this.props.dateNext;
+            console.log(user, jobId, isInputChecked, dateSend);
+            this.props.changeHeartDate(user, jobId, isInputChecked, dateSend)
+          }} />
+        </div>
         <p>Job Title:   {this.props.job}</p>
-        <p>Company:   {this.props.co}</p>
-        <p className="phoneText">Phone Number:   {this.props.phone}</p>
-        <p className="emailText">Email Address:   {this.props.email}</p>
-        <p>Met this contact on:   {this.props.firstMeet}</p>
-        <p>Notes:   {this.props.meetInfo}</p>
-        <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
+        {/* <Link to={'/' + user + '/one_contact/' + contact._id}}> */}
+          <p>Contact:   {this.props.contactName}</p>
+        {/* </Link> */}
+        <p>Company website: {this.props.web}</p>
+        <p>Job posting: {this.props.listing}</p>
+        <p>Stage: {this.props.progress}</p>
+        <p>Found out about this job on:  {this.props.foundDate}</p>
+        <p>Research on company: {this.props.research}</p>
+        <p>Notes:   {this.props.info}</p>
+        <Link to={'/' + user + '/edit_job/' + this.props.params.id} className="Link"><RaisedButton
           label="Edit" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
         <div>
           <MediaQuery query='(min-device-width: 1010px)'>
             <Toolbar style={{marginTop: 10}}>
               <ToolbarGroup firstChild={true} style={{paddingBottom: 10, paddingLeft: 15}}>
-                <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
+                <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this opportunity on {this.props.dateNext}</p>
               </ToolbarGroup>
               <ToolbarGroup>
                 <AddToCalendar
@@ -112,18 +117,19 @@ export class OneContact extends React.Component {
                 <DatePicker hintText="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Edit Date" hintStyle={{color: 'black'}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
                   let sendDate = moment(date).format("MMM DD YYYY");
                   let heart = this.props.important;
-                  this.props.changeHeartDate(user, contactId, heart, sendDate)
+                  console.log(sendDate, heart);
+                  this.props.changeHeartDate(user, jobId, heart, sendDate)
                 }}/>
 
               </ToolbarGroup>
             </Toolbar>
           </MediaQuery>
           <MediaQuery query='(max-device-width: 1009px)'>
-            <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this contact on {this.props.appointment}</p>
+            <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this opportunity on {this.props.dateNext}</p>
             <DatePicker hintText="Edit Follow Date" hintStyle={{color: 'black', fontSize: '0.5em', border: '0.5px solid black', paddingLeft: 10, paddingRight: 10}} underlineStyle={{display: 'none'}} onChange={(event, date) => {
               let sendDate = moment(date).format("MMM DD YYYY");
               let heart = this.props.important;
-              this.props.changeHeartDate(user, contactId, heart, sendDate)
+              this.props.changeHeartDate(user, jobId, heart, sendDate)
             }}/>
           </MediaQuery>
         </div>
@@ -135,13 +141,16 @@ export class OneContact extends React.Component {
           this.setState({date})
         }} />
         <RadioButtonGroup
-          name="contact"
+          name="Job"
           valueSelected={this.state.type}
           onChange={(event, value) => {
             this.setState({type: value})
-          }}
-          value={this.state.type}
-        >
+        }}
+        value={this.state.type}>
+        <RadioButton
+          value="Interview"
+          label="Interview"
+        />
           <RadioButton
             value="Call"
             label="Call"
@@ -151,8 +160,8 @@ export class OneContact extends React.Component {
             label="Email"
           />
           <RadioButton
-            value="Meeting"
-            label="Meeting"
+            value="Evaluation"
+            label="Evaluation"
           />
           <RadioButton
             value="Other"
@@ -177,38 +186,37 @@ export class OneContact extends React.Component {
               alert("Please include the type of contact made")
             } else {
               prettyDate = moment(this.state.date).format("MMM DD YYYY");
-              this.props.addPast(user, contactId, pastId, prettyDate, this.state.type, this.state.notes);
+              this.props.addPast(user, jobId, pastId, prettyDate, this.state.type, this.state.notes,);
              this.setState({ notes: '', type: '', date: {} })
             }
           }} />
       </form>
       </Paper>
-      <Past />
+      <PastJobs />
     </div>
   )
  }
 }
 
 const mapStateToProps = (state, props) => ({
-  appointment: state.ContactState.dateNext,
-  first: state.ContactState.firstName,
-  last: state.ContactState.lastName,
-  important: state.ContactState.import,
-  co: state.ContactState.company,
-  job: state.ContactState.jobTitle,
-  email: state.ContactState.email,
-  phone: state.ContactState.phone,
-  firstMeet: state.ContactState.meetDate,
-  meetInfo: state.ContactState.meetNotes,
-  googleLogin: state.ContactState.login
+  co: state.JobState.companyState,
+  job: state.JobState.jobTitleState,
+  progress: state.JobState.stageState,
+  dateNext: state.JobState.dateNextState,
+  important: state.JobState.importState,
+  contactName: state.JobState.contactState,
+  foundDate: state.JobState.foundJobState,
+  research: state.JobState.researchState,
+  info: state.JobState.jobNotesState,
+  web: state.JobState.websiteState,
+  listing: state.JobState.postState
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
-  //changeAppointment: (user, contactId, sendDate) => dispatch(actions.fetchDateUpdate(user, contactId, sendDate)),
-  changeHeartDate: (user, contactId, isInputChecked, appDate) => dispatch(actions.fetchHeartDateUpdate(user, contactId, isInputChecked, appDate)),
-  addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput)),
-  runApiPush: (pushEvent) => dispatch(actions.pushToGoogle(pushEvent)),
+  getOneJob: (linkId) => dispatch(actions.fetchWholeJob(linkId)),
+  changeHeartDate: (user, jobId, isInputChecked, sendDate) => dispatch(actions.fetchHeartDateUpdate(user, jobId, isInputChecked, sendDate)),
+  addPast: (user, jobId, pastId, dateInput, typeInput, JobNotesInput) => dispatch(actions.sendNewJobPast(user, jobId, pastId, dateInput, typeInput, JobNotesInput)),
+  // runApiPush: (pushEvent) => dispatch(actions.pushToGoogle(pushEvent)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OneContact);
+export default connect(mapStateToProps, mapDispatchToProps)(OneJob);
