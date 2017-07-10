@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 
 const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
 const APP_URL = 'https://be-a-networker.herokuapp.com';
@@ -147,7 +147,7 @@ export function sendNewJob(user, companyInput, jobTitleInput, foundJobInput, dat
       })
     })
     .then(response => response.json())
-    .then(browserHistory.push('/' + user + '/jobs'))
+    .then(hashHistory.push('/' + user + '/jobs'))
   }
 };
 
@@ -190,7 +190,7 @@ export function fetchUpdate(editUser, editId, companyInput, jobTitleInput, found
     .then(data => {
       dispatch(setOneJob(data))
     })
-    .then(browserHistory.push('/' + user + '/one_job/' + _id))
+    .then(hashHistory.push('/' + user + '/one_job/' + _id))
     .catch(ex => console.log(ex))
   }
 };
@@ -235,7 +235,7 @@ export function fetchDeleteJob(editId, editUser) {
       })
     })
     .then(response => response.json())
-    .then(browserHistory.push('/' + user + '/jobs'))
+    .then(hashHistory.push('/' + user + '/jobs'))
     .catch(ex => console.log(ex))
   }
 };

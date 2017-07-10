@@ -5,7 +5,7 @@ const APP_URL = 'https://be-a-networker.herokuapp.com';
 // const APP_URL = 'http://localhost:3000';
 
 
-import { browserHistory } from 'react-router'
+import { hashHistory } from 'react-router'
 
 
 
@@ -44,7 +44,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
     })
     .then(response => response.json())
     .then(data => {console.log(data)})
-    .then(browserHistory.push('/' + usernameInput + '/contacts'))
+    .then(hashHistory.push('/' + usernameInput + '/contacts'))
     .catch(ex => console.log(ex))
   }
 }
@@ -65,7 +65,7 @@ export function fetchOneUser(usernameInput, passwordInput) {
     .then(response => response.json())
     .then(data => {
       const endpoint = data.user.username;
-      browserHistory.push('/' + endpoint + '/network')})
+      hashHistory.push('/' + endpoint + '/network')})
     .catch(ex => console.log(ex))
   }
 }

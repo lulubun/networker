@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+import { hashHistory } from 'react-router';
 
 const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
 const APP_URL = 'https://be-a-networker.herokuapp.com';
@@ -141,7 +141,7 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
       })
     })
     .then(response => response.json())
-    .then(browserHistory.push('/' + user + '/contacts'))
+    .then(hashHistory.push('/' + user + '/contacts'))
   }
 };
 
@@ -179,7 +179,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, companyInpu
     .then(data => {
       dispatch(setOneContact(data))
     })
-    .then(browserHistory.push('/' + user + '/one_contact/' + _id))
+    .then(hashHistory.push('/' + user + '/one_contact/' + _id))
     .catch(ex => console.log(ex))
   }
 };
@@ -224,7 +224,7 @@ export function fetchDeleteContact(editId, editUser) {
       })
     })
     .then(response => response.json())
-    .then(browserHistory.push('/' + user + '/contacts'))
+    .then(hashHistory.push('/' + user + '/contacts'))
     .catch(ex => console.log(ex))
   }
 };

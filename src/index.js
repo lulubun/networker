@@ -43,7 +43,7 @@ const store = createStore(
   applyMiddleware(thunk)
 );
 
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(hashHistory, store)
 
 const Start = () => (
   <MuiThemeProvider>
