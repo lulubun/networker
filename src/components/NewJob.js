@@ -79,13 +79,13 @@ export class NewJob extends React.Component {
           }}/><br />
           <FormsyDate
             name="foundJobInput"
-            floatingLabelText="Date you discovered this opportunity"
+            floatingLabelText="Date discovered"
             onChange={(event, date) => {foundJobInput = moment(date).format("MMM DD YYYY")}}
           />
           <br />
           <FormsyDate
             name="dateNextInput"
-            floatingLabelText="Date to follow up with this job opportunity"
+            floatingLabelText="Date to follow up"
             onChange={(event, date) => {dateNextInput = moment(date).format("MMM DD YYYY")}}
           />
           <br />
@@ -132,6 +132,7 @@ export class NewJob extends React.Component {
             name="researchInput"
             hintText="Research about this company"
             multiLine={true}
+            fullWidth={true}
             onChange={(event, newValue) => {
               researchInput = newValue
             }}/>
@@ -140,6 +141,7 @@ export class NewJob extends React.Component {
             name="jobNotesInput"
             hintText="Other notes about this job opportunity"
             multiLine={true}
+            fullWidth={true}
             onChange={(event, newValue) => {
               jobNotesInput = newValue
             }}/>

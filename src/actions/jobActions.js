@@ -1,10 +1,10 @@
 import { hashHistory } from 'react-router';
 
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
-const APP_URL = 'https://be-a-networker.herokuapp.com';
+// const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
+// const APP_URL = 'https://be-a-networker.herokuapp.com';
 
-// const SER_URL = 'http://localhost:8080';
-// const APP_URL = 'http://localhost:3000';
+const SER_URL = 'http://localhost:8080';
+const APP_URL = 'http://localhost:3000';
 
 //open a job just created
 export const SET_NEW_JOB = 'SET_NEW_JOB';
@@ -213,7 +213,8 @@ export function fetchAllJobs(user) {
     })
     .then(response => response.json())
     .then(data => {
-        sortedArray = data.sort(function(a, b) {return Date.parse(a.serDateNext) - Date.parse(b.serDateNext)});
+        console.log(data);
+        sortedArray = data.sort(function(a, b) {return Date.parse(a.serNextDate) - Date.parse(b.serNextDate)});
         dispatch(setAllJobs(sortedArray))
     })
     .catch(ex => console.log(ex))

@@ -71,7 +71,7 @@ class Jobs extends React.Component {
     return (
       <div className="Jobs">
         <div className="New_Button">
-          <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 20}}/></Link>
+          <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 20, zIndex: 5}}/></Link>
         </div>
         <div className="jobs-List">
         <MediaQuery query='(min-device-width: 1000px)'>

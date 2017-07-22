@@ -1,8 +1,8 @@
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
-const APP_URL = 'https://be-a-networker.herokuapp.com';
+// const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
+// const APP_URL = 'https://be-a-networker.herokuapp.com';
 
-// const SER_URL = 'http://localhost:8080';
-// const APP_URL = 'http://localhost:3000';
+const SER_URL = 'http://localhost:8080';
+const APP_URL = 'http://localhost:3000';
 
 
 import { hashHistory } from 'react-router'
@@ -44,7 +44,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
     })
     .then(response => response.json())
     .then(data => {console.log(data)})
-    .then(hashHistory.push('/' + usernameInput + '/contacts'))
+    .then(hashHistory.push('/' + usernameInput + '/network'))
     .catch(ex => console.log(ex))
   }
 }
@@ -64,6 +64,7 @@ export function fetchOneUser(usernameInput, passwordInput) {
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       const endpoint = data.user.username;
       hashHistory.push('/' + endpoint + '/network')})
     .catch(ex => console.log(ex))
