@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import PastJobs from './PastJobs';
+import OneJobContact from './OneJobContact';
 import * as actions from '../actions/jobActions';
 import Paper from 'material-ui/Paper';
 import Alarm from 'material-ui/svg-icons/action/alarm';
@@ -36,6 +36,8 @@ export class OneJob extends React.Component {
   }
   componentDidMount() {
     this.props.getOneJob(this.props.params.id);
+    this.props.getOneContact("5907d3f4a2147a145996ec2e");
+    console.log(this.props.params);
   }
 
  render() {
@@ -134,65 +136,7 @@ export class OneJob extends React.Component {
           </MediaQuery>
         </div>
       </Paper>
-      <Paper style={style} zDepth={1}>
-      <form>
-        <p>Record New Follow Up</p>
-        <DatePicker hintText="Date" value={this.state.date} onChange={(event, date) => {
-          this.setState({date})
-        }} />
-        <RadioButtonGroup
-          name="Job"
-          valueSelected={this.state.type}
-          onChange={(event, value) => {
-            this.setState({type: value})
-        }}
-        value={this.state.type}>
-        <RadioButton
-          value="Interview"
-          label="Interview"
-        />
-          <RadioButton
-            value="Call"
-            label="Call"
-          />
-          <RadioButton
-            value="Email"
-            label="Email"
-          />
-          <RadioButton
-            value="Evaluation"
-            label="Evaluation"
-          />
-          <RadioButton
-            value="Other"
-            label="Other"
-          />
-        </RadioButtonGroup>
-        <TextField
-          hintText="notes"
-          floatingLabelText="Notes"
-          ref={(node) => this.notesText = node}
-          multiLine={true}
-          value={this.state.notes}
-          onChange={(event, newValue) => {
-            this.setState({notes: newValue})
-          }}
-        /><br />
-        <RaisedButton label="Save Follow Up"
-          backgroundColor="#5D576B" labelColor="#F1F1EF"
-          onTouchTap={(event) => {
-            pastId = Math.floor((Math.random() * 10000) + 1);
-            if (this.state.type == '') {
-              alert("Please include the type of contact made")
-            } else {
-              prettyDate = moment(this.state.date).format("MMM DD YYYY");
-              this.props.addPast(user, jobId, pastId, prettyDate, this.state.type, this.state.notes,);
-             this.setState({ notes: '', type: '', date: {} })
-            }
-          }} />
-      </form>
-      </Paper>
-      <PastJobs />
+      <OneJobContact />
     </div>
   )
  }

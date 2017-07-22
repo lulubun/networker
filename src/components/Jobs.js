@@ -13,12 +13,12 @@ import MediaQuery from 'react-responsive';
 
 class Jobs extends React.Component {
   componentDidMount() {
-    const user = this.props.params.user;
-    this.props.getAllJobs(user);
+    // const user = this.props.params.user;
+    // this.props.getAllJobs(user);
   };
 
   render() {
-    const user = this.props.params.user;
+    // const user = this.props.params.user;
 
     const style = {
       height: 175,
@@ -26,8 +26,8 @@ class Jobs extends React.Component {
       marginBottom: 20,
       marginLeft: 'auto',
       marginRight: 'auto',
-      paddingTop: 30,
-      paddingLeft: 60,
+      // paddingTop: 30,
+      // paddingLeft: 60,
       width: '80%',
       display: 'block',
     };
@@ -59,11 +59,11 @@ class Jobs extends React.Component {
       return(
         <div>
           <div className="New_Button">
-            <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+            {/* <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link> */}
           </div>
           <h3 style={noneStyle}>Press the button above to add a new Job</h3>
-          <Link to={'/' + user + '/network'} className="Link"><RaisedButton
-            className="DoneButton" label="Back to Options" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 0, position: 'fixed'}}/></Link>
+          {/* <Link to={'/' + user + '/network'} className="Link"><RaisedButton
+            className="DoneButton" label="Back to Options" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 0, position: 'fixed'}}/></Link> */}
         </div>
       )
     }
@@ -71,14 +71,14 @@ class Jobs extends React.Component {
     return (
       <div className="Jobs">
         <div className="New_Button">
-          <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 20}}/></Link>
+          {/* <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 20, zIndex: 5}}/></Link> */}
         </div>
         <div className="jobs-List">
         <MediaQuery query='(min-device-width: 1000px)'>
           {this.props.jobList.map((job, index) =>
             (<div className="oneLink" key={index}>
               <Paper style={style} zDepth={1} rounded={false} className="onePaper">
-                  <Link to={'/' + user + '/one_Job/' + job._id} className="Link">
+                  {/* <Link to={'/' + user + '/one_Job/' + job._id} className="Link"> */}
                     <Checkbox
                       checked={job.serImportant}
                       checkedIcon={<ActionFavorite />}
@@ -87,7 +87,7 @@ class Jobs extends React.Component {
                       label={job.serCompany}
                       labelStyle={{fontSize: '1.75em'}}
                     />
-                  </Link>
+                  {/* </Link> */}
                   <p style={{marginBottom: 40}}>Next Follow-Up: {job.serNextDate}</p>
              </Paper>
             </div>
@@ -97,7 +97,7 @@ class Jobs extends React.Component {
           {this.props.jobList.map((job, index) =>
             (<div className="oneLink" key={index}>
               <Paper style={styleMin} zDepth={1} rounded={false} className="onePaper">
-              <Link to={'/' + user + '/one_Job/' + job._id} className="Link">
+              {/* <Link to={'/' + user + '/one_Job/' + job._id} className="Link"> */}
               <Checkbox
                checked={job.serImportant}
                checkedIcon={<ActionFavorite />}
@@ -106,15 +106,15 @@ class Jobs extends React.Component {
                label={job.serCompany}
                labelStyle={{fontSize: '1.75em'}}
                />
-               </Link>
+               {/* </Link> */}
                <p style={{marginBottom: 40}}>Next Follow-Up: {job.serNextDate}</p>
              </Paper>
             </div>
           ))}
         </MediaQuery>
         </div>
-        <Link to={'/' + user + '/network'} className="Link"><RaisedButton
-          className="DoneButton" label="Back to Options" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+        {/* <Link to={'/' + user + '/network'} className="Link"><RaisedButton
+          className="DoneButton" label="Back to Options" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link> */}
       </div>
     );
   }
@@ -125,7 +125,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllJobs: (user) => dispatch(actions.fetchAllJobs(user)),
+  // getAllJobs: (user) => dispatch(actions.fetchAllJobs(user)),
   handleClick: (linkId) => dispatch(actions.fetchWholeJob(linkId)),
 })
 

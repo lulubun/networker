@@ -73,8 +73,7 @@ export class OneContact extends React.Component {
 
   return(
     <div>
-      <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
-      <Paper style={style} zDepth={1}>
+      <Paper style={style} zDepth={0}>
         <Checkbox
         label={sentence}
         labelPosition='left'
@@ -129,7 +128,7 @@ export class OneContact extends React.Component {
           </MediaQuery>
         </div>
       </Paper>
-      <Paper style={style} zDepth={1}>
+      <Paper style={style} zDepth={0}>
       <form>
         <p>Record New Follow Up</p>
         <DatePicker hintText="Date" value={this.state.date} onChange={(event, date) => {

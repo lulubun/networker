@@ -1,10 +1,10 @@
 import { browserHistory } from 'react-router';
 
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
-const APP_URL = 'https://be-a-networker.herokuapp.com';
+// const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
+// const APP_URL = 'https://be-a-networker.herokuapp.com';
 
-// const SER_URL = 'http://localhost:8080';
-// const APP_URL = 'http://localhost:3000';
+const SER_URL = 'http://localhost:8080';
+const APP_URL = 'http://localhost:3000';
 
 //open a contact just created
 export const SET_NEW_CONTACT = 'SET_NEW_CONTACT';
