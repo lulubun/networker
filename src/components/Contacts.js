@@ -12,15 +12,14 @@ import MediaQuery from 'react-responsive';
 
 
 class Contacts extends React.Component {
-  // componentDidMount() {
-  //   const user = this.parent.props.params.user;
-  //   this.props.getAllContacts(user);
-  // };
+  componentDidMount() {
+    const user = this.props.user;
+    console.log(user);
+    this.props.getAllContacts(user);
+  };
 
   render() {
-    // console.log(this.props.params);
-
-    //const user = this.props.params.user;
+    const user = this.props.user;
 
     const style = {
       height: 175,
@@ -58,28 +57,28 @@ class Contacts extends React.Component {
     }
 
 
-    // if (this.props.contactList.length == 0) {
-    //   return(
-    //     <div>
-    //       <div className="New_Button">
-    //         <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
-    //       </div>
-    //       <h3 style={noneStyle}>Press the button above to add a new contact</h3>
-    //     </div>
-    //   )
-    // }
+    if (this.props.contactList.length == 0) {
+      return(
+        <div>
+          <div className="New_Button">
+            <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+          </div>
+          <h3 style={noneStyle}>Press the button above to add a new contact</h3>
+        </div>
+      )
+    }
 
     return (
       <div className="Contacts">
         <div className="New_Button">
-          {/* <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"  style={{zIndex: 2}}/></Link> */}
+          <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"  style={{zIndex: 2, borderRadius: 0}}/></Link>
         </div>
         <div className="Contacts-List">
         <MediaQuery query='(min-device-width: 1000px)'>
           {this.props.contactList.map((contact, index) =>
             (<div className="oneLink" key={index}>
               <Paper style={style} zDepth={1} rounded={false} className="onePaper">
-                  {/* <Link to={'/' + user + '/one_contact/' + contact._id} className="Link"> */}
+                  <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
                     <Checkbox
                       checked={contact.serImportant}
                       checkedIcon={<ActionFavorite />}
@@ -88,7 +87,7 @@ class Contacts extends React.Component {
                       label={contact.serFirst + ' ' + contact.serLast}
                       labelStyle={{fontSize: '1.75em'}}
                     />
-                  {/* </Link> */}
+                  </Link>
                   <p>at {contact.serCompany}</p>
                   <p style={{marginBottom: 40}}>Next Follow-Up: {contact.serNextContact}</p>
              </Paper>
@@ -99,7 +98,7 @@ class Contacts extends React.Component {
           {this.props.contactList.map((contact, index) =>
             (<div className="oneLink" key={index}>
               <Paper style={styleMin} zDepth={1} rounded={false} className="onePaper">
-              {/* <Link to={'/' + user + '/one_contact/' + contact._id} className="Link"> */}
+              <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
               <Checkbox
                checked={contact.serImportant}
                checkedIcon={<ActionFavorite />}
@@ -108,7 +107,7 @@ class Contacts extends React.Component {
                label={contact.serFirst + ' ' + contact.serLast}
                labelStyle={{fontSize: '1.75em'}}
                />
-               {/* </Link> */}
+               </Link>
                <p style={{marginRight: '10px'}}>at {contact.serCompany}</p>
                <p style={{marginBottom: 40}}>Next Follow-Up: {contact.serNextContact}</p>
              </Paper>
@@ -128,7 +127,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // getAllContacts: (user) => dispatch(actions.fetchAllContacts(user)),
+  getAllContacts: (user) => dispatch(actions.fetchAllContacts(user)),
   handleClick: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
   startGoogle: () => dispatch(actions.initClient()),
 })

@@ -73,7 +73,7 @@ export class OneJob extends React.Component {
 
   return(
     <div>
-      <Link to={'/' + user + '/Jobs'} className="Link"><RaisedButton label="Return to All Jobs" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+      <Link to={'/' + user + '/network'} className="Link"><RaisedButton label="Return to All Jobs" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1}>
         <div className="JobName" style={nameStyle}>
           <Checkbox

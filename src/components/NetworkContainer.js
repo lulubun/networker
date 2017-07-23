@@ -11,8 +11,8 @@ import Columns from 'react-columns';
 class NetworkContainer extends React.Component {
   componentDidMount() {
     const user = this.props.params.user;
-    this.props.getAllContacts(user);
-    this.props.getAllJobs(user);
+    // this.props.getAllContacts(user);
+    // this.props.getAllJobs(user);
   };
   render() {
     const style = {
@@ -37,9 +37,9 @@ class NetworkContainer extends React.Component {
     return (
       <div>
         <div className="networkContainer" style={style}>
-          <Columns>
-            <Contacts />
-            <Jobs />
+          <Columns columns="2">
+            <Contacts user={this.props.params.user} />
+            <Jobs user={this.props.params.user} />
           </Columns>
           <RaisedButton
             label="Log Out"
@@ -56,8 +56,8 @@ class NetworkContainer extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   logOutNow: () => dispatch(actions.fetchLogOut()),
-  getAllJobs: (user) => dispatch(actions.fetchAllJobs(user)),
-  getAllContacts: (user) => dispatch(actions.fetchAllContacts(user))
+  // getAllJobs: (user) => dispatch(actions.fetchAllJobs(user)),
+  // getAllContacts: (user) => dispatch(actions.fetchAllContacts(user))
 })
 
 export default connect (null, mapDispatchToProps)(NetworkContainer);

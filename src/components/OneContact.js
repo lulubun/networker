@@ -34,13 +34,13 @@ export class OneContact extends React.Component {
     type: '',
     date: {}
   }
-  // componentDidMount() {
-  //   this.props.getOneContact(this.props.params.id);
-  // }
+  componentDidMount() {
+    this.props.getOneContact(this.props.params.id);
+  }
 
  render() {
-  const contactId = "5907d3f4a2147a145996ec2e";
-  const user = "User";
+  const contactId = this.props.params.id;
+  const user = this.props.params.user;
   let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
   let overdue = "";
   if (dayNext < moment().format("YYYY-MM-DD")) {
@@ -73,7 +73,7 @@ export class OneContact extends React.Component {
 
   return(
     <div>
-      <Link to={'/' + user + '/contacts'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+      <Link to={'/' + user + '/network'} className="Link"><RaisedButton label="Return to All Contacts" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1}>
         <Checkbox
         label={sentence}
@@ -93,9 +93,9 @@ export class OneContact extends React.Component {
         <p className="emailText">Email Address:   {this.props.email}</p>
         <p>Met this contact on:   {this.props.firstMeet}</p>
         <p>Notes:   {this.props.meetInfo}</p>
-        {/* <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"> */}
+        <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link">
           <RaisedButton label="Edit" backgroundColor="#5D576B" labelColor="#F1F1EF"/>
-        {/* </Link> */}
+        </Link>
         <div>
           <MediaQuery query='(min-device-width: 1010px)'>
             <Toolbar style={{marginTop: 10}}>

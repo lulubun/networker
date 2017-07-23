@@ -40,7 +40,8 @@ export class OneContact extends React.Component {
 
  render() {
   const contactId = "5907d3f4a2147a145996ec2e";
-  const user = "User";
+  const user = this.props.user;
+  console.log(user);
   let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
   let overdue = "";
   if (dayNext < moment().format("YYYY-MM-DD")) {
