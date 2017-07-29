@@ -29,7 +29,7 @@ export class EditJob extends React.Component {
     let editTitle = this.props.title;
     let editFound = this.props.found;
     let editFollowUp = this.props.followUp;
-    let editStage = this.props.stage;
+    let editStage = this.state.stage;
     let editContact = this.props.contact;
     let editResearch = this.props.research;
     let editNotes = this.props.notes;
@@ -100,7 +100,7 @@ export class EditJob extends React.Component {
                   <p style={color}>Date Job Discovered:</p>
                   <DatePicker
                     floatingLabelText={editFound}
-                    labelStyle={dateStyle}
+                    style={dateStyle}
                     fullWidth={true}
                     // defaultDate={this.props.found}
                     onChange={(event, date) => {
@@ -112,6 +112,7 @@ export class EditJob extends React.Component {
                     valueSelected={this.state.stage}
                     onChange={(event, value) => {
                       this.setState({stage: value})
+                      console.log(this.state.stage);
                     }}
                     value={editStage}
                   >
@@ -181,6 +182,7 @@ export class EditJob extends React.Component {
                       }}/>
                   <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
                     onTouchTap={(event) => {
+                      console.log(editStage);
                         this.props.editJob(editUser, editId, editCo, editTitle, editFound, editFollowUp, editStage, editContact, editResearch, editNotes, editWeb, editPost);
                     }}
                   />
@@ -310,6 +312,7 @@ export class EditJob extends React.Component {
                     /> */}
                 <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
                   onTouchTap={(event) => {
+                      console.log(editStage);
                       this.props.editJob(editUser, editId, editCo, editTitle, editFound, editFollowUp, editStage, editContact, editResearch, editNotes, editWeb, editPost);
                   }}
                 />

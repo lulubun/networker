@@ -151,21 +151,21 @@ export function sendNewJob(user, companyInput, jobTitleInput, foundJobInput, dat
   }
 };
 
-export function fetchUpdate(editUser, editId, companyInput, jobTitleInput, foundJobInput, dateNextInput, stageInput, contactNameInput, researchInput, notesInput, websiteInput, postInput) {
+export function fetchUpdate(editUser, editId, editCo, editTitle, editFound, editFollowUp, editStage, editContact, editResearch, editNotes, editWeb, editPost) {
   return dispatch => {
     const user = editUser;
     let _id = editId;
     const url = SER_URL + '/' + user + '/edit_job/' + _id;
-    let serCompany = companyInput;
-    let serJobTitle = jobTitleInput;
-    let serDateNext = dateNextInput;
-    let serStage = stageInput;
-    let serContactName = contactNameInput;
-    let serResearch = researchInput
-    let serJobNotes = notesInput;
-    let serFoundJob = foundJobInput;
-    let serWebsite = websiteInput;
-    let serPost = postInput;
+    let serCompany = editCo;
+    let serJobTitle = editTitle;
+    let serDateNext = editFollowUp;
+    let serStage = editStage;
+    let serContactName = editContact;
+    let serResearch = editResearch
+    let serJobNotes = editNotes;
+    let serFoundJob = editFound;
+    let serWebsite = editWeb;
+    let serPost = editPost;
     fetch(url, {
       method: 'PUT',
       headers: {

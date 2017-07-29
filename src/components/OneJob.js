@@ -137,7 +137,9 @@ export class OneJob extends React.Component {
       <Paper style={style} zDepth={1}>
       <form>
         <p>Record New Follow Up</p>
-        <DatePicker hintText="Date" value={this.state.date} onChange={(event, date) => {
+        <DatePicker hintText="Date"
+          value={this.state.date}
+          onChange={(event, date) => {
           this.setState({date})
         }} />
         <RadioButtonGroup
