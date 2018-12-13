@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as actions from '../actions/contactActions';
+import * as actions from '../../actions/contactActions';
 import Paper from 'material-ui/Paper';
 import moment from 'moment';
 import MediaQuery from 'react-responsive';
@@ -71,7 +71,7 @@ export class EditContact extends React.Component {
                   <p style={color}>First Name:</p>
                   <TextField
                     name="firstNameInput"
-                    fullWidth={true}
+                    fullWidth
                     onChange={(event, newValue) => {
                     firstInput=newValue
                   }}
@@ -80,7 +80,7 @@ export class EditContact extends React.Component {
                   <p style={color}>Last Name:</p>
                   <TextField
                     name="lastNameInput"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.last}
                     onChange={(event, newValue) => {
                     lastInput=newValue
@@ -95,28 +95,28 @@ export class EditContact extends React.Component {
                   <p style={color}>Job Title:</p>
                   <TextField
                   name="jobTitleInput"
-                  fullWidth={true}
+                  fullWidth
                   defaultValue={this.props.jobTitle} onChange={(event, newValue) => {
                   jobTitleInput=newValue
                   }}/>
                   <p style={color}>Phone:</p>
                   <TextField
                     name="phoneInput"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.phone} onChange={(event, newValue) => {
                     phoneInput=newValue
                   }}/>
                   <p style={color}>Email:</p>
                   <TextField
                     name="emailInput"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.email} onChange={(event, newValue) => {
                     emailInput=newValue
                   }}/>
                   <DatePicker
                     floatingLabelText={"Date of meeting this contact " + meetDateInput}
                     style={dateStyle}
-                    fullWidth={true}
+                    fullWidth
                     // defaultDate={this.props.meetDate}
                     onChange={(event, date) => {
                       meetDateInput=moment(date).format("MMM DD YYYY");
@@ -125,9 +125,9 @@ export class EditContact extends React.Component {
                   <p style={color}>Notes:</p>
                   <TextField
                     name="meetingNotes"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.meetNotes}
-                    multiLine={true}
+                    multiLine
                     onChange={(event, newValue) => {
                       notesInput=newValue
                     }}/>
@@ -154,7 +154,7 @@ export class EditContact extends React.Component {
               <p>First Name:</p>
               <TextField
                 name="firstNameInput"
-                fullWidth={true}
+                fullWidth
                 onChange={(event, newValue) => {
                 firstInput=newValue
               }}
@@ -163,7 +163,7 @@ export class EditContact extends React.Component {
               <p>Last Name:</p>
               <TextField
                 name="lastNameInput"
-                fullWidth={true}
+                fullWidth
                 defaultValue={this.props.last}
                 onChange={(event, newValue) => {
                 lastInput=newValue
@@ -171,7 +171,7 @@ export class EditContact extends React.Component {
               <p>Company:</p>
               <TextField
               name="companyInput"
-              fullWidth={true}
+              fullWidth
               defaultValue={this.props.company} onChange={(event, newValue) => {
                 companyInput=newValue
               }}/>
@@ -179,21 +179,21 @@ export class EditContact extends React.Component {
               <p>Job Title:</p>
               <TextField
               name="jobTitleInput"
-              fullWidth={true}
+              fullWidth
               defaultValue={this.props.jobTitle} onChange={(event, newValue) => {
               jobTitleInput=newValue
               }}/>
               <p>Email:</p>
               <TextField
                 name="emailInput"
-                fullWidth={true}
+                fullWidth
                 defaultValue={this.props.email} onChange={(event, newValue) => {
                 emailInput=newValue
               }}/>
               <p>Phone:</p>
               <TextField
                 name="phoneInput"
-                fullWidth={true}
+                fullWidth
                 defaultValue={this.props.phone} onChange={(event, newValue) => {
                 phoneInput=newValue
               }}/>
@@ -201,7 +201,7 @@ export class EditContact extends React.Component {
               <DatePicker
                 floatingLabelText={meetDateInput}
                 style={dateStyle}
-                fullWidth={true}
+                fullWidth
                 defaultDate={this.props.meetDate}
                 onChange={(event, date) => {
                   meetDateInput=moment(date).format("MMM DD YYYY");
@@ -210,9 +210,9 @@ export class EditContact extends React.Component {
               <p>Notes:</p>
               <TextField
                 name="meetingNotes"
-                fullWidth={true}
+                fullWidth
                 defaultValue={this.props.meetNotes}
-                multiLine={true}
+                multiLine
                 onChange={(event, newValue) => {
                   notesInput=newValue
                 }}/>

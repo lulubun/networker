@@ -7,22 +7,22 @@ import { Route, Router, IndexRoute, browserHistory, hashHistory } from 'react-ro
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 import Control from './components/Control';
-import LoginContainer from './components/LoginContainer';
+import LoginContainer from './components/Login/LoginContainer';
 import NetworkContainer from './components/NetworkContainer';
-import Jobs from './components/Jobs';
-import Contacts from './components/Contacts';
-import OneContact from './components/OneContact';
-import OneJob from './components/OneJob';
-import EditContact from './components/EditContact';
-import NewContact from './components/NewContact';
-import EditJob from './components/EditJob';
-import NewJob from './components/NewJob';
+import Jobs from './components/Jobs/Jobs';
+import Contacts from './components/Contacts/Contacts';
+import OneContact from './components/Contacts/OneContact';
+import OneJob from './components/Jobs/OneJob';
+import EditContact from './components/Contacts/EditContact';
+import NewContact from './components/Contacts/NewContact';
+import EditJob from './components/Jobs/EditJob';
+import NewJob from './components/Jobs/NewJob';
 import ContactState from './reducers/ContactState';
 import UsersState from './reducers/UsersState';
 import AllContactsState from './reducers/AllContactsState';
 import AllJobsState from './reducers/AllJobsState';
 import JobState from './reducers/JobState';
-import NewUser from './components/new_user';
+import NewUser from './components/Login/new_user';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 

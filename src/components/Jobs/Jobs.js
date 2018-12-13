@@ -6,8 +6,8 @@ import Checkbox from 'material-ui/Checkbox';
 import {connect} from 'react-redux';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as actions from '../actions/jobActions';
-import '../index.css';
+import * as actions from '../../actions/jobActions';
+import '../../index.css';
 import GoogleLogin from 'react-google-login';
 import MediaQuery from 'react-responsive';
 
@@ -59,11 +59,11 @@ class Jobs extends React.Component {
       return(
         <div>
           <div className="New_Button">
-            <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+            <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
           </div>
           <h3 style={noneStyle}>Press the button above to add a new Job</h3>
           <Link to={'/' + user + '/network'} className="Link"><RaisedButton
-            className="DoneButton" label="Back to Options" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 0, position: 'fixed'}}/></Link>
+            className="DoneButton" label="Back to Options" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 0, position: 'fixed'}}/></Link>
         </div>
       )
     }
@@ -71,7 +71,7 @@ class Jobs extends React.Component {
     return (
       <div className="Jobs">
         <div className="New_Button">
-          <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 20, zIndex: 5}}/></Link>
+          <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 20, zIndex: 5}}/></Link>
         </div>
         <div className="jobs-List">
         <MediaQuery query='(min-device-width: 1000px)'>
@@ -114,7 +114,7 @@ class Jobs extends React.Component {
         </MediaQuery>
         </div>
         <Link to={'/' + user + '/network'} className="Link"><RaisedButton
-          className="DoneButton" label="Back to Options" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+          className="DoneButton" label="Back to Options" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       </div>
     );
   }

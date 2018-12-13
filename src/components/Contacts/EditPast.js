@@ -43,7 +43,7 @@ export class EditPast extends React.Component {
           hintText={this.props.notation}
           floatingLabelText="notes"
           ref={(node) => this.notesText = node}
-          multiLine={true}
+          multiLine
           onChange={(event, newValue) => {
             contactNotesInput = newValue;
           }}

@@ -3,8 +3,8 @@ import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Link} from 'react-router';
-import * as actions from '../actions/userActions';
-import '../index.css';
+import * as actions from '../../actions/userActions';
+import '../../index.css';
 
 export class Login extends React.Component {
   render() {

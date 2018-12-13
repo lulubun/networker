@@ -6,8 +6,8 @@ import Checkbox from 'material-ui/Checkbox';
 import {connect} from 'react-redux';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as actions from '../actions/contactActions';
-import '../index.css';
+import * as actions from '../../actions/contactActions';
+import '../../index.css';
 import MediaQuery from 'react-responsive';
 
 
@@ -60,7 +60,7 @@ class Contacts extends React.Component {
       return(
         <div>
           <div className="New_Button">
-            <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+            <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
           </div>
           <h3 style={noneStyle}>Press the button above to add a new contact</h3>
         </div>
@@ -70,7 +70,7 @@ class Contacts extends React.Component {
     return (
       <div className="Contacts">
         <div className="New_Button">
-          <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"  style={{zIndex: 2}}/></Link>
+          <Link to={'/' + user + '/new_contact'} className="Link"><RaisedButton className="NewButton" label="Create a New Contact" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"  style={{zIndex: 2}}/></Link>
         </div>
         <div className="Contacts-List">
         <MediaQuery query='(min-device-width: 1000px)'>
@@ -115,7 +115,7 @@ class Contacts extends React.Component {
         </MediaQuery>
         </div>
         <Link to={'/' + user + '/network'} className="Link"><RaisedButton
-          className="DoneButton" label="Back to Options" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+          className="DoneButton" label="Back to Options" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       </div>
     );
   }

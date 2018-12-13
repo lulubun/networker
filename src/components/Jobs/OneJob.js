@@ -7,16 +7,16 @@ import Checkbox from 'material-ui/Checkbox';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import PastJobs from './PastJobs';
-import * as actions from '../actions/jobActions';
+import * as actions from '../../actions/jobActions';
 import Paper from 'material-ui/Paper';
 import Alarm from 'material-ui/svg-icons/action/alarm';
 import moment from 'moment';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
-import '../index.css';
+import '../../index.css';
 import AddToCalendar from 'react-add-to-calendar';
 import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
-import '../../node_modules/react-add-to-calendar/dist/react-add-to-calendar.min.css';
+import '../../../node_modules/react-add-to-calendar/dist/react-add-to-calendar.min.css';
 import MediaQuery from 'react-responsive';
 
 const style = {
@@ -71,7 +71,7 @@ export class OneJob extends React.Component {
 
   return(
     <div>
-      <Link to={'/' + user + '/Jobs'} className="Link"><RaisedButton label="Return to All Jobs" fullWidth={true} backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+      <Link to={'/' + user + '/Jobs'} className="Link"><RaisedButton label="Return to All Jobs" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <Paper style={style} zDepth={1}>
         <div className="JobName" style={nameStyle}>
           <Checkbox
@@ -103,7 +103,7 @@ export class OneJob extends React.Component {
         <div>
           <MediaQuery query='(min-device-width: 1010px)'>
             <Toolbar style={{marginTop: 10}}>
-              <ToolbarGroup firstChild={true} style={{paddingBottom: 10, paddingLeft: 15}}>
+              <ToolbarGroup firstChild style={{paddingBottom: 10, paddingLeft: 15}}>
                 <p style={overdueStyle}><Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up with this opportunity on {this.props.dateNext}</p>
               </ToolbarGroup>
               <ToolbarGroup>
@@ -174,7 +174,7 @@ export class OneJob extends React.Component {
           hintText="notes"
           floatingLabelText="Notes"
           ref={(node) => this.notesText = node}
-          multiLine={true}
+          multiLine
           value={this.state.notes}
           onChange={(event, newValue) => {
             this.setState({notes: newValue})

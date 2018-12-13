@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import ActionFavorite from 'material-ui/svg-icons/toggle/star';
 import ActionFavoriteBorder from 'material-ui/svg-icons/toggle/star-border';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as actions from '../actions/contactActions';
+import * as actions from '../../actions/contactActions';
 import moment from 'moment';
 import Formsy from 'formsy-react';
 import { FormsyCheckbox, FormsyDate, FormsyRadioGroup, FormsyText } from 'formsy-material-ui/lib';
@@ -97,7 +97,7 @@ export class NewContact extends React.Component {
           <FormsyText
             name="notesInput"
             hintText="Notes about this contact"
-            multiLine={true}
+            multiLine
             onChange={(event, newValue) => {
               notesInput = newValue
             }}/><br />

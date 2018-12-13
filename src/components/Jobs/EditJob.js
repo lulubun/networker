@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as actions from '../actions/jobActions';
+import * as actions from '../../actions/jobActions';
 import Paper from 'material-ui/Paper';
 import moment from 'moment';
 import MediaQuery from 'react-responsive';
@@ -12,6 +12,7 @@ import { FormsyCheckbox, FormsyDate, FormsyRadioGroup, FormsyText } from 'formsy
 import ActionFavorite from 'material-ui/svg-icons/alert/error';
 import ActionFavoriteBorder from 'material-ui/svg-icons/alert/error-outline';
 import Checkbox from 'material-ui/Checkbox';
+import Stages from './Stages';
 
 export class EditJob extends React.Component {
   componentDidMount() {
@@ -83,7 +84,7 @@ export class EditJob extends React.Component {
                   <p style={color}>Company:</p>
                   <TextField
                     name="editCo"
-                    fullWidth={true}
+                    fullWidth
                     onChange={(event, newValue) => {
                     editCo=newValue
                   }}
@@ -92,7 +93,7 @@ export class EditJob extends React.Component {
                   <p style={color}>Job Title:</p>
                   <TextField
                     name="editTitle"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.title}
                     onChange={(event, newValue) => {
                     editTitle=newValue
@@ -101,13 +102,14 @@ export class EditJob extends React.Component {
                   <DatePicker
                     floatingLabelText={editFound}
                     style={dateStyle}
-                    fullWidth={true}
+                    fullWidth
                     // defaultDate={this.props.found}
                     onChange={(event, date) => {
                       editFound=moment(date).format("MMM DD YYYY");
                     }}
                   />
-                  <RadioButtonGroup
+                  <Stages val={this.state.stage} fun={(v) => this.setState({stage: v})} />
+                  {/* <RadioButtonGroup
                     name="Stage"
                     valueSelected={this.state.stage}
                     onChange={(event, value) => {
@@ -125,6 +127,10 @@ export class EditJob extends React.Component {
                       label="Applied"
                     />
                     <RadioButton
+                      value="Homework"
+                      label="Homework"
+                    />
+                    <RadioButton
                       value="Phone Screen"
                       label="Phone Screen"
                     />
@@ -140,43 +146,43 @@ export class EditJob extends React.Component {
                       value="Inactive"
                       label="Inactive"
                     />
-                  </RadioButtonGroup>
+                  </RadioButtonGroup> */}
                   <p style={color}>Contact at Company:</p>
                   <TextField
                   name="editContact"
-                  fullWidth={true}
+                  fullWidth
                   defaultValue={this.props.contact} onChange={(event, newValue) => {
                   editContact=newValue
                   }}/>
                   <p style={color}>Research:</p>
                   <TextField
                     name="editResearch"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.research} onChange={(event, newValue) => {
                     editResearch=newValue
                   }}/>
                   <p style={color}>Notes:</p>
                   <TextField
                     name="editNotes"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.notes} onChange={(event, newValue) => {
                     editNotes=newValue
                   }}/>
                   <p style={color}>Website:</p>
                   <TextField
                     name="editWeb"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.web}
-                    multiLine={true}
+                    multiLine
                     onChange={(event, newValue) => {
                       editWeb=newValue
                     }}/>
                     <p style={color}>Job Posting:</p>
                     <TextField
                       name="editPost"
-                      fullWidth={true}
+                      fullWidth
                       defaultValue={this.props.posting}
-                      multiLine={true}
+                      multiLine
                       onChange={(event, newValue) => {
                         editPost=newValue
                       }}/>
@@ -205,7 +211,7 @@ export class EditJob extends React.Component {
                 <p style={color}>Company:</p>
                 <TextField
                   name="editCo"
-                  fullWidth={true}
+                  fullWidth
                   onChange={(event, newValue) => {
                   editCo=newValue
                 }}
@@ -214,7 +220,7 @@ export class EditJob extends React.Component {
                 <p style={color}>Job Title:</p>
                 <TextField
                   name="editTitle"
-                  fullWidth={true}
+                  fullWidth
                   defaultValue={this.props.title}
                   onChange={(event, newValue) => {
                   editTitle=newValue
@@ -223,7 +229,7 @@ export class EditJob extends React.Component {
                 <DatePicker
                   floatingLabelText={editFound}
                   style={dateStyle}
-                  fullWidth={true}
+                  fullWidth
                   // defaultDate={this.props.found}
                   onChange={(event, date) => {
                     editFound=moment(date).format("MMM DD YYYY");
@@ -265,39 +271,39 @@ export class EditJob extends React.Component {
                 <p style={color}>Contact at Company:</p>
                 <TextField
                 name="editContact"
-                fullWidth={true}
+                fullWidth
                 defaultValue={this.props.contact} onChange={(event, newValue) => {
                 editContact=newValue
                 }}/>
                 <p style={color}>Research:</p>
                 <TextField
                   name="editResearch"
-                  fullWidth={true}
+                  fullWidth
                   defaultValue={this.props.research} onChange={(event, newValue) => {
                   editResearch=newValue
                 }}/>
                 <p style={color}>Notes:</p>
                 <TextField
                   name="editNotes"
-                  fullWidth={true}
+                  fullWidth
                   defaultValue={this.props.notes} onChange={(event, newValue) => {
                   editNotes=newValue
                 }}/>
                 <p style={color}>Website:</p>
                 <TextField
                   name="editWeb"
-                  fullWidth={true}
+                  fullWidth
                   defaultValue={this.props.web}
-                  multiLine={true}
+                  multiLine
                   onChange={(event, newValue) => {
                     editWeb=newValue
                   }}/>
                   <p style={color}>Job Posting:</p>
                   <TextField
                     name="editPost"
-                    fullWidth={true}
+                    fullWidth
                     defaultValue={this.props.posting}
-                    multiLine={true}
+                    multiLine
                     onChange={(event, newValue) => {
                       editPost=newValue
                     }}/>

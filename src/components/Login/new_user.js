@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import * as actions from '../actions/userActions';
+import * as actions from '../../actions/userActions';
 import Paper from 'material-ui/Paper';
 import {Link} from 'react-router';
 
@@ -29,13 +29,13 @@ export class NewUser extends React.Component {
         <TextField
           className="firstNameRegister"
           hintText="First Name"
-          fullWidth={true}
+          fullWidth
           onChange={(event, newValue) => {
           firstNameInput = newValue
         }}/><br />
         <TextField
           className="lastNameRegister"
-          fullWidth={true}
+          fullWidth
           hintText="Last Name"
           onChange={(event, newValue) => {
           lastNameInput = newValue
@@ -43,7 +43,7 @@ export class NewUser extends React.Component {
         <TextField
           className="userNameRegister"
           hintText="Username"
-          fullWidth={true}
+          fullWidth
           onChange={(event, newValue) => {
           usernameInput = newValue
         }}/><br />
@@ -51,7 +51,7 @@ export class NewUser extends React.Component {
           className="passwordRegister"
           hintText="Password"
           type={"password"}
-          fullWidth={true}
+          fullWidth
           onChange={(event, newValue) => {
           passwordInput = newValue
         }}/><br />
@@ -59,7 +59,7 @@ export class NewUser extends React.Component {
           className="confirmPasswordRegister"
           hintText="Confirm Password"
           type={"password"}
-          fullWidth={true}
+          fullWidth
           onChange={(event, newValue) => {
           confirmPassword = newValue
         }}/><br />

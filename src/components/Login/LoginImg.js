@@ -1,10 +1,9 @@
 import React from 'react';
 import Star from 'material-ui/svg-icons/action/stars';
 import MediaQuery from 'react-responsive';
-// import Landing from './Landing';
-import Background from '../../public/n_Fotor.jpg';
+import Background from '../../../public/n_Fotor.jpg';
 import Columns from 'react-columns';
-import '../../public/index.css';
+import '../../../public/index.css';
 
 
 class LoginImg extends React.Component {

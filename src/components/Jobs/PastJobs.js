@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-import * as actions from '../actions/jobActions';
+import * as actions from '../../actions/jobActions';
 import Columns from 'react-columns';
 
 
