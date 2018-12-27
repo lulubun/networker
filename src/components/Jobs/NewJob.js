@@ -190,17 +190,17 @@ export class NewJob extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  id: state.jobState.id,
-  companyInput: state.jobState.companyState,
-  jobTitleInput: state.jobState.jobTitleState,
-  foundJobInput: state.jobState.foundJobState,
-  dateNextInput: state.jobState.dateNextState,
-  stageInput: state.jobState.stageState,
-  contactNameInput: state.jobState.contactState,
-  researchInput: state.jobState.researchState,
-  jobNotesInput: state.jobState.jobNotesState,
-  websiteInput: state.jobState.websiteState,
-  postInput: state.jobState.postState,
+  // id: state.jobState.id,
+  // companyInput: state.jobState.companyState,
+  // jobTitleInput: state.jobState.jobTitleState,
+  // foundJobInput: state.jobState.foundJobState,
+  // dateNextInput: state.jobState.dateNextState,
+  // stageInput: state.jobState.stageState,
+  // contactNameInput: state.jobState.contactState,
+  // researchInput: state.jobState.researchState,
+  // jobNotesInput: state.jobState.jobNotesState,
+  // websiteInput: state.jobState.websiteState,
+  // postInput: state.jobState.postState,
 });
 
 const mapDispatchToProps = (dispatch) => ({
