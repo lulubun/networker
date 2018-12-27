@@ -213,7 +213,6 @@ export function fetchAllJobs(user) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         sortedArray = data.sort(function(a, b) {return Date.parse(a.serNextDate) - Date.parse(b.serNextDate)});
         dispatch(setAllJobs(sortedArray))
     })
@@ -268,7 +267,6 @@ export function fetchHeartDateUpdate(user, jobId, isInputChecked, appDate) {
       let newFoundJob = res.serFoundJob;
       let newDateNext = res.serNextDate;
       let newImportant = res.serImportant;
-      console.log(newImportant, res.serImportant);
       let newStage = res.serStage;
       let newContactName = res.serContactName;
       let newResearch = res.serResearch;
