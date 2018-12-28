@@ -123,6 +123,20 @@ body {
   text-decoration-style: solid;
 }
 
+.LinkBlack {
+  text-decoration: none;
+  color:  rgba(0, 0, 0, 0.87);
+  text-align: center;
+}
+
+/* .LinkBlack:hover {
+  color: #FFFF00;
+}
+
+.LinkBlack:visited {
+  color: black;
+  text-decoration-style: solid;
+} */
 .DoneButton {
   position: fixed;
   bottom: 0;

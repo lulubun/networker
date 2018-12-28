@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {
   Table,
   TableBody,
@@ -16,12 +17,12 @@ import Checkbox from 'material-ui/Checkbox';
  */
 const JobsTable = (props) => (
   <Table
-   onCellClick={(rowNum, colId) => {
-     if (colId !== 1) {
-      // console.log('link to', props.jobs[rowNum], props)
-      props.router.push(`/${props.user}/one_job/${props.jobs[rowNum]._id}`)
-     }
-    }}
+  //  onCellClick={(rowNum, colId) => {
+  //    if (colId !== 1) {
+  //     // console.log('link to', props.jobs[rowNum], props)
+  //     props.router.push(`/${props.user}/one_job/${props.jobs[rowNum]._id}`)
+  //    }
+  //   }}
    selectable={false}
   >
     <TableHeader
@@ -50,7 +51,11 @@ const JobsTable = (props) => (
                     }}
                   />
                 </TableRowColumn>
-                <TableRowColumn>{job.serCompany}</TableRowColumn>
+                <TableRowColumn>
+                  <Link to={`/${props.user}/one_job/${job._id}`} className="LinkBlack">
+                    {job.serCompany}
+                  </Link>
+                </TableRowColumn>
               <TableRowColumn>{job.serNextDate}</TableRowColumn>
             </TableRow>
           ))}
