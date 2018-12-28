@@ -18,7 +18,8 @@ const JobsTable = (props) => (
   <Table
    onCellClick={(rowNum, colId) => {
      if (colId !== 1) {
-      console.log('link to', props.jobs[rowNum])
+      // console.log('link to', props.jobs[rowNum], props)
+      props.router.push(`/${props.user}/one_job/${props.jobs[rowNum]._id}`)
      }
     }}
    selectable={false}
@@ -44,7 +45,9 @@ const JobsTable = (props) => (
                     checked={job.serImportant}
                     checkedIcon={<ActionFavorite />}
                     uncheckedIcon={<ActionFavoriteBorder />}
-                    onCheck={() => console.log(job.serImportant)}
+                    onCheck={() => {
+                      props.updateHeart(props.user, job._id, !job.serImportant, job.serNextDate)
+                    }}
                   />
                 </TableRowColumn>
                 <TableRowColumn>{job.serCompany}</TableRowColumn>
