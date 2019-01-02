@@ -24,7 +24,6 @@ let jobNotesInput = '';
 let websiteInput = '';
 let postInput = '';
 let stageInput = '';
-let foundJobInput = moment().format("MMM DD YYYY");
 
 
 export class NewJob extends React.Component {
@@ -38,15 +37,6 @@ export class NewJob extends React.Component {
 
   render() {
     const {
-      // companyInput,
-      // jobTitleInput,
-      // importantInput,
-      // contactNameInput,
-      // researchInput,
-      // jobNotesInput,
-      // websiteInput,
-      // postInput,
-      // stageInput,
       params,
     } = this.props;
     const user = params.user;
@@ -189,23 +179,23 @@ export class NewJob extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  // id: state.jobState.id,
-  // companyInput: state.jobState.companyState,
-  // jobTitleInput: state.jobState.jobTitleState,
-  // foundJobInput: state.jobState.foundJobState,
-  // dateNextInput: state.jobState.dateNextState,
-  // stageInput: state.jobState.stageState,
-  // contactNameInput: state.jobState.contactState,
-  // researchInput: state.jobState.researchState,
-  // jobNotesInput: state.jobState.jobNotesState,
-  // websiteInput: state.jobState.websiteState,
-  // postInput: state.jobState.postState,
-});
+// const mapStateToProps = (state) => ({
+//   // id: state.jobState.id,
+//   // companyInput: state.jobState.companyState,
+//   // jobTitleInput: state.jobState.jobTitleState,
+//   // foundJobInput: state.jobState.foundJobState,
+//   // dateNextInput: state.jobState.dateNextState,
+//   // stageInput: state.jobState.stageState,
+//   // contactNameInput: state.jobState.contactState,
+//   // researchInput: state.jobState.researchState,
+//   // jobNotesInput: state.jobState.jobNotesState,
+//   // websiteInput: state.jobState.websiteState,
+//   // postInput: state.jobState.postState,
+// });
 
 const mapDispatchToProps = (dispatch) => ({
   saveJob: (user, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput) => dispatch(actions.sendNewJob(user, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput)),
   clear: (startId, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput) => dispatch(actions.setOneJob(startId, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewJob);
+export default connect(null, mapDispatchToProps)(NewJob);
