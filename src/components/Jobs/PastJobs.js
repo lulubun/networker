@@ -1,67 +1,56 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+
 import * as actions from '../../actions/jobActions';
-import Columns from 'react-columns';
-
-
-
-const style = {
-  padding: 20,
-  margin: 20,
-};
 
 class Past extends React.Component {
   render() {
-    let array = this.props.allPastList;
-    let sortedArray;
-    if (array == undefined) {
-      sortedArray = []
-    } else {
-      sortedArray = array.sort(function(a, b) {return Date.parse(b.serDateNext) - Date.parse(a.serDateNext)});
-    }
-
-    if (sortedArray.length > 2) {
-      return (
-        <div className="allPast">
-          <Columns>
-          {sortedArray.map((onePast, index) => (
-          <div className="onePast" key={index}>
-            <Paper style={style} zDepth={1}>
-            <p>{onePast.serTypeJob} on {onePast.serDateNext}</p>
-            <Divider />
-            <p>{onePast.serNotesJob}</p>
-            <RaisedButton label="Delete"
-              backgroundColor="#5D576B" labelColor="#F1F1EF"
-              onTouchTap={(event) => {
-                this.props.delete(onePast.serUser, onePast.id, onePast.pastId)
-              }}
-            />
-          </Paper>
-          </div>))}
-          </Columns>
-        </div>
-      );
-    }
+    const { allPastList } = this.props;
+    const sortedArray = ((allPastList && allPastList.length > 0) && allPastList.sort(function(a, b) {return Date.parse(b.serDateNext) - Date.parse(a.serDateNext)})) || [];
     return (
-      <div className="allPast">
-        {sortedArray.map((onePast, index) => (
-        <div className="onePast" key={index}>
-          <Paper style={style} zDepth={1}>
-          <p>{onePast.serTypeJob} on {onePast.serDateNext}</p>
-          <Divider />
-          <p>{onePast.serNotesJob}</p>
-          <RaisedButton label="Delete"
-            backgroundColor="#5D576B" labelColor="#F1F1EF"
-            onTouchTap={(event) => {
-              this.props.delete(onePast.serUser, onePast.id, onePast.pastId)
-            }}
-          />
-        </Paper>
-        </div>))}
-      </div>
+      <Table
+        selectable={false}
+      >
+        <TableHeader
+          displaySelectAll={false}
+          adjustForCheckbox={false}
+        >
+          <TableRow>
+            <TableHeaderColumn>Date</TableHeaderColumn>
+            <TableHeaderColumn>Type</TableHeaderColumn>
+            <TableHeaderColumn>Notes</TableHeaderColumn>
+            <TableHeaderColumn></TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody
+          displayRowCheckbox={false}
+        >
+          {sortedArray.map((onePast) =>(
+              <TableRow key={onePast.pastId}>
+              <TableRowColumn>{onePast.serDateNext}</TableRowColumn>
+              <TableRowColumn>{onePast.serTypeJob}</TableRowColumn>
+              <TableRowColumn>{onePast.serNotesJob}</TableRowColumn>
+              <TableRowColumn>
+                <RaisedButton label="Delete"
+                  backgroundColor="#5D576B" labelColor="#F1F1EF"
+                  onTouchTap={(event) => {
+                    this.props.delete(onePast.serUser, onePast.id, onePast.pastId)
+                  }}
+                />
+              </TableRowColumn>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     );
   }
 }

@@ -88,7 +88,11 @@ const JobState = (state=initialState, action) => {
       ...state,
       importState: !state.importState
     }
-
+    case 'INDI_UPDATE':
+    return {
+      ...state,
+      [action.payload.kind]: action.payload.update
+    }
 
     default:
     return state

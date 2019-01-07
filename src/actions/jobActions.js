@@ -1,4 +1,5 @@
 import { hashHistory } from 'react-router';
+import * as constants from './constants';
 
 const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
 const APP_URL = 'https://be-a-networker.herokuapp.com';
@@ -7,9 +8,8 @@ const APP_URL = 'https://be-a-networker.herokuapp.com';
 // const APP_URL = 'http://localhost:3000';
 
 //open a job just created
-export const SET_NEW_JOB = 'SET_NEW_JOB';
 export const setNewJob = (newCompany, newJobTitle, newDateNext, newImportant, newStage, newContactName, newResearch, newJobNotes, newWebsite, newPost) => ({
-  type: SET_NEW_JOB,
+  type: constants.SET_NEW_JOB,
   newCompany,
   newJobTitle,
   newDateNext,
@@ -23,9 +23,8 @@ export const setNewJob = (newCompany, newJobTitle, newDateNext, newImportant, ne
 });
 
 //open one job with full past
-export const SET_ONE_JOB = 'SET_ONE_JOB';
 export const setOneJob = (id, newCompany, newJobTitle, newFoundJob, newDateNext, newImportant, newStage, newContactName, newResearch, newJobNotes, newWebsite, newPost, newPastArray) => ({
-  type: SET_ONE_JOB,
+  type: constants.SET_ONE_JOB,
   id,
   newCompany,
   newJobTitle,
@@ -41,9 +40,8 @@ export const setOneJob = (id, newCompany, newJobTitle, newFoundJob, newDateNext,
   newPastArray
 });
 
-export const UPDATE_JOB = 'UPDATE_JOB';
 export const updateJob = (newCompany, newJobTitle, newDateNext, newImportant, newStage, newContactName, newResearch, newJobNotes, newWebsite, newPost) => ({
-  type: UPDATE_JOB,
+  type: constants.UPDATE_JOB,
   newCompany,
   newJobTitle,
   newDateNext,
@@ -56,21 +54,26 @@ export const updateJob = (newCompany, newJobTitle, newDateNext, newImportant, ne
   newPost
 });
 
-export const UPDATE_DATE_NEXT_JOB = 'UPDATE_DATE_NEXT';
+export const individualUpdate = (kind, update) => ({
+  type: constants.INDI_UPDATE,
+  payload: {
+    kind,
+    update
+  }
+});
+
 export const updateDateNextJob = (newDateNext) => ({
-  type: UPDATE_DATE_NEXT_JOB,
+  type: constants.UPDATE_DATE_NEXT_JOB,
   newDateNext
 });
 
-export const UPDATE_JOB_PAST = 'UPDATE_JOB_PAST';
 export const updateJobPast = (updatedJob) =>  ({
-  type: UPDATE_JOB_PAST,
+  type: constants.UPDATE_JOB_PAST,
   updatedJob
 })
 
-export const UPDATE_HEART = 'UPDATE_HEART';
 export const updateHeart = (updatedHeart) => ({
-  type: UPDATE_HEART,
+  type: constants.UPDATE_HEART,
   updatedHeart
 })
 
@@ -80,33 +83,19 @@ export function fetchWholeJob(id, user) {
     const urlWhole = (SER_URL + '/' + user + '/one_job/' + id)
     fetch(urlWhole)
     .then(response => response.json())
-    .then(data => {
-      let id = data._id;
-      let newCompany = data.serCompany;
-      let newJobTitle = data.serJobTitle;
-      let newFoundJob = data.serFoundJob;
-      let newDateNext = data.serNextDate;
-      let newImportant = data.serImportant;
-      let newStage = data.serStage;
-      let newContactName = data.serContactName;
-      let newResearch = data.serResearch;
-      let newJobNotes = data.serJobNotes;
-      let newWebsite = data.serWebsite;
-      let newPost = data.serPost;
-      let newPastArray = data.serPastJobs;
-      dispatch(setOneJob(id,
-        newCompany,
-        newJobTitle,
-        newFoundJob,
-        newDateNext,
-        newImportant,
-        newStage,
-        newContactName,
-        newResearch,
-        newJobNotes,
-        newWebsite,
-        newPost,
-        newPastArray))})
+    .then(data => dispatch(setOneJob(data._id,
+      data.serCompany,
+      data.serJobTitle,
+      data.serFoundJob,
+      data.serNextDate,
+      data.serImportant,
+      data.serStage,
+      data.serContactName,
+      data.serResearch,
+      data.serJobNotes,
+      data.serWebsite,
+      data.serPost,
+      data.serPastJobs)))
     .catch(ex => console.log(ex))
   }
 }
@@ -195,9 +184,8 @@ export function fetchUpdate(editUser, editId, editCo, editTitle, editFound, edit
   }
 };
 
-export const SET_ALL_JOBS = 'SET_ALL_JOBS';
 export const setAllJobs = (allJobs) => ({
-  type: SET_ALL_JOBS,
+  type: constants.SET_ALL_JOBS,
   allJobs
 });
 
@@ -213,7 +201,6 @@ export function fetchAllJobs(user) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         sortedArray = data.sort(function(a, b) {return Date.parse(a.serNextDate) - Date.parse(b.serNextDate)});
         dispatch(setAllJobs(sortedArray))
     })
@@ -268,7 +255,6 @@ export function fetchHeartDateUpdate(user, jobId, isInputChecked, appDate) {
       let newFoundJob = res.serFoundJob;
       let newDateNext = res.serNextDate;
       let newImportant = res.serImportant;
-      console.log(newImportant, res.serImportant);
       let newStage = res.serStage;
       let newContactName = res.serContactName;
       let newResearch = res.serResearch;
