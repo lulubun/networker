@@ -52,7 +52,7 @@ class NetworkContainer extends React.Component {
       <div style={wholeStyle}>
         <div style={style}>
           <Link to={'/' + params.user + '/jobs'} className="Link"><RaisedButton label="Jobs" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
-          <Link to={'/' + params.user + '/contacts'} className="Link"><RaisedButton label="Contacts" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link>
+          {/* <Link to={'/' + params.user + '/contacts'} className="Link"><RaisedButton label="Contacts" style={buttonStyle} backgroundColor="#5D576B" labelColor="#F1F1EF" /></Link> */}
           <RaisedButton
             label="Log Out" style={LogoutStyle} backgroundColor="#aaa5b6" labelColor="#F1F1EF"
             onTouchTap={() => {logOutNow()}}

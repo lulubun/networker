@@ -1,10 +1,5 @@
 import { hashHistory } from 'react-router';
-
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
-const APP_URL = 'https://be-a-networker.herokuapp.com';
-
-// const SER_URL = 'http://localhost:8080';
-// const APP_URL = 'http://localhost:3000';
+import * as constants from './constants'
 
 //open a contact just created
 export const SET_NEW_CONTACT = 'SET_NEW_CONTACT';
@@ -75,7 +70,7 @@ export const updateHeart = (updatedHeart) => ({
 
 export function fetchWholeContact(id, user) {
   return dispatch => {
-    const urlWhole = (SER_URL + '/' + user + '/one_contact/' + id)
+    const urlWhole = (constants.SER_URL + '/' + user + '/one_contact/' + id)
     fetch(urlWhole)
     .then(response => response.json())
     .then(data => {
@@ -110,7 +105,7 @@ export function fetchWholeContact(id, user) {
 export function sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
   return dispatch => {
     const serUser = user;
-    const url = SER_URL + '/' + serUser + '/new_contact';
+    const url = constants.SER_URL + '/' + serUser + '/new_contact';
     let serNextContact = dateNextInput;
     let serFirst = firstInput;
     let serLast = lastInput;
@@ -149,7 +144,7 @@ export function fetchUpdate(editUser, editId, firstInput, lastInput, companyInpu
   return dispatch => {
     const user = editUser;
     let _id = editId;
-    const url = SER_URL + '/' + user + '/edit_contact/' + _id;
+    const url = constants.SER_URL + '/' + user + '/edit_contact/' + _id;
     let serFirst = firstInput;
     let serLast = lastInput;
     let serCompany = companyInput;
@@ -192,7 +187,7 @@ export const setAllContacts = (allContacts) => ({
 
 export function fetchAllContacts(user) {
   return dispatch => {
-    const url = SER_URL + '/' + user + '/contacts';
+    const url = constants.SER_URL + '/' + user + '/contacts';
     let sortedArray = [];
     fetch(url, {
       headers : {
@@ -213,7 +208,7 @@ export function fetchDeleteContact(editId, editUser) {
   let _id = editId;
   const user = editUser;
   return dispatch => {
-    const urlDel = SER_URL + '/' + user + '/one_contact/' + _id;
+    const urlDel = constants.SER_URL + '/' + user + '/one_contact/' + _id;
     fetch(urlDel, {
       method: 'DELETE',
       headers: {
@@ -235,7 +230,7 @@ export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
   let _id = contactId;
   const serNextContact = appDate;
   return dispatch => {
-    const urlHeart = SER_URL + '/' + serUser + '/one_contact/' + _id;
+    const urlHeart = constants.SER_URL + '/' + serUser + '/one_contact/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
@@ -273,7 +268,7 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
     let serUser = user;
     let id = contactId;
     let pastId = pastid;
-    const pastUrl = SER_URL + '/' + user + '/newPast/' + id;
+    const pastUrl = constants.SER_URL + '/' + user + '/newPast/' + id;
     let serDateContact = dateInput;
     let serTypeContact = typeInput;
     let serNotesContact = contactNotesInput;
@@ -303,7 +298,7 @@ export function fetchDeletePast(userOne, contactId, oneId) {
   const user = userOne;
   const pastId = oneId;
   return dispatch => {
-    const urlDel = SER_URL + '/' + user + '/one_contact/' + _id + '/' + pastId;
+    const urlDel = constants.SER_URL + '/' + user + '/one_contact/' + _id + '/' + pastId;
     fetch(urlDel, {
       method: 'PUT',
       headers: {
@@ -325,7 +320,7 @@ export function fetchDeletePast(userOne, contactId, oneId) {
 
 export function fetchLogOut() {
   return dispatch => {
-    const logOut = SER_URL + '/logout';
+    const logOut = constants.SER_URL + '/logout';
     fetch(logOut)
     .then(location.assign('/'))
     .catch(ex => console.log(ex))

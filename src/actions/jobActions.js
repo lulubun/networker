@@ -1,12 +1,6 @@
 import { hashHistory } from 'react-router';
 import * as constants from './constants';
 
-const SER_URL = 'https://warm-harbor-59021.herokuapp.com';
-const APP_URL = 'https://be-a-networker.herokuapp.com';
-
-// const SER_URL = 'http://localhost:8080';
-// const APP_URL = 'http://localhost:3000';
-
 //open a job just created
 export const setNewJob = (newCompany, newJobTitle, newDateNext, newImportant, newStage, newContactName, newResearch, newJobNotes, newWebsite, newPost) => ({
   type: constants.SET_NEW_JOB,
@@ -80,7 +74,7 @@ export const updateHeart = (updatedHeart) => ({
 
 export function fetchWholeJob(id, user) {
   return dispatch => {
-    const urlWhole = (SER_URL + '/' + user + '/one_job/' + id)
+    const urlWhole = (constants.SER_URL + '/' + user + '/one_job/' + id)
     fetch(urlWhole)
     .then(response => response.json())
     .then(data => dispatch(setOneJob(data._id,
@@ -103,7 +97,7 @@ export function fetchWholeJob(id, user) {
 export function sendNewJob(user, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput) {
   return dispatch => {
     const serUser = user;
-    const url = SER_URL + '/' + serUser + '/new_job';
+    const url = constants.SER_URL + '/' + serUser + '/new_job';
     let serNextDate = dateNextInput;
     let serImportant = importantInput;
     let serStage = stageInput;
@@ -144,7 +138,7 @@ export function fetchUpdate(editUser, editId, editCo, editTitle, editFound, edit
   return dispatch => {
     const user = editUser;
     let _id = editId;
-    const url = SER_URL + '/' + user + '/edit_job/' + _id;
+    const url = constants.SER_URL + '/' + user + '/edit_job/' + _id;
     let serCompany = editCo;
     let serJobTitle = editTitle;
     let serDateNext = editFollowUp;
@@ -191,7 +185,7 @@ export const setAllJobs = (allJobs) => ({
 
 export function fetchAllJobs(user) {
   return dispatch => {
-    const url = SER_URL + '/' + user + '/jobs';
+    const url = constants.SER_URL + '/' + user + '/jobs';
     let sortedArray = [];
     fetch(url, {
       headers : {
@@ -212,7 +206,7 @@ export function fetchDeleteJob(editId, editUser) {
   let _id = editId;
   const user = editUser;
   return dispatch => {
-    const urlDel = SER_URL + '/' + user + '/one_job/' + _id;
+    const urlDel = constants.SER_URL + '/' + user + '/one_job/' + _id;
     fetch(urlDel, {
       method: 'DELETE',
       headers: {
@@ -234,7 +228,7 @@ export function fetchHeartDateUpdate(user, jobId, isInputChecked, appDate) {
   let _id = jobId;
   const serNextDate = appDate;
   return dispatch => {
-    const urlHeart = SER_URL + '/' + serUser + '/one_job/' + _id;
+    const urlHeart = constants.SER_URL + '/' + serUser + '/one_job/' + _id;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
@@ -299,7 +293,7 @@ export function sendNewJobPast(user, jobId, pastid, dateInput, typeInput, jobNot
     let serUser = user;
     let id = jobId;
     let pastId = pastid;
-    const pastUrl = SER_URL + '/' + user + '/newJobPast/' + id;
+    const pastUrl = constants.SER_URL + '/' + user + '/newJobPast/' + id;
     let serDateNext = dateInput;
     let serTypeJob = typeInput;
     let serNotesJob = jobNotesInput;
@@ -343,7 +337,7 @@ export function fetchDeletePast(userOne, jobId, oneId) {
   const user = userOne;
   const pastId = oneId;
   return dispatch => {
-    const urlDel = SER_URL + '/' + user + '/one_job/' + _id + '/' + pastId;
+    const urlDel = constants.SER_URL + '/' + user + '/one_job/' + _id + '/' + pastId;
     fetch(urlDel, {
       method: 'PUT',
       headers: {

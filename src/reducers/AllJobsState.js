@@ -1,5 +1,6 @@
 const initialState = {
-  allJobs: []
+  allJobs: [],
+  allContacts: [],
 }
 
 const AllJobsState = (state=initialState, action) => {
@@ -7,7 +8,7 @@ const AllJobsState = (state=initialState, action) => {
     case 'SET_ALL_JOBS':
     return {
       ...state,
-      allJobs: action.allJobs
+      allJobs: action.allJobs,
     };
 
     case 'SET_ONE_JOB':

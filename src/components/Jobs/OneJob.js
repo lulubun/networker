@@ -51,7 +51,7 @@ export class OneJob extends React.Component {
       <Link to={'/' + user + '/Jobs'} className="Link"><RaisedButton label="Return to All Jobs" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
       <JobCard {...this.props} user={user} jobId={jobId} />
       <RaisedButton
-        label="Record New Follow Up"
+        label="+ Record New Follow Up"
         onClick={this.handleOpen}
         backgroundColor="#5D576B"
         labelColor="#F1F1EF"
