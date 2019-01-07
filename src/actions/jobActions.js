@@ -1,5 +1,6 @@
 import { hashHistory } from 'react-router';
 import * as constants from './constants';
+import { fetchAllContacts } from './contactActions';
 
 
 //open a job just created

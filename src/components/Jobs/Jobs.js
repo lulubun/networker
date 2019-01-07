@@ -9,7 +9,7 @@ import JobsTable from './JobsTable';
 class Jobs extends React.Component {
 
   render() {
-    const { params, jobList, handleClick, updateHeart, router } = this.props;
+    const { params, jobList, fetchWholeJob, updateHeart, router } = this.props;
     const user = params.user;
 
     const noneStyle = {
@@ -39,7 +39,7 @@ class Jobs extends React.Component {
           </Link>
         </div>
         <div className="jobs-List" style={{ padding: '100px, 0, 1vh, 0'}}>
-          <JobsTable jobs={jobList} selectJob={handleClick} updateHeart={updateHeart} user={user} router={router} />
+          <JobsTable jobs={jobList} selectJob={fetchWholeJob} updateHeart={updateHeart} user={user} router={router} />
         </div>
         <Link to={'/' + user + '/network'} className="Link"><RaisedButton
           className="DoneButton" label="Back to Options" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
@@ -54,7 +54,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAllJobs: (user) => dispatch(actions.fetchAllJobs(user)),
-  handleClick: (linkId) => dispatch(actions.fetchWholeJob(linkId)),
+  fetchWholeJob: (linkId) => dispatch(actions.fetchWholeJob(linkId)),
   updateHeart: (user, jobId, isInputChecked, appDate) => dispatch(actions.fetchHeartDateUpdate(user, jobId, isInputChecked, appDate)),
 })
 

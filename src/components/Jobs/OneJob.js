@@ -25,7 +25,7 @@ export class OneJob extends React.Component {
     newOpen: false,
   }
   componentDidMount() {
-    this.props.getOneJob(this.props.params.id);
+    this.props.fetchWholeJob(this.props.params.id);
   }
 
   handleOpen = () => {
@@ -144,7 +144,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getOneJob: (linkId) => dispatch(actions.fetchWholeJob(linkId)),
+  fetchWholeJob: (linkId) => dispatch(actions.fetchWholeJob(linkId)),
   changeHeartDate: (user, jobId, isInputChecked, sendDate) => dispatch(actions.fetchHeartDateUpdate(user, jobId, isInputChecked, sendDate)),
   addPast: (user, jobId, pastId, dateInput, typeInput, JobNotesInput) => dispatch(actions.sendNewJobPast(user, jobId, pastId, dateInput, typeInput, JobNotesInput)),
 })

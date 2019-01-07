@@ -15,7 +15,7 @@ const TodayList = (props) => {
   const newList = props.todayList && props.todayList.reduce((acc, j) => {
     const today = moment();
     const newAcc = acc;
-    if (today > moment(j.serNextDate)) {
+    if ((today > moment(j.serNextDate)) && j.serStage !== 'Inactive') {
       newAcc.push(j)
     }
     return newAcc;

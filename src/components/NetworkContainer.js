@@ -10,9 +10,10 @@ import TodayList from './TodayList';
 
 class NetworkContainer extends React.Component {
   componentDidMount() {
-    const { params, getAllJobs } = this.props;
+    const { params, getAllJobs, fetchContacts } = this.props;
     const user = params.user;
     getAllJobs(user);
+    fetchContacts(user);
   };
 
   render() {
@@ -70,6 +71,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getAllJobs: (user) => dispatch(jobActions.fetchAllJobs(user)),
+  fetchContacts: (user) => dispatch(contactActions.fetchAllContacts(user)),
   logOutNow: () => dispatch(contactActions.fetchLogOut())
 })
 
