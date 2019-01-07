@@ -36,12 +36,14 @@ const JobCard = (props) => {
 
   let overdueStyle = {
     fontWeight: 'bold',
+    paddingRight: '5px'
   }
 
   if (dayNext < moment().format("YYYY-MM-DD")) {
     overdueStyle = {
       color: 'red',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      paddingRight: '5px'
     }
   }
 
@@ -87,11 +89,14 @@ const JobCard = (props) => {
         }}
       >
         <p style={overdueStyle}>
-          <Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up on 
-          <RaisedButton style={{ width: '40px'}}>
+          <Alarm className="conIcon" style={overdueStyle}/>{overdue} Follow up on </p>
+          <RaisedButton
+            style={{ height: '5vh', margin: '2vh 0 0 0'}}
+          >
             <DatePicker
+              style={{ padding: '0 5px 5px 5px', width: '15.5vw', ...overdueStyle }}
               hintText={props.dateNext}
-              hintStyle={{color: 'red'}}
+              hintStyle={{color: overdue ? 'red' : '#50A350', paddingBottom: '4px' }}
               underlineStyle={{display: 'none'}}
               autoOk    
               onChange={(e, date) => {
@@ -101,7 +106,7 @@ const JobCard = (props) => {
               }}
             />
         </RaisedButton>
-        </p>
+       
       </div>
       <div
         style={{
