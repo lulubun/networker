@@ -228,6 +228,7 @@ export function fetchHeartDateUpdate(user, jobId, isInputChecked, appDate) {
   const serUser = user;
   let serImportant = isInputChecked;
   let _id = jobId;
+  console.log('_id: ', _id);
   const serNextDate = appDate;
   return dispatch => {
     const urlHeart = constants.SER_URL + '/' + serUser + '/one_job/' + _id;
@@ -258,19 +259,6 @@ export function fetchHeartDateUpdate(user, jobId, isInputChecked, appDate) {
       let newWebsite = res.serWebsite;
       let newPost = res.serPost;
       let newPastArray = res.serPastJobs;
-      // console.log(id,
-      // newCompany,
-      // newJobTitle,
-      // newFoundJob,
-      // newDateNext,
-      // newImportant,
-      // newStage,
-      // newContactName,
-      // newResearch,
-      // newJobNotes,
-      // newWebsite,
-      // newPost,
-      // newPastArray);
       dispatch(setOneJob(
         id,
         newCompany,

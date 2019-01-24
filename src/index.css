@@ -64,7 +64,7 @@
   padding-right: 15px;
 }
 
-.googleButton {
+/* .googleButton {
   background-color: #5D576B;
   color: #F1F1EF;
   border-radius: 1px;
@@ -75,7 +75,7 @@
   padding-bottom: 8px;
   padding-left: 15px;
   padding-right: 15px;
-}
+} */
 
 .googleButton:hover {
   background-color: #6d6779;
@@ -120,7 +120,8 @@ body {
 
 .Link:visited {
   color: white;
-  text-decoration-style: solid;
+  text-decoration-style: none;
+  text-decoration: none;
 }
 
 .LinkBlack {
@@ -137,7 +138,7 @@ body {
   color: black;
   text-decoration-style: solid;
 } */
-.DoneButton {
+/* .DoneButton {
   position: fixed;
   bottom: 0;
 }
@@ -146,7 +147,7 @@ body {
   position: fixed;
   top: 0;
   margin-bottom: 10px;
-}
+} */
 
 .Contacts-List {
   margin-top: 50px;

@@ -40,7 +40,9 @@ const JobsTable = (props) => (
     >
     {props.jobs.map((job) =>
             (
-              <TableRow key={job._id}>
+              <TableRow key={job._id} style={{
+                backgroundColor: job.serStage === 'Inactive' ? 'gray' : null,
+              }}>
                 <TableRowColumn>
                   <Checkbox
                     checked={job.serImportant}

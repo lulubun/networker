@@ -12,9 +12,10 @@ import TextField from 'material-ui/TextField';
 import '../../index.css';
 import '../../../node_modules/react-add-to-calendar/dist/react-add-to-calendar.min.css';
 import JobCard from './JobCard';
+import FollowUp from './FollowUp';
 
-let pastId = 0;
-let prettyDate = '';
+// let pastId = 0;
+// let prettyDate = '';
 
 export class OneJob extends React.Component {
 
@@ -65,7 +66,8 @@ export class OneJob extends React.Component {
         open={this.state.newOpen}
         onRequestClose={this.handleClose}
       >
-        <form>
+        <FollowUp {...this.props} close={() => this.setState({ newOpen: false })}/>
+        {/* <form>
         <DatePicker hintText="Date"
           value={this.state.date}
           onChange={(event, date) => {
@@ -121,7 +123,7 @@ export class OneJob extends React.Component {
              this.setState({ notes: '', type: '', date: {}, newOpen: false })
             }
           }} />
-        </form>
+        </form> */}
       </Dialog>
       <PastJobs />
     </div>

@@ -1,13 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import RaisedButton from 'material-ui/RaisedButton';
+import {FlatButton, RaisedButton} from 'material-ui';
 import * as actions from '../../actions/jobActions';
 import '../../index.css';
 import JobsTable from './JobsTable';
 
 class Jobs extends React.Component {
-
+  state = {
+    showBool: false,
+  }
   render() {
     const { params, jobList, fetchWholeJob, updateHeart, router } = this.props;
     const user = params.user;
@@ -22,27 +24,78 @@ class Jobs extends React.Component {
       return(
         <div>
           <div className="New_Button">
-            <Link to={'/' + user + '/new_Job'} className="Link"><RaisedButton className="NewButton" label="Create a New Job" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+            <Link to={'/' + user + '/new_Job'} className="Link">
+              <FlatButton
+                className="NewButton"
+                label="Create a New Job"
+                fullWidth
+                backgroundColor="#5D576B"
+                labelStyle={{ color: "#F1F1EF" }}
+              />
+            </Link>
           </div>
           <h3 style={noneStyle}>Press the button above to add a new Job</h3>
-          <Link to={'/' + user + '/network'} className="Link"><RaisedButton
-            className="DoneButton" label="Back to Options" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 0, position: 'fixed'}}/></Link>
+          <Link to={'/' + user + '/network'} className="Link">
+            <FlatButton
+              className="DoneButton"
+              fullWidth
+              label="Back to Options"
+              backgroundColor="#5D576B"
+              labelStyle={{ color: "#F1F1EF" }}
+              style={{marginBottom: 0, position: 'fixed'}}
+            />
+          </Link>
         </div>
       )
     }
 
+    const activeJobs = jobList.reduce((acc, j) => {
+      const newAcc = acc;
+      if (j.serStage !== 'Inactive') {
+        return newAcc.concat([j])
+      }
+      return newAcc;
+    }, []);
+
+    const buttonLabel = this.state.showBool ? 'Hide Inactive' : 'Show Inactive'
+    const oneThird = (screen.width / 3) - 10;
+    const buttonStyle = {width: `${oneThird}px`, borderRadius: '0px!', margin: '1vh, 0, 1vh, 0'}
     return (
       <div className="Jobs">
-        <div className="New_Button" style={{ margin: '1vh, 0, 1vh, 0', height: '5vh'}}>
+        <div className="New_Button" style={{ margin: '5vh, 0, 0, 0', display: 'flex', justifyContent: 'space-around', width: '100%'}}>
           <Link to={'/' + user + '/new_Job'} className="Link">
-            <RaisedButton className="NewButton" label="Create a New Job" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF" style={{marginBottom: 10, zIndex: 5}}/>
+            <FlatButton
+              className="NewButton"
+              label="Create a New Job"
+              backgroundColor="#5D576B"
+              labelStyle={{ color: "#F1F1EF" }}
+              style={buttonStyle}
+              />
           </Link>
+          <FlatButton
+            className="HideButton"
+            label={buttonLabel}
+            backgroundColor="#5D576B"
+            labelStyle={{ color: "#F1F1EF" }}
+            style={buttonStyle}
+            onClick={() => {
+              this.setState({showBool: !this.state.showBool})
+            }}
+            />
+          <Link to={'/' + user + '/network'} className="Link">
+            <FlatButton
+              className="DoneButton"
+              label="Back to Options"
+              backgroundColor="#5D576B"
+              labelStyle={{ color: "#F1F1EF" }}
+              style={buttonStyle}
+              />
+            </Link>
         </div>
-        <div className="jobs-List" style={{ padding: '100px, 0, 1vh, 0'}}>
-          <JobsTable jobs={jobList} selectJob={fetchWholeJob} updateHeart={updateHeart} user={user} router={router} />
+        <div className="jobs-List" style={{ padding: '3vh, 0, 0, 0',}}>
+          <JobsTable jobs={this.state.showBool ? jobList : activeJobs} selectJob={fetchWholeJob} updateHeart={updateHeart} user={user} router={router} />
         </div>
-        <Link to={'/' + user + '/network'} className="Link"><RaisedButton
-          className="DoneButton" label="Back to Options" fullWidth backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
+       
       </div>
     );
   }

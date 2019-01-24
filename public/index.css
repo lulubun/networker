@@ -52,7 +52,7 @@
   padding-right: 15px;
 }
 
-.googleButton {
+/* .googleButton {
   background-color: #5D576B;
   color: #F1F1EF;
   border-radius: 1px;
@@ -62,7 +62,7 @@
 
 .googleButton:hover {
   background-color: #6d6779;
-}
+} */
 
 .onePaper {
   color: white;
@@ -97,10 +97,10 @@ body {
 }
 
 .Link:visited {
-  text-decoration-style: solid;
+  text-decoration-style: none;
 }
 
-.DoneButton {
+/* .DoneButton {
   position: relative;
   bottom: 0;
-}
+} */
