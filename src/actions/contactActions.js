@@ -3,50 +3,22 @@ import * as constants from './constants';
 
 //open a contact just created
 export const SET_NEW_CONTACT = 'SET_NEW_CONTACT';
-export const setNewContact = (newDateNext, newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetDate, newMeetNotes) => ({
+export const setNewContact = (contact) => ({
   type: SET_NEW_CONTACT,
-  newDateNext,
-  newFirstName,
-  newLastName,
-  newImportant,
-  newCompany,
-  newJobTitle,
-  newEmail,
-  newPhone,
-  newMeetDate,
-  newMeetNotes
+  contact
 });
 
 //open one contact with full past
 export const SET_ONE_CONTACT = 'SET_ONE_CONTACT';
-export const setOneContact = (id, newDateNext, newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetDate, newMeetNotes, newPastArray) => ({
+export const setOneContact = (contact) => ({
   type: SET_ONE_CONTACT,
-  id,
-  newDateNext,
-  newFirstName,
-  newLastName,
-  newImportant,
-  newCompany,
-  newJobTitle,
-  newEmail,
-  newPhone,
-  newMeetDate,
-  newMeetNotes,
-  newPastArray
+  contact
 });
 
 export const UPDATE_CONTACT = 'UPDATE_CONTACT';
-export const updateContact = (newFirstName, newLastName, newImportant, newCompany, newJobTitle, newEmail, newPhone, newMeetDate, newMeetNotes) => ({
+export const updateContact = (contact) => ({
   type: UPDATE_CONTACT,
-  newFirstName,
-  newLastName,
-  newImportant,
-  newCompany,
-  newJobTitle,
-  newEmail,
-  newPhone,
-  newMeetDate,
-  newMeetNotes
+  contact
 });
 
 export const UPDATE_DATE_NEXT = 'UPDATE_DATE_NEXT';
@@ -73,66 +45,22 @@ export function fetchWholeContact(id, user) {
     const urlWhole = (constants.SER_URL + '/' + user + '/one_contact/' + id)
     fetch(urlWhole)
     .then(response => response.json())
-    .then(data => {
-      let id = data._id;
-      let newDateNext = data.serNextContact;
-      let newFirstName = data.serFirst;
-      let newLastName = data.serLast;
-      let newImportant = data.serImportant;
-      let newCompany = data.serCompany;
-      let newJobTitle = data.serJobTitle;
-      let newEmail = data.serEmail;
-      let newPhone = data.serPhone;
-      let newMeetDate = data.serMeetDate;
-      let newMeetNotes = data.serNote;
-      let newPastArray = data.serPast;
-      dispatch(setOneContact(id,
-        newDateNext,
-        newFirstName,
-        newLastName,
-        newImportant,
-        newCompany,
-        newJobTitle,
-        newEmail,
-        newPhone,
-        newMeetDate,
-        newMeetNotes,
-        newPastArray))})
+    .then(data => dispatch(setOneContact(data)))
     .catch(ex => console.log(ex))
   }
 }
 
-export function sendNewContact(user, firstInput, lastInput, importantInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput, dateNextInput) {
+export function sendNewContact(user, contact) {
   return dispatch => {
-    const serUser = user;
-    const url = constants.SER_URL + '/' + serUser + '/new_contact';
-    let serNextContact = dateNextInput;
-    let serFirst = firstInput;
-    let serLast = lastInput;
-    let serImportant = importantInput;
-    let serCompany = companyInput;
-    let serJobTitle = jobTitleInput;
-    let serPhone = phoneInput;
-    let serEmail = emailInput;
-    let serMeetDate = meetDateInput;
-    let serNote = notesInput;
+    const url = constants.SER_URL + '/' + user + '/new_contact';
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        serUser,
-        serNextContact,
-        serFirst,
-        serLast,
-        serImportant,
-        serCompany,
-        serJobTitle,
-        serPhone,
-        serEmail,
-        serMeetDate,
-        serNote
+        user,
+        contact
       })
     })
     .then(response => response.json())
@@ -140,41 +68,23 @@ export function sendNewContact(user, firstInput, lastInput, importantInput, comp
   }
 };
 
-export function fetchUpdate(editUser, editId, firstInput, lastInput, companyInput, jobTitleInput, emailInput, phoneInput, meetDateInput, notesInput) {
+export function fetchUpdate(user, job) {
   return dispatch => {
-    const user = editUser;
-    let _id = editId;
-    const url = constants.SER_URL + '/' + user + '/edit_contact/' + _id;
-    let serFirst = firstInput;
-    let serLast = lastInput;
-    let serCompany = companyInput;
-    let serJobTitle = jobTitleInput;
-    let serPhone = phoneInput;
-    let serEmail = emailInput;
-    let serMeetDate = meetDateInput;
-    let serNote = notesInput;
+    const url = constants.SER_URL + '/' + user + '/edit_contact/' + job._id;
     fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        _id,
-        serFirst,
-        serLast,
-        serCompany,
-        serJobTitle,
-        serPhone,
-        serEmail,
-        serMeetDate,
-        serNote
+        job        
       })
     })
     .then(response => response.json())
     .then(data => {
       dispatch(setOneContact(data))
     })
-    .then(hashHistory.push('/' + user + '/one_contact/' + _id))
+    .then(hashHistory.push('/' + user + '/one_contact/' + job._id))
     .catch(ex => console.log(ex))
   }
 };
@@ -226,7 +136,7 @@ export function fetchDeleteContact(editId, editUser) {
 
 export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
   const serUser = user;
-  let serImportant = isInputChecked;
+  let important = isInputChecked;
   let _id = contactId;
   const serNextContact = appDate;
   return dispatch => {
@@ -239,7 +149,7 @@ export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
       body: JSON.stringify({
         _id,
         serUser,
-        serImportant,
+        important,
         serNextContact
       })
     })
@@ -250,9 +160,9 @@ export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
       res.serNextContact,
       res.serFirst,
       res.serLast,
-      res.serImportant,
-      res.serCompany,
-      res.serJobTitle,
+      res.important,
+      res.company,
+      res.jobTitle,
       res.serEmail,
       res.serPhone,
       res.serMeetDate,
@@ -263,27 +173,18 @@ export function fetchHeartDateUpdate(user, contactId, isInputChecked, appDate) {
   }
 };
 
-export function sendNewPast(user, contactId, pastid, dateInput, typeInput, contactNotesInput) {
+export function sendNewPast(user, _id, past) {
   return dispatch => {
-    let serUser = user;
-    let id = contactId;
-    let pastId = pastid;
-    const pastUrl = constants.SER_URL + '/' + user + '/newPast/' + id;
-    let serDateContact = dateInput;
-    let serTypeContact = typeInput;
-    let serNotesContact = contactNotesInput;
+    const pastUrl = constants.SER_URL + '/' + user + '/newPast/' + _id;
     fetch(pastUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        serUser,
-        id,
-        pastId,
-        serDateContact,
-        serTypeContact,
-        serNotesContact
+        user,
+        _id,
+        past
       })
     })
     .then(response => response.json())
@@ -293,10 +194,7 @@ export function sendNewPast(user, contactId, pastid, dateInput, typeInput, conta
   }
 }
 
-export function fetchDeletePast(userOne, contactId, oneId) {
-  let _id = contactId;
-  const user = userOne;
-  const pastId = oneId;
+export function fetchDeletePast(user, _id, pastId) {
   return dispatch => {
     const urlDel = constants.SER_URL + '/' + user + '/one_contact/' + _id + '/' + pastId;
     fetch(urlDel, {

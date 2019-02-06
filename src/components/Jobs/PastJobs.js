@@ -15,7 +15,7 @@ import * as actions from '../../actions/jobActions';
 class Past extends React.Component {
   render() {
     const { allPastList } = this.props;
-    const sortedArray = ((allPastList && allPastList.length > 0) && allPastList.sort(function(a, b) {return Date.parse(b.serDateNext) - Date.parse(a.serDateNext)})) || [];
+    const sortedArray = ((allPastList && allPastList.length > 0) && allPastList.sort(function(a, b) {return Date.parse(b.nextDate) - Date.parse(a.nextDate)})) || [];
     return (
       <Table
         selectable={false}
@@ -36,14 +36,14 @@ class Past extends React.Component {
         >
           {sortedArray.map((onePast) =>(
               <TableRow key={onePast.pastId}>
-              <TableRowColumn>{onePast.serDateNext}</TableRowColumn>
+              <TableRowColumn>{onePast.nextDate}</TableRowColumn>
               <TableRowColumn>{onePast.serTypeJob}</TableRowColumn>
               <TableRowColumn>{onePast.serNotesJob}</TableRowColumn>
               <TableRowColumn>
                 <RaisedButton label="Delete"
                   backgroundColor="#5D576B" labelColor="#F1F1EF"
                   onTouchTap={(event) => {
-                    this.props.delete(onePast.serUser, onePast.id, onePast.pastId)
+                    this.props.delete(onePast.serUser, onePast._id, onePast.pastId)
                   }}
                 />
               </TableRowColumn>
@@ -56,7 +56,7 @@ class Past extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  allPastList: state.JobState.allPastState
+  allPastList: state.AllState.allPastState
 });
 
 const mapDispatchToProps = (dispatch) => ({

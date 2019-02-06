@@ -8,62 +8,75 @@ import {Dialog, Subheader} from 'material-ui';
 import '../index';
 import FollowUp from './Jobs/FollowUp';
 
-const toDo = (list, usr, fetchHeartDateUpdate) => list.map((l) => (<ListItem
-    style={{
-      padding: '0px 0px 0px 50px'
-    }}
-    key={l.serCompany}
-    leftCheckbox={
-      <Checkbox onClick={() => console.log(l)}/>
-    }
-  >
-    <Link to={'/' + usr + '/one_Job/' + l._id } className="Link" key={l.id} style={{color: 'black', position: 'absolute', top: 16}}>
-      {l.serCompany} {l.serNextDate}
-    </Link>
-    <IconButton tooltip="SVG Icon"
-      style={{
-        marginLeft: '160px'
-      }}
-      onClick={() => {
-        const newDate = moment().add(1, 'day').format('MMM DD YYYY');
-        fetchHeartDateUpdate(usr, l._id, l.serImportant, newDate);
-      }}
-    >
-      <Snooze />
-    </IconButton>
-  </ListItem>)
-);
 
-
-const TodayList = (props) => {
+export class TodayList extends React.Component {
   state =  {
     newOpen: false,
+    jobId: null,
+    user: null,
   }
-  const newList = props.todayList && props.todayList.reduce((acc, j) => {
-    const today = moment();
-    const newAcc = acc;
-    if ((today >= moment(j.serNextDate)) && j.serStage !== 'Inactive') {
-      newAcc.push(j)
-    }
-    return newAcc;
-  }, []) || [];
-  console.log('newList: ', newList);
 
-  return (
-  <div>
-    <Subheader>Today's Followups</Subheader>
-    <List>
-      {toDo(newList, props.user, props.fetchHeartDateUpdate)}
-    </List>
-    <Dialog
-      title="Record of Follow Up"
-      modal={false}
-      open={this.state.newOpen}
-      onRequestClose={this.handleClose}
+  toDo = (list, usr, fetchHeartDateUpdate) => list.map((l) => (<ListItem
+      style={{
+        padding: '0px 0px 0px 50px'
+      }}
+      key={l.company}
+      leftCheckbox={
+        <Checkbox onClick={() => this.setState({ jobId: l._id, newOpen: true })}/>
+      }
     >
-      <FollowUp {...this.props} close={() => this.setState({ newOpen: false })}/>
-    </Dialog>
-  </div>
-)};
+      <Link
+        to={'/' + usr + '/one_Job/' + l._id }
+        className="Link" key={l._id}
+        style={{color: 'black', position: 'absolute', top: 16}}
+      >
+        {l.company} {l.nextDate}
+      </Link>
+      <IconButton tooltip="SVG Icon"
+        style={{
+          marginLeft: '160px'
+        }}
+        onClick={() => {
+          const newDate = moment().add(1, 'day').format('MMM DD YYYY');
+          fetchHeartDateUpdate(usr, l._id, l.important, newDate);
+        }}
+      >
+        <Snooze />
+      </IconButton>
+    </ListItem>)
+  );
+  render() {
+    const {todayList, user, fetchHeartDateUpdate, addPast, params } = this.props;
+    const newList = todayList && todayList.reduce((acc, j) => {
+      const today = moment();
+      const newAcc = acc;
+      if ((today >= moment(j.nextDate)) && j.stage !== 'Inactive') {
+        newAcc.push(j)
+      }
+      return newAcc;
+    }, []) || [];
+    return (
+      <div>
+        <Subheader>Today's Followups</Subheader>
+        <List>
+          {this.toDo(newList, user, fetchHeartDateUpdate)}
+        </List>
+        <Dialog
+          title="Record of Follow Up"
+          modal={false}
+          open={this.state.newOpen}
+          onRequestClose={this.handleClose}
+        >
+          <FollowUp
+            close={() => this.setState({ newOpen: false })}
+            jobId={this.state.jobId}
+            user={params.user}
+            addPast={addPast}
+          />
+        </Dialog>
+      </div>
+    )
+  }
+}
 
 export default TodayList;

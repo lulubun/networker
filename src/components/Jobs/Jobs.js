@@ -10,6 +10,11 @@ class Jobs extends React.Component {
   state = {
     showBool: false,
   }
+  componentDidMount = () => {
+    const user = this.props.params.user;
+    this.props.getAllJobs(user);
+  }
+  
   render() {
     const { params, jobList, fetchWholeJob, updateHeart, router } = this.props;
     const user = params.user;
@@ -51,7 +56,7 @@ class Jobs extends React.Component {
 
     const activeJobs = jobList.reduce((acc, j) => {
       const newAcc = acc;
-      if (j.serStage !== 'Inactive') {
+      if (j.stage !== 'Inactive') {
         return newAcc.concat([j])
       }
       return newAcc;
@@ -102,7 +107,7 @@ class Jobs extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  jobList: state.AllJobsState.allJobs,
+  jobList: state.AllState.allJobs,
 });
 
 const mapDispatchToProps = (dispatch) => ({

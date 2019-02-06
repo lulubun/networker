@@ -35,11 +35,11 @@ export class OneContact extends React.Component {
     date: {}
   }
   componentDidMount() {
-    this.props.getOneContact(this.props.params.id);
+    this.props.getOneContact(this.props.params._id);
   }
 
  render() {
-  const contactId = this.props.params.id;
+  const contactId = this.props.params._id;
   const user = this.props.params.user;
   let dayNext = moment(this.props.appointment).format("YYYY-MM-DD");
   let overdue = "";
@@ -93,7 +93,7 @@ export class OneContact extends React.Component {
         <p className="emailText">Email Address:   {this.props.email}</p>
         <p>Met this contact on:   {this.props.firstMeet}</p>
         <p>Notes:   {this.props.meetInfo}</p>
-        <Link to={'/' + user + '/edit_contact/' + this.props.params.id} className="Link"><RaisedButton
+        <Link to={'/' + user + '/edit_contact/' + this.props.params._id} className="Link"><RaisedButton
           label="Edit" backgroundColor="#5D576B" labelColor="#F1F1EF"/></Link>
         <div>
           <MediaQuery query='(min-device-width: 1010px)'>
@@ -177,7 +177,13 @@ export class OneContact extends React.Component {
               alert("Please include the type of contact made")
             } else {
               prettyDate = moment(this.state.date).format("MMM DD YYYY");
-              this.props.addPast(user, contactId, pastId, prettyDate, this.state.type, this.state.notes);
+              const past = {
+                pastId,
+                prettyDate,
+                type: this.state.type,
+                notes: this.state.notes
+              }
+              this.props.addPast(user, contactId, past);
              this.setState({ notes: '', type: '', date: {} })
             }
           }} />
@@ -190,24 +196,24 @@ export class OneContact extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  appointment: state.ContactState.dateNext,
-  first: state.ContactState.firstName,
-  last: state.ContactState.lastName,
-  important: state.ContactState.import,
-  co: state.ContactState.company,
-  job: state.ContactState.jobTitle,
-  email: state.ContactState.email,
-  phone: state.ContactState.phone,
-  firstMeet: state.ContactState.meetDate,
-  meetInfo: state.ContactState.meetNotes,
-  googleLogin: state.ContactState.login
+  appointment: state.AllState.dateNext,
+  first: state.AllState.firstName,
+  last: state.AllState.lastName,
+  important: state.AllState.import,
+  co: state.AllState.company,
+  job: state.AllState.jobTitle,
+  email: state.AllState.email,
+  phone: state.AllState.phone,
+  firstMeet: state.AllState.meetDate,
+  meetInfo: state.AllState.meetNotes,
+  googleLogin: state.AllState.login
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getOneContact: (linkId) => dispatch(actions.fetchWholeContact(linkId)),
   //changeAppointment: (user, contactId, sendDate) => dispatch(actions.fetchDateUpdate(user, contactId, sendDate)),
   changeHeartDate: (user, contactId, isInputChecked, appDate) => dispatch(actions.fetchHeartDateUpdate(user, contactId, isInputChecked, appDate)),
-  addPast: (user, contactId, pastId, dateInput, typeInput, contactNotesInput) => dispatch(actions.sendNewPast(user, contactId, pastId, dateInput, typeInput, contactNotesInput)),
+  addPast: (user, contactId, past) => dispatch(actions.sendNewPast(user, contactId, past)),
   runApiPush: (pushEvent) => dispatch(actions.pushToGoogle(pushEvent)),
 })
 

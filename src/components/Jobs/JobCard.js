@@ -22,7 +22,7 @@ const nameStyle = {
 }
 
 const JobCard = (props) => {
-  let dayNext = moment(props.dateNext).format("YYYY-MM-DD");
+  let dayNext = moment(props.nextDate).format("YYYY-MM-DD");
   let overdue = "";
   if (dayNext < moment().format("YYYY-MM-DD")) {
     overdue = 'Overdue:'
@@ -51,7 +51,7 @@ const JobCard = (props) => {
   <Paper style={style} zDepth={1}>
     <div className="JobName" style={nameStyle}>
       <Checkbox
-      label={props.co}
+      label={props.company}
       labelPosition='left'
       checked={props.important}
       iconStyle={{width: '3em', height: '3em'}}
@@ -59,20 +59,21 @@ const JobCard = (props) => {
       uncheckedIcon={<ActionFavoriteBorder />}
       labelStyle={{float: 'right', paddingBottom: 10, fontSize: '3em', lineHeight: '100%'}}
       onCheck={(event, isInputChecked) => {
-        const dateSend = props.dateNext;
+        const dateSend = props.nextDate;
         props.changeHeartDate(props.user, props.jobId, isInputChecked, dateSend)
       }} />
     </div>
-    <p>Job Title:   {props.job}</p>
+    <p>Job Title:   {props.jobTitle}</p>
     {/* <Link to={'/' + props.user + '/one_contact/' + contact._id}}> */}
-      <p>Contact:   {props.contactName}</p>
+      <p>Contacts: </p>
+    {props.contact.map((c) => <p style={{ marginLeft: '20px'}}>{c}</p>)}
     {/* </Link> */}
-    <p>Company website: {props.web}</p>
-    <p>Job posting: {props.listing}</p>
-    <p>Stage: {props.progress}</p>
+    <p>Company website: {props.website}</p>
+    <p>Job posting: {props.post}</p>
+    <p>Stage: {props.stage}</p>
     <p>Found out about this job on:  {props.foundDate}</p>
     <p>Research on company: {props.research}</p>
-    <p>Notes:   {props.info}</p>
+    <p>Notes:   {props.notes}</p>
     <div
       style={{
         display: 'flex',
@@ -95,7 +96,7 @@ const JobCard = (props) => {
           >
             <DatePicker
               style={{ padding: '0 5px 5px 5px', width: '15.5vw', ...overdueStyle }}
-              hintText={props.dateNext}
+              hintText={props.nextDate}
               hintStyle={{color: overdue ? 'red' : '#50A350', paddingBottom: '4px' }}
               underlineStyle={{display: 'none'}}
               autoOk    
@@ -145,7 +146,7 @@ const JobCard = (props) => {
         position: 'relative', margin: '1vh 1vw 1vh 1vw', width: '100%'
       }}
     >
-      <Link to={'/' + props.user + '/edit_job/' + props.params.id} className="Link" style={{ position: 'absolute', right: 0, bottom: 0 }}>
+      <Link to={'/' + props.user + '/edit_job/' + props.jobId} className="Link" style={{ position: 'absolute', right: 0, bottom: 0 }}>
         <Edit />
       </Link>
     </div>

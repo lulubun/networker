@@ -43,7 +43,7 @@ export function sendNewUser(usernameInput, passwordInput, firstNameInput, lastNa
   }
 }
 
-export function fetchOneUser(usernameInput, passwordInput) {
+export function fetchOneUser(username, password) {
   return dispatch => {
     const userVer = constants.SER_URL + '/me';
     fetch(userVer, {
@@ -52,8 +52,8 @@ export function fetchOneUser(usernameInput, passwordInput) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: usernameInput,
-        password: passwordInput,
+        username,
+        password,
       })
     })
     .then(response => response.json())

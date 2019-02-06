@@ -64,7 +64,7 @@ export class Login extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  day: state.ContactState.meetDate
+  day: state.AllState.meetDate
 });
 
 const mapDispatchToProps = (dispatch) => ({

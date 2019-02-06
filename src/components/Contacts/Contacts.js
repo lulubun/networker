@@ -79,7 +79,7 @@ class Contacts extends React.Component {
               <Paper style={style} zDepth={1} rounded={false} className="onePaper">
                   <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
                     <Checkbox
-                      checked={contact.serImportant}
+                      checked={contact.important}
                       checkedIcon={<ActionFavorite />}
                       uncheckedIcon={<ActionFavoriteBorder />}
                       style={{paddingBottom: 15, margin: '0 auto'}}
@@ -87,7 +87,7 @@ class Contacts extends React.Component {
                       labelStyle={{fontSize: '1.75em'}}
                     />
                   </Link>
-                  <p>at {contact.serCompany}</p>
+                  <p>at {contact.company}</p>
                   <p style={{marginBottom: 40}}>Next Follow-Up: {contact.serNextContact}</p>
              </Paper>
             </div>
@@ -99,7 +99,7 @@ class Contacts extends React.Component {
               <Paper style={styleMin} zDepth={1} rounded={false} className="onePaper">
               <Link to={'/' + user + '/one_contact/' + contact._id} className="Link">
               <Checkbox
-               checked={contact.serImportant}
+               checked={contact.important}
                checkedIcon={<ActionFavorite />}
                uncheckedIcon={<ActionFavoriteBorder />}
                style={{paddingBottom: 15, margin: '0 auto'}}
@@ -107,7 +107,7 @@ class Contacts extends React.Component {
                labelStyle={{fontSize: '1.75em'}}
                />
                </Link>
-               <p style={{marginRight: '10px'}}>at {contact.serCompany}</p>
+               <p style={{marginRight: '10px'}}>at {contact.company}</p>
                <p style={{marginBottom: 40}}>Next Follow-Up: {contact.serNextContact}</p>
              </Paper>
             </div>

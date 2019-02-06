@@ -4,50 +4,20 @@ import { fetchAllContacts } from './contactActions';
 
 
 //open a job just created
-export const setNewJob = (newCompany, newJobTitle, newDateNext, newImportant, newStage, newContactName, newResearch, newJobNotes, newWebsite, newPost) => ({
+export const setNewJob = (job) => ({
   type: constants.SET_NEW_JOB,
-  newCompany,
-  newJobTitle,
-  newDateNext,
-  newImportant,
-  newStage,
-  newContactName,
-  newResearch,
-  newJobNotes,
-  newWebsite,
-  newPost
+  job
 });
 
 //open one job with full past
-export const setOneJob = (id, newCompany, newJobTitle, newFoundJob, newDateNext, newImportant, newStage, newContactName, newResearch, newJobNotes, newWebsite, newPost, newPastArray) => ({
+export const setOneJob = (job) => ({
   type: constants.SET_ONE_JOB,
-  id,
-  newCompany,
-  newJobTitle,
-  newFoundJob,
-  newDateNext,
-  newImportant,
-  newStage,
-  newContactName,
-  newResearch,
-  newJobNotes,
-  newWebsite,
-  newPost,
-  newPastArray
+  job
 });
 
-export const updateJob = (newCompany, newJobTitle, newDateNext, newImportant, newStage, newContactName, newResearch, newJobNotes, newWebsite, newPost) => ({
+export const updateJob = (job) => ({
   type: constants.UPDATE_JOB,
-  newCompany,
-  newJobTitle,
-  newDateNext,
-  newImportant,
-  newStage,
-  newContactName,
-  newResearch,
-  newJobNotes,
-  newWebsite,
-  newPost
+  job
 });
 
 export const individualUpdate = (kind, update) => ({
@@ -58,9 +28,9 @@ export const individualUpdate = (kind, update) => ({
   }
 });
 
-export const updateDateNextJob = (newDateNext) => ({
-  type: constants.UPDATE_DATE_NEXT_JOB,
-  newDateNext
+export const updateDateNextJob = (nextDate) => ({
+  type: constants.UPDATE_DATE_NEXT,
+  nextDate
 });
 
 export const updateJobPast = (updatedJob) =>  ({
@@ -74,108 +44,47 @@ export const updateHeart = (updatedHeart) => ({
 })
 
 
-export function fetchWholeJob(id, user) {
+export function fetchWholeJob(_id, user) {
   return dispatch => {
-    const urlWhole = (constants.SER_URL + '/' + user + '/one_job/' + id)
+    const urlWhole = (constants.SER_URL + '/' + user + '/one_job/' + _id)
     fetch(urlWhole)
     .then(response => response.json())
-    .then(data => dispatch(setOneJob(data._id,
-      data.serCompany,
-      data.serJobTitle,
-      data.serFoundJob,
-      data.serNextDate,
-      data.serImportant,
-      data.serStage,
-      data.serContactName,
-      data.serResearch,
-      data.serJobNotes,
-      data.serWebsite,
-      data.serPost,
-      data.serPastJobs)))
-    .catch(ex => console.log(ex))
+    .then(data => {
+      dispatch(setOneJob(data))})
+    .catch(e => console.log(e))
   }
 }
 
-export function sendNewJob(user, companyInput, jobTitleInput, foundJobInput, dateNextInput, importantInput, stageInput, contactNameInput, researchInput, jobNotesInput, websiteInput, postInput) {
-  return dispatch => {
-    const serUser = user;
-    const url = constants.SER_URL + '/' + serUser + '/new_job';
-    let serNextDate = dateNextInput;
-    let serImportant = importantInput;
-    let serStage = stageInput;
-    let serCompany = companyInput;
-    let serJobTitle = jobTitleInput;
-    let serResearch = researchInput;
-    let serJobNotes = jobNotesInput;
-    let serContactName = contactNameInput;
-    let serFoundJob = foundJobInput;
-    let serWebsite = websiteInput;
-    let serPost = postInput;
+export function sendNewJob(user, job) {
+  return () => {
+    const url = constants.SER_URL + '/' + user + '/new_Job';
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        serUser,
-        serCompany,
-        serJobTitle,
-        serFoundJob,
-        serNextDate,
-        serImportant,
-        serStage,
-        serContactName,
-        serResearch,
-        serJobNotes,
-        serWebsite,
-        serPost
-      })
+      body: JSON.stringify(job)
     })
     .then(response => response.json())
     .then(hashHistory.push('/' + user + '/jobs'))
   }
 };
 
-export function fetchUpdate(editUser, editId, editCo, editTitle, editFound, editFollowUp, editStage, editContact, editResearch, editNotes, editWeb, editPost) {
+export function fetchUpdate(user, job) {
   return dispatch => {
-    const user = editUser;
-    let _id = editId;
-    const url = constants.SER_URL + '/' + user + '/edit_job/' + _id;
-    let serCompany = editCo;
-    let serJobTitle = editTitle;
-    let serDateNext = editFollowUp;
-    let serStage = editStage;
-    let serContactName = editContact;
-    let serResearch = editResearch
-    let serJobNotes = editNotes;
-    let serFoundJob = editFound;
-    let serWebsite = editWeb;
-    let serPost = editPost;
+    const url = constants.SER_URL + '/' + user + '/edit_job/' + job._id;
     fetch(url, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        _id,
-        user,
-        serCompany,
-        serJobTitle,
-        serFoundJob,
-        serDateNext,
-        serStage,
-        serContactName,
-        serResearch,
-        serJobNotes,
-        serWebsite,
-        serPost
-      })
+      body: JSON.stringify(job)
     })
     .then(response => response.json())
     .then(data => {
       dispatch(setOneJob(data))
     })
-    .then(hashHistory.push('/' + user + '/one_job/' + _id))
+    .then(hashHistory.push('/' + user + '/one_job/' + job._id))
     .catch(ex => console.log(ex))
   }
 };
@@ -197,17 +106,16 @@ export function fetchAllJobs(user) {
     })
     .then(response => response.json())
     .then(data => {
-        sortedArray = data.sort(function(a, b) {return Date.parse(a.serNextDate) - Date.parse(b.serNextDate)});
-        dispatch(setAllJobs(sortedArray))
+      console.log('data: ', data);
+      sortedArray = data.sort(function(a, b) {return Date.parse(a.nextDate) - Date.parse(b.nextDate)});
+      dispatch(setAllJobs(sortedArray))
     })
     .catch(ex => console.log(ex))
   }
 };
 
-export function fetchDeleteJob(editId, editUser) {
-  let _id = editId;
-  const user = editUser;
-  return dispatch => {
+export function fetchDeleteJob(_id, user) {
+  return () => {
     const urlDel = constants.SER_URL + '/' + user + '/one_job/' + _id;
     fetch(urlDel, {
       method: 'DELETE',
@@ -224,100 +132,63 @@ export function fetchDeleteJob(editId, editUser) {
   }
 };
 
-export function fetchHeartDateUpdate(user, jobId, isInputChecked, appDate) {
-  const serUser = user;
-  let serImportant = isInputChecked;
-  let _id = jobId;
-  console.log('_id: ', _id);
-  const serNextDate = appDate;
+export function fetchHeartDateUpdate(user, jobId, isInputChecked, nextDate) {
   return dispatch => {
-    const urlHeart = constants.SER_URL + '/' + serUser + '/one_job/' + _id;
+    const urlHeart = constants.SER_URL + '/' + user + '/one_job/' + jobId;
     fetch(urlHeart, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        _id,
-        serUser,
-        serImportant,
-        serNextDate
+        jobId,
+        user,
+        isInputChecked,
+        nextDate
       })
     })
     .then(response => response.json())
     .then(res => {
-      let id = res._id;
-      let newCompany = res.serCompany;
-      let newJobTitle = res.serJobTitle;
-      let newFoundJob = res.serFoundJob;
-      let newDateNext = res.serNextDate;
-      let newImportant = res.serImportant;
-      let newStage = res.serStage;
-      let newContactName = res.serContactName;
-      let newResearch = res.serResearch;
-      let newJobNotes = res.serJobNotes;
-      let newWebsite = res.serWebsite;
-      let newPost = res.serPost;
-      let newPastArray = res.serPastJobs;
       dispatch(setOneJob(
-        id,
-        newCompany,
-        newJobTitle,
-        newFoundJob,
-        newDateNext,
-        newImportant,
-        newStage,
-        newContactName,
-        newResearch,
-        newJobNotes,
-        newWebsite,
-        newPost,
-        newPastArray
+        res._id,
+        res.company,
+        res.jobTitle,
+        res.foundDate,
+        res.nextDate,
+        res.important,
+        res.stage,
+        res.contact,
+        res.research,
+        res.notes,
+        res.website,
+        res.post,
+        res.pastJobs
     ))})
     .catch(ex => console.log(ex))
   }
 };
 
-export function sendNewJobPast(user, jobId, pastid, dateInput, typeInput, jobNotesInput) {
+export function sendNewJobPast(user, jobId, pastId, foundDate, type, notes, nextDate) {
   return dispatch => {
-    let serUser = user;
-    let id = jobId;
-    let pastId = pastid;
-    const pastUrl = constants.SER_URL + '/' + user + '/newJobPast/' + id;
-    let serDateNext = dateInput;
-    let serTypeJob = typeInput;
-    let serNotesJob = jobNotesInput;
+    const pastUrl = constants.SER_URL + '/' + user + '/newJobPast/' + jobId;
     fetch(pastUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        serUser,
-        id,
+        user,
+        jobId,
         pastId,
-        serDateNext,
-        serTypeJob,
-        serNotesJob
+        foundDate,
+        type,
+        nextDate,
+        notes,
       })
     })
     .then(response => response.json())
     .then(res => {
-      dispatch(setOneJob(
-        res.id,
-        res.serCompany,
-        res.serJobTitle,
-        res.serFoundJob,
-        res.serDateNext,
-        res.serImportant,
-        res.serStage,
-        res.serContactName,
-        res.serResearch,
-        res.serJobNotes,
-        res.serWebsite,
-        res.serPost,
-        res.serPastJobs
-      ))
+      dispatch(setOneJob(res))
     })
   }
 }

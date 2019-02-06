@@ -41,24 +41,24 @@ const JobsTable = (props) => (
     {props.jobs.map((job) =>
             (
               <TableRow key={job._id} style={{
-                backgroundColor: job.serStage === 'Inactive' ? 'gray' : null,
+                backgroundColor: job.stage === 'Inactive' ? 'gray' : null,
               }}>
                 <TableRowColumn>
                   <Checkbox
-                    checked={job.serImportant}
+                    checked={job.important}
                     checkedIcon={<ActionFavorite />}
                     uncheckedIcon={<ActionFavoriteBorder />}
                     onCheck={() => {
-                      props.updateHeart(props.user, job._id, !job.serImportant, job.serNextDate)
+                      props.updateHeart(props.user, job._id, !job.important, job.nextDate)
                     }}
                   />
                 </TableRowColumn>
                 <TableRowColumn>
                   <Link to={`/${props.user}/one_job/${job._id}`} className="LinkBlack">
-                    {job.serCompany}
+                    {job.company}
                   </Link>
                 </TableRowColumn>
-              <TableRowColumn>{job.serNextDate}</TableRowColumn>
+              <TableRowColumn>{job.nextDate}</TableRowColumn>
             </TableRow>
           ))}
 

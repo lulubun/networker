@@ -10,11 +10,11 @@ import MediaQuery from 'react-responsive';
 
 export class EditContact extends React.Component {
   componentDidMount() {
-    this.props.getOneContact(this.props.params.id);
+    this.props.getOneContact(this.props.params._id);
   }
   render() {
     let editUser = this.props.params.user;
-    let editId = this.props.params.id
+    let editId = this.props.params._id
     let firstInput = this.props.first;
     let lastInput = this.props.last;
     let companyInput = this.props.company;
@@ -238,14 +238,14 @@ export class EditContact extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  first: state.ContactState.firstName,
-  last: state.ContactState.lastName,
-  company: state.ContactState.company,
-  jobTitle: state.ContactState.jobTitle,
-  email: state.ContactState.email,
-  phone: state.ContactState.phone,
-  meetDate: state.ContactState.meetDate,
-  meetNotes: state.ContactState.meetNotes
+  first: state.AllState.firstName,
+  last: state.AllState.lastName,
+  company: state.AllState.company,
+  jobTitle: state.AllState.jobTitle,
+  email: state.AllState.email,
+  phone: state.AllState.phone,
+  meetDate: state.AllState.meetDate,
+  meetNotes: state.AllState.meetNotes
 });
 
 const mapDispatchToProps = (dispatch) => ({

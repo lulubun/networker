@@ -10,13 +10,14 @@ const uuidv1 = require('uuid/v1');
 
 class FollowUp extends React.Component {
   state = {
-    date: moment().format("YYYY-MM-DD"),
+    date: moment(),
     type: '',
     notes: '',
+    newDate: moment().add(1, 'week')
   }
+  prettyDate = (date) => moment(date).format("MMM DD YYYY");
 
   render() {
-    console.log('Hello!', this.props)
     return (
       <div>
         <form>
@@ -66,16 +67,15 @@ class FollowUp extends React.Component {
         <RaisedButton label="Save Follow Up"
           backgroundColor="#5D576B" labelColor="#F1F1EF"
           onTouchTap={() => {
-            const jobId = this.props.params.id;
-            const user = this.props.params.user;
-            const pastId = uuidv1();//Math.floor((Math.random() * 10000) + 1);
-            console.log('pastId: ', pastId);
+            const {jobId, user, addPast, close } = this.props;
+            const pastId = uuidv1();
             if (this.state.type == '') {
               alert("Please include the type of contact made")
             } else {
               const prettyDate = moment(this.state.date).format("MMM DD YYYY");
-              this.props.addPast(user, jobId, pastId, prettyDate, this.state.type, this.state.notes,);
-              this.props.close()
+              //user, jobId, pastId, dateOfContact, type, notes, newJobDate
+              addPast(user, jobId, pastId, this.prettyDate(this.state.date), this.state.type, this.state.notes, this.prettyDate(this.state.newDate));
+              close()
             }
           }} />
         </form>

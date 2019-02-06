@@ -8,71 +8,83 @@ import Paper from 'material-ui/Paper';
 import moment from 'moment';
 import MediaQuery from 'react-responsive';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import { FormsyCheckbox, FormsyDate, FormsyRadioGroup, FormsyText } from 'formsy-material-ui/lib';
-import ActionFavorite from 'material-ui/svg-icons/alert/error';
-import ActionFavoriteBorder from 'material-ui/svg-icons/alert/error-outline';
-import Checkbox from 'material-ui/Checkbox';
 import Stages from './Stages';
+import Select from 'react-select';
+
+
+const dateStyle = {
+  width: '100%',
+};
+
+const styleLeft = {
+  width: '90%',
+  padding: 20,
+  margin: 'auto',
+  minHeight: 500
+};
+
+const titleStyle = {
+  marginLeft: 80,
+  color: "#5D576B"
+
+}
+
+const push = {
+  marginLeft: 10,
+  marginRight: 10,
+  marginBottom: 10
+}
+
+const color = {
+  color: '#9892a6'
+}
 
 export class EditJob extends React.Component {
-  componentDidMount() {
-    this.props.getOneJob(this.props.params.id);
+  constructor(props) {
+    super(props);
+    console.log('props: ', props);
+    this.state = {};
   }
-
-  state = {
-    stage: this.props.stage
+  componentWillMount() {
+    // this.props.getOneJob(this.props.params._id);
+    const { allJobs, params } = this.props
+    const  _id = params._id;
+    console.log('this.props.params._id: ', this.props.params._id, this.props.allJobs);
+    const currentJob = allJobs.filter((j) => j._id === _id)[0]
+    console.log('currentJob: ', currentJob);
+    this.setState(currentJob)
   }
 
   render() {
-    let editUser = this.props.params.user;
-    let editId = this.props.params.id;
-    let editCo = this.props.co;
-    let editTitle = this.props.title;
-    let editFound = this.props.found;
-    let editFollowUp = this.props.followUp;
-    let editStage = this.state.stage;
-    let editContact = this.props.contact;
-    let editResearch = this.props.research;
-    let editNotes = this.props.notes;
-    let editWeb = this.props.web;
-    let editPost = this.props.posting;
+    const {contacts, params} = this.props;
+    const {user, _id} = params;
 
-    const dateStyle = {
-      width: '100%',
-    };
+    const {
+      company,
+      jobTitle,
+      foundDate,
+      nextDate,
+      important,
+      stage,
+      contact,
+      research,
+      notes,
+      website,
+      post,
+      pastJobs,
+    } = this.state;
 
-    const styleLeft = {
-      width: '90%',
-      padding: 20,
-      margin: 'auto',
-      minHeight: 500
-    };
+    const contactValues = contacts.reduce((acc, c) => {
+      const newAcc = acc;
+      newAcc.push({
+        value: c._id,
+        label: c.serFirst + c.serLast,
+      })
+      return newAcc;
+    }, []).concat([{value: 'new', label: 'Add New Contact'}])
 
-    const styleBoth = {
-      padding: 20,
-      margin: 20
-    }
+    console.log('company: ', company);
 
-    const titleStyle = {
-      marginLeft: 80,
-      color: "#5D576B"
-
-    }
-
-    const pad = {
-      marginLeft: 10,
-      marginRight: 10,
-    }
-
-    const push = {
-      marginLeft: 10,
-      marginRight: 10,
-      marginBottom: 10
-    }
-
-    const color = {
-      color: '#9892a6'
-    }
 
     return(
       <div className="edit_job">
@@ -86,117 +98,103 @@ export class EditJob extends React.Component {
                     name="editCo"
                     fullWidth
                     onChange={(event, newValue) => {
-                    editCo=newValue
+                      this.setState({company: newValue})
                   }}
-                    defaultValue={this.props.co}
+                    defaultValue={company}
                   />
                   <p style={color}>Job Title:</p>
                   <TextField
                     name="editTitle"
                     fullWidth
-                    defaultValue={this.props.title}
+                    defaultValue={jobTitle}
                     onChange={(event, newValue) => {
-                    editTitle=newValue
-                  }}/>
+                      this.setState({jobTitle: newValue})
+                    }}/>
                   <p style={color}>Date Job Discovered:</p>
                   <DatePicker
-                    floatingLabelText={editFound}
+                    floatingLabelText={foundDate}
                     style={dateStyle}
                     fullWidth
-                    // defaultDate={this.props.found}
+                    // defaultDate={}
                     onChange={(event, date) => {
-                      editFound=moment(date).format("MMM DD YYYY");
+                      this.setState({foundDate: date})
                     }}
                   />
-                  <Stages val={this.state.stage} fun={(v) => this.setState({stage: v})} />
-                  {/* <RadioButtonGroup
-                    name="Stage"
-                    valueSelected={this.state.stage}
-                    onChange={(event, value) => {
-                      this.setState({stage: value})
-                      console.log(this.state.stage);
-                    }}
-                    value={editStage}
-                  >
-                    <RadioButton
-                      value="Discovered"
-                      label="Discovered"
-                    />
-                    <RadioButton
-                      value="Applied"
-                      label="Applied"
-                    />
-                    <RadioButton
-                      value="Homework"
-                      label="Homework"
-                    />
-                    <RadioButton
-                      value="Phone Screen"
-                      label="Phone Screen"
-                    />
-                    <RadioButton
-                      value="Interview"
-                      label="Interview"
-                    />
-                    <RadioButton
-                      value="Offer"
-                      label="Offer"
-                    />
-                    <RadioButton
-                      value="Inactive"
-                      label="Inactive"
-                    />
-                  </RadioButtonGroup> */}
+                  <Stages val={stage} fun={(v) => this.setState({stage: v})} />     
                   <p style={color}>Contact at Company:</p>
-                  <TextField
-                  name="editContact"
-                  fullWidth
-                  defaultValue={this.props.contact} onChange={(event, newValue) => {
-                  editContact=newValue
-                  }}/>
+                  <Select
+                    style={{ zIndex: 1000, margin: '3vh 0 0 0' }}
+                    value={contact}
+                    placeholder="Contacts at this Company"
+                    isMulti
+                    onChange={(e) => {
+                      if (e.find((v) => v.value === 'new')) {
+                        console.log('redirect!!!')
+                      } else {
+                        this.setState({ contact: e})
+                      }
+                    }}
+                    options={contactValues}
+                  />
                   <p style={color}>Research:</p>
                   <TextField
                     name="editResearch"
                     fullWidth
-                    defaultValue={this.props.research} onChange={(event, newValue) => {
-                    editResearch=newValue
-                  }}/>
+                    defaultValue={research}
+                    onChange={(event, newValue) => {
+                      this.setState({research: newValue})
+                    }}/>
                   <p style={color}>Notes:</p>
                   <TextField
                     name="editNotes"
                     fullWidth
-                    defaultValue={this.props.notes} onChange={(event, newValue) => {
-                    editNotes=newValue
-                  }}/>
+                    defaultValue={notes}
+                    onChange={(event, newValue) => {
+                      this.setState({notes: newValue})
+                    }}/>
                   <p style={color}>Website:</p>
                   <TextField
                     name="editWeb"
                     fullWidth
-                    defaultValue={this.props.web}
+                    defaultValue={website}
                     multiLine
                     onChange={(event, newValue) => {
-                      editWeb=newValue
+                      this.setState({website: newValue})
                     }}/>
                     <p style={color}>Job Posting:</p>
                     <TextField
                       name="editPost"
                       fullWidth
-                      defaultValue={this.props.posting}
+                      defaultValue={post}
                       multiLine
                       onChange={(event, newValue) => {
-                        editPost=newValue
+                        this.setState({post: newValue})
                       }}/>
                   <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
-                    onTouchTap={(event) => {
-                      console.log(editStage);
-                        this.props.editJob(editUser, editId, editCo, editTitle, editFound, editFollowUp, editStage, editContact, editResearch, editNotes, editWeb, editPost);
-                    }}
+                    onTouchTap={() => {
+                      this.props.editJob(
+                        user,
+                        _id,
+                        company,
+                        jobTitle,
+                        foundDate,
+                        nextDate,
+                        important,
+                        stage,
+                        contact,
+                        research,
+                        notes,
+                        website,
+                        post,
+                        pastJobs
+                      )
+                      }}
                   />
                   <RaisedButton label="Delete Job" backgroundColor="#5D576B" labelColor="#F1F1EF"
                     onTouchTap={(event) => {
                       const doubleCheck = confirm("Are you sure?");
                       if (doubleCheck == true) {
-                        this.props.delete(editId, editUser);
+                        this.props.delete(_id, user);
                       }
                     }}
                   />
@@ -213,35 +211,35 @@ export class EditJob extends React.Component {
                   name="editCo"
                   fullWidth
                   onChange={(event, newValue) => {
-                  editCo=newValue
-                }}
-                  defaultValue={this.props.co}
+                    this.setState({company: newValue})
+                  }}
+                  defaultValue={company}
                 />
                 <p style={color}>Job Title:</p>
                 <TextField
                   name="editTitle"
                   fullWidth
-                  defaultValue={this.props.title}
+                  defaultValue={jobTitle}
                   onChange={(event, newValue) => {
-                  editTitle=newValue
-                }}/>
+                    this.setState({jobTitle: newValue})
+                  }}/>
                 <p style={color}>Date Job Discovered:</p>
                 <DatePicker
-                  floatingLabelText={editFound}
+                  floatingLabelText={foundDate}
                   style={dateStyle}
                   fullWidth
                   // defaultDate={this.props.found}
                   onChange={(event, date) => {
-                    editFound=moment(date).format("MMM DD YYYY");
+                    this.setState({foundDate: moment(date).format("MMM DD YYYY")})
                   }}
                 />
                 <RadioButtonGroup
                   name="Stage"
-                  valueSelected={this.state.stage}
+                  valueSelected={stage}
                   onChange={(event, value) => {
                     this.setState({stage: value})
                   }}
-                  value={editStage}
+                  // value={stage}
                 >
                   <RadioButton
                     value="Discovered"
@@ -272,41 +270,45 @@ export class EditJob extends React.Component {
                 <TextField
                 name="editContact"
                 fullWidth
-                defaultValue={this.props.contact} onChange={(event, newValue) => {
-                editContact=newValue
+                defaultValue={contact}
+                onChange={(event, value) => {
+                  this.setState({contact: value})
                 }}/>
                 <p style={color}>Research:</p>
                 <TextField
                   name="editResearch"
                   fullWidth
-                  defaultValue={this.props.research} onChange={(event, newValue) => {
-                  editResearch=newValue
+                  defaultValue={research}
+                  onChange={(event, value) => {
+                    this.setState({research: value})
                 }}/>
                 <p style={color}>Notes:</p>
                 <TextField
                   name="editNotes"
                   fullWidth
-                  defaultValue={this.props.notes} onChange={(event, newValue) => {
-                  editNotes=newValue
+                  defaultValue={notes}
+                  onChange={(event, value) => {
+                    this.setState({notes: value})
                 }}/>
                 <p style={color}>Website:</p>
                 <TextField
                   name="editWeb"
                   fullWidth
-                  defaultValue={this.props.web}
+                  defaultValue={website}
                   multiLine
-                  onChange={(event, newValue) => {
-                    editWeb=newValue
+                  onChange={(event, value) => {
+                    this.setState({website: value})
+                  }}
+                />
+                <p style={color}>Job Posting:</p>
+                <TextField
+                  name="editPost"
+                  fullWidth
+                  defaultValue={post}
+                  multiLine
+                  onChange={(event, value) => {
+                    this.setState({post: value})
                   }}/>
-                  <p style={color}>Job Posting:</p>
-                  <TextField
-                    name="editPost"
-                    fullWidth
-                    defaultValue={this.props.posting}
-                    multiLine
-                    onChange={(event, newValue) => {
-                      editPost=newValue
-                    }}/>
                     {/* <Checkbox
                     name="editImportant"
                     checkedIcon={<ActionFavorite />}
@@ -317,16 +319,30 @@ export class EditJob extends React.Component {
                     }}
                     /> */}
                 <RaisedButton label="Save Edits" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
-                  onTouchTap={(event) => {
-                      console.log(editStage);
-                      this.props.editJob(editUser, editId, editCo, editTitle, editFound, editFollowUp, editStage, editContact, editResearch, editNotes, editWeb, editPost);
-                  }}
+                  onTouchTap={() => {
+                      this.props.editJob(
+                        user,
+                        _id,
+                        company,
+                        jobTitle,
+                        foundDate,
+                        nextDate,
+                        important,
+                        stage,
+                        contact,
+                        research,
+                        notes,
+                        website,
+                        post,
+                        pastJobs
+                      )
+                    }}
                 />
                 <RaisedButton label="Delete Job" backgroundColor="#5D576B" labelColor="#F1F1EF" style={push}
-                  onTouchTap={(event) => {
+                  onTouchTap={() => {
                     const doubleCheck = confirm("Are you sure?");
                     if (doubleCheck == true) {
-                      this.props.delete(editId, editUser);
+                      this.props.delete(_id, user);
                     }
                   }}
                 />
@@ -340,21 +356,13 @@ export class EditJob extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  co: state.JobState.companyState,
-  title: state.JobState.jobTitleState,
-  found: state.JobState.foundJobState,
-  followUp: state.JobState.dateNextState,
-  stage: state.JobState.stageState,
-  contact: state.JobState.contactState,
-  research: state.JobState.researchState,
-  notes: state.JobState.researchState,
-  web: state.JobState.websiteState,
-  posting: state.JobState.postState
+  allJobs: state.AllState.allJobs,
+  contacts: state.AllState.allContacts,
 });
 
 const mapDispatchToProps = (dispatch) => ({
  getOneJob: (linkId) => dispatch(actions.fetchWholeJob(linkId)),
- editJob: (editUser, editId, editCo, editTitle, editFound, editFollowUp, editStage, editContact, editResearch, editNotes, editWeb, editPost) => dispatch(actions.fetchUpdate(editUser, editId, editCo, editTitle, editFound, editFollowUp, editStage, editContact, editResearch, editNotes, editWeb, editPost)),
+ editJob: (user, job) => dispatch(actions.fetchUpdate(user, job)),
  delete: (editId, editUser) => dispatch(actions.fetchDeleteJob(editId, editUser))
 })
 

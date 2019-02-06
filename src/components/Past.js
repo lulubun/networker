@@ -36,7 +36,7 @@ class Past extends React.Component {
             <RaisedButton label="Delete"
               backgroundColor="#5D576B" labelColor="#F1F1EF"
               onTouchTap={(event) => {
-                this.props.delete(onePast.serUser, onePast.id, onePast.pastId)
+                this.props.delete(onePast.serUser, onePast._id, onePast.pastId)
               }}
             />
           </Paper>
@@ -56,7 +56,7 @@ class Past extends React.Component {
           <RaisedButton label="Delete"
             backgroundColor="#5D576B" labelColor="#F1F1EF"
             onTouchTap={(event) => {
-              this.props.delete(onePast.serUser, onePast.id, onePast.pastId)
+              this.props.delete(onePast.serUser, onePast._id, onePast.pastId)
             }}
           />
         </Paper>
@@ -67,7 +67,7 @@ class Past extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  allPastList: state.ContactState.allPast
+  allPastList: state.AllState.allPast
 });
 
 const mapDispatchToProps = (dispatch) => ({

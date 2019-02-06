@@ -67,21 +67,22 @@ class NetworkContainer extends React.Component {
             onTouchTap={() => {logOutNow()}}
           />
         </div>
-        <TodayList todayList={jobList} user={params.user} fetchHeartDateUpdate={fetchHeartDateUpdate} />
+        <TodayList todayList={jobList} {...this.props} />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, props) => ({
-  jobList: state.AllJobsState.allJobs,
+  jobList: state.AllState.allJobs,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getAllJobs: (user) => dispatch(jobActions.fetchAllJobs(user)),
   fetchContacts: (user) => dispatch(contactActions.fetchAllContacts(user)),
   logOutNow: () => dispatch(contactActions.fetchLogOut()),
-  fetchHeartDateUpdate: (usr, id, important, newDate) => dispatch(jobActions.fetchHeartDateUpdate(usr, id, important, newDate))
+  addPast: (user, jobId, pastId, dateOfContact, type, notes, newJobDate) => dispatch(jobActions.sendNewJobPast(user, jobId, pastId, dateOfContact, type, notes, newJobDate)),
+  fetchHeartDateUpdate: (usr, _id, important, newDate) => dispatch(jobActions.fetchHeartDateUpdate(usr, _id, important, newDate))
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(NetworkContainer);
